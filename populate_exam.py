@@ -3,11 +3,15 @@ __author__ = 'Alexey Kutepov'
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'exam_project.settings')
 
+import pickle
+import random
+
 import django
 django.setup()
 
 from exam.models import *
 from django.contrib.auth.models import User
+from exam.exam_test import exam_test
 
 
 def populate():
@@ -145,6 +149,26 @@ def add_cat(name):
     """
     category = Category.objects.get_or_create(name=name)[0]
     return category
+
+
+def add_test(name, description, author, category):
+    test = exam_test.ExamTest()
+    number_of_questions = random.randint(1, 100)
+    number_of_answers = random.randint(2, 10)
+    for i in range(number_of_questions):
+        question = exam_test.Question()
+
+        test.add_question(question)
+
+    test_dump = pickle.dumps(test)
+    result = Test.objects.get_or_create(
+        name=name,
+        description=description,
+        test=test_dump,
+        author=author,
+        category=category
+    )[0]
+    return result
 
 
 if __name__ == '__main__':
