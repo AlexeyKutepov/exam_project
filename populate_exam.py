@@ -20,7 +20,7 @@ def populate():
     :return:
     """
     add_super_user()
-    add_user(
+    user1 = add_user(
         "ivanov",
         "ivanov@gmail.com",
         "ivanov_pass",
@@ -32,7 +32,14 @@ def populate():
         "Russia",
         "Moscow"
     )
-    add_user(
+    category1 = add_cat("category 1")
+    add_test(
+        "test 1",
+        "test 1 description",
+        user1,
+        category1
+    )
+    user2 = add_user(
         "petrov",
         "ipetrov@gmail.com",
         "petrov_pass",
@@ -43,6 +50,13 @@ def populate():
         UserProfile.MALE,
         "Russia",
         "Moscow"
+    )
+    category2 = add_cat("category 2")
+    add_test(
+        "test 2",
+        "test 2 description",
+        user2,
+        category2
     )
     add_user(
         "nikolaev",
@@ -80,8 +94,6 @@ def populate():
         "Russia",
         "Moscow"
     )
-    add_cat("category 1")
-    add_cat("category 2")
     add_cat("category 3")
     add_cat("category 4")
     add_cat("category 5")
@@ -152,12 +164,26 @@ def add_cat(name):
 
 
 def add_test(name, description, author, category):
+    """
+    Creates new test
+    :param name: name of the test
+    :param description: description of the test
+    :param author:
+    :param category:
+    :return:
+    """
     test = exam_test.ExamTest()
     number_of_questions = random.randint(1, 100)
     number_of_answers = random.randint(2, 10)
     for i in range(number_of_questions):
         question = exam_test.Question()
-
+        for j in range(number_of_answers):
+            if random.randint(0, 1) == 0:
+                is_correct = False
+            else:
+                is_correct = True
+            answer = exam_test.CloseAnswer("answer " + str(j), is_correct)
+            question.add_new_answer(answer)
         test.add_question(question)
 
     test_dump = pickle.dumps(test)
@@ -172,6 +198,6 @@ def add_test(name, description, author, category):
 
 
 if __name__ == '__main__':
-    print("Starting Rango population script...")
+    print("Starting Exam population script...")
     populate()
     print("Complete!")

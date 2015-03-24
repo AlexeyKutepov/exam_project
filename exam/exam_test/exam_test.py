@@ -92,6 +92,8 @@ class Question:
             if not isinstance(answer, CloseAnswer):
                 raise AttributeError("The attribute 'answer' is not instance of CloseAnswer class")
             else:
+                if self._answer is None:
+                    self._answer = []
                 self._answer.append(answer)
                 self._correct_count += 1
 
