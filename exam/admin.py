@@ -1,3 +1,7 @@
 from django.contrib import admin
+from exam.models import *
 
-# Register your models here.
+admin.site.register(UserProfile)
+admin.site.register(Test)
+admin.site.register(Category)
+admin.site.register(Journal)
