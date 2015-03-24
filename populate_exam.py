@@ -76,6 +76,16 @@ def populate():
         "Russia",
         "Moscow"
     )
+    add_cat("category 1")
+    add_cat("category 2")
+    add_cat("category 3")
+    add_cat("category 4")
+    add_cat("category 5")
+    add_cat("category 6")
+    add_cat("category 7")
+    add_cat("category 8")
+    add_cat("category 9")
+    add_cat("category 10")
 
 
 def add_super_user():
@@ -125,6 +135,16 @@ def add_user(username, email, password, first_name, middle_name, last_name, birt
         city=city
     )[0]
     return user_profile
+
+
+def add_cat(name):
+    """
+    Creates new category into database
+    :param name:
+    :return:
+    """
+    category = Category.objects.get_or_create(name=name)[0]
+    return category
 
 
 if __name__ == '__main__':
