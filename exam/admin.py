@@ -10,8 +10,8 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
-    list_display = ('name', 'author', 'category', 'date_and_time', 'rating')
-    list_filter = ('author', 'category', 'date_and_time', 'rating')
+    list_display = ('name', 'author', 'category', 'date_and_time', 'rating', 'is_public')
+    list_filter = ('author', 'category', 'date_and_time', 'rating', 'is_public')
     date_hierarchy = 'date_and_time'
 
 

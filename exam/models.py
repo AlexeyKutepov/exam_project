@@ -81,6 +81,8 @@ class Test(models.Model):
     date_and_time = models.DateTimeField(default=datetime.datetime.now())
     # How many users complete this test.
     rating = models.IntegerField(default=0)
+    # Public or not public test
+    is_public = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
