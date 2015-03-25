@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 
 class UserProfile(models.Model):
@@ -35,9 +36,18 @@ class UserProfile(models.Model):
     address = models.CharField(max_length=500, blank=True)
     # The institution where the user works or studies
     institution = models.CharField(max_length=500, blank=True)
+    # The user's job
+    job = models.CharField(max_length=500, blank=True)
+    # The user's registration date
+    registration_date = models.DateTimeField(default=datetime.datetime.now())
+    # How many tests complete this user and how many tests created this user.
+    rating = models.IntegerField(default=0)
+
+    def full_name(self):
+        return self.user.last_name + " " + self.user.first_name + " " + self.middle_name
 
     def __str__(self):
-        return self.user.username
+        return self.full_name()
 
 
 class Category(models.Model):
@@ -45,6 +55,8 @@ class Category(models.Model):
     The category of the tests
     """
     name = models.CharField(max_length=128, unique=True)
+    # Date and time
+    date_and_time = models.DateTimeField(default=datetime.datetime.now())
 
     def __str__(self):
         return self.name
@@ -65,6 +77,10 @@ class Test(models.Model):
     author = models.ForeignKey(UserProfile)
     # The category of the test
     category = models.ForeignKey(Category)
+    # Date and time
+    date_and_time = models.DateTimeField(default=datetime.datetime.now())
+    # How many users complete this test.
+    rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -79,10 +95,12 @@ class Journal(models.Model):
     user = models.ForeignKey(UserProfile)
     # The completed test
     test = models.ForeignKey(Test)
-    # Date
-    datetime = models.DateTimeField(auto_now_add=True)
-    # Result
+    # Date and time
+    date_and_time = models.DateTimeField(default=datetime.datetime.now())
+    # The result of test
     result = models.IntegerField(default=0)
+    # The report of the test (JSON - file)'
+    report = models.TextField()
 
     def __str__(self):
         return self.user.user.last_name + " " + self.user.user.first_name + " " + self.user.middle_name
