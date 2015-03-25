@@ -60,7 +60,7 @@ class Test(models.Model):
     # The description of test
     description = models.TextField(blank=True)
     # The file of the test
-    test = models.FileField(upload_to='files_of_tests')
+    test = models.BinaryField()
     # The author of the test
     author = models.ForeignKey(UserProfile)
     # The category of the test

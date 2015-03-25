@@ -58,7 +58,7 @@ def populate():
         user2,
         category2
     )
-    add_user(
+    user3 = add_user(
         "nikolaev",
         "nikolaev@gmail.com",
         "nikolaev_pass",
@@ -70,7 +70,14 @@ def populate():
         "Russia",
         "Moscow"
     )
-    add_user(
+    category3 = add_cat("category 3")
+    add_test(
+        "test 3",
+        "test 3 description",
+        user3,
+        category3
+    )
+    user4 = add_user(
         "vasileva",
         "vasileva@gmail.com",
         "vasileva_pass",
@@ -82,7 +89,14 @@ def populate():
         "Russia",
         "Moscow"
     )
-    add_user(
+    category4 = add_cat("category 4")
+    add_test(
+        "test 4",
+        "test 4 description",
+        user4,
+        category4
+    )
+    user5 = add_user(
         "nikiforova",
         "nikiforova@gmail.com",
         "nikiforova_pass",
@@ -94,9 +108,13 @@ def populate():
         "Russia",
         "Moscow"
     )
-    add_cat("category 3")
-    add_cat("category 4")
-    add_cat("category 5")
+    category5 = add_cat("category 5")
+    add_test(
+        "test 5",
+        "test 5 description",
+        user5,
+        category5
+    )
     add_cat("category 6")
     add_cat("category 7")
     add_cat("category 8")
