@@ -49,6 +49,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTH_USER_MODEL = 'exam.UserProfile'
+
 ROOT_URLCONF = 'exam_project.urls'
 
 WSGI_APPLICATION = 'exam_project.wsgi.application'

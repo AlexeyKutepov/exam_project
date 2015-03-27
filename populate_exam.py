@@ -21,7 +21,6 @@ def populate():
     """
     add_super_user()
     user1 = add_user(
-        "ivanov",
         "ivanov@gmail.com",
         "ivanov_pass",
         "Ivan",
@@ -40,7 +39,6 @@ def populate():
         category1
     )
     user2 = add_user(
-        "petrov",
         "ipetrov@gmail.com",
         "petrov_pass",
         "Petr",
@@ -59,7 +57,6 @@ def populate():
         category2
     )
     user3 = add_user(
-        "nikolaev",
         "nikolaev@gmail.com",
         "nikolaev_pass",
         "Nikolay",
@@ -78,7 +75,6 @@ def populate():
         category3
     )
     user4 = add_user(
-        "vasileva",
         "vasileva@gmail.com",
         "vasileva_pass",
         "Mariya",
@@ -97,7 +93,6 @@ def populate():
         category4
     )
     user5 = add_user(
-        "nikiforova",
         "nikiforova@gmail.com",
         "nikiforova_pass",
         "Irina",
@@ -128,9 +123,9 @@ def add_super_user():
     :return:
     """
     try:
-        user = User.objects.create_superuser(
-            username="admin",
+        user = django.contrib.auth.get_user_model().objects.create_superuser(
             email="admin@gmail.com",
+            date_of_birth="1990-01-01",
             password="admin"
         )
         return user
@@ -138,10 +133,9 @@ def add_super_user():
         print("Impossible to create a superuser.")
 
 
-def add_user(username, email, password, first_name, middle_name, last_name, birthday, gender, country, city):
+def add_user(email, password, first_name, middle_name, last_name, birthday, gender, country, city):
     """
     Creates new user into database
-    :param username:
     :param email:
     :param password:
     :param first_name:
@@ -153,17 +147,13 @@ def add_user(username, email, password, first_name, middle_name, last_name, birt
     :param city:
     :return:
     """
-    user = User.objects.get_or_create(
-        username=username,
+    user_profile = UserProfile.objects.get_or_create(
         email=email,
         password=password,
         first_name=first_name,
         last_name=last_name,
-    )
-    user_profile = UserProfile.objects.get_or_create(
-        user_id=user[0].id,
         middle_name=middle_name,
-        birthday=birthday,
+        date_of_birth=birthday,
         gender=gender,
         country=country,
         city=city
