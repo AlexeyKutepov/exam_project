@@ -6,7 +6,7 @@ from exam_project import settings
 
 class UserProfileManager(BaseUserManager):
 
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, email, date_of_birth, password):
         """
         Creates and saves a User with the given email, date of
         birth and password.
