@@ -16,12 +16,12 @@ def sign_in(request):
             auth.login(request, user)
             return HttpResponseRedirect("/dashboard/")
         else:
-            return HttpResponseRedirect("/")
+            return render(request, "exam/index.html", {"login_error": "has-error"})
             # return render("main/login.html",
             #                           {"access_denied": "Access denied", "access_denied_class":"access_denied_text"},
             #                           context_instance=RequestContext(request))
     else:
-        return HttpResponseRedirect("/")
+        return render(request, "exam/index.html", {"login_error": "has-error"})
         # return render("main/login.html", context_instance=RequestContext(request))
 
 @login_required

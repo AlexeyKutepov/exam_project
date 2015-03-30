@@ -59,8 +59,12 @@
                         </ul>
                         <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
                             {% csrf_token %}
-                            <input id="email" name="email" type="text" placeholder="Email" class="form-control">
-                            <input id="password" name="password" type="password" placeholder="Password" class="form-control">
+                            <div class="form-group {{ login_error|default:"nothing" }}">
+                                <input id="email" name="email" type="email" placeholder="Email" class="form-control">
+                            </div>
+                            <div class="form-group {{ login_error|default:"nothing" }}">
+                                <input id="password" name="password" type="password" placeholder="Password" class="form-control">
+                            </div>
                             <button type="submit" class="btn btn-success">Вход</button>
                         </form>
                     {% endif %}
