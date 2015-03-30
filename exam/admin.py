@@ -37,7 +37,7 @@ class UserProfileAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'date_of_birth', 'gender', 'country', 'city', 'address', 'institution', 'job', 'registration_date', 'rating', 'is_superuser',)
+    list_display = ('email', 'date_of_birth', 'gender', 'country', 'city', 'address', 'institution', 'job', 'registration_date', 'rating', 'is_staff', 'is_superuser',)
     list_filter = ('gender', 'country', 'city', 'institution', 'job', 'registration_date', 'rating', 'is_superuser',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
@@ -59,7 +59,3 @@ class UserProfileAdmin(UserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
-admin.site.unregister(Group)

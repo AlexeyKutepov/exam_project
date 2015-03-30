@@ -6,7 +6,7 @@ from exam_project import settings
 
 class UserProfileManager(BaseUserManager):
     def _create_user(self, email, date_of_birth, password,
-                     is_staff, is_superuser, **extra_fields):
+                     is_superuser, **extra_fields):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -17,7 +17,6 @@ class UserProfileManager(BaseUserManager):
         user = self.model(
             email=email,
             date_of_birth=date_of_birth,
-            is_staff=is_staff,
             is_active=True,
             is_superuser=is_superuser,
             **extra_fields
@@ -27,11 +26,11 @@ class UserProfileManager(BaseUserManager):
         return user
 
     def create_user(self, email, date_of_birth, password=None, **extra_fields):
-        return self._create_user(email, date_of_birth, password, False, False,
+        return self._create_user(email, date_of_birth, password, False,
                                  **extra_fields)
 
     def create_superuser(self, email, date_of_birth, password, **extra_fields):
-        return self._create_user(email, date_of_birth, password, True, True,
+        return self._create_user(email, date_of_birth, password, True,
                                  **extra_fields)
 
 
@@ -52,7 +51,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         unique=True,
     )
-    is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
     # The additional attributes we wish to include.
@@ -90,12 +88,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['date_of_birth']
 
     def get_full_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.last_name + ' ' + self.first_name + ' ' + self.middle_name
 
     def get_short_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.first_name + ' ' + self.last_name
 
     def __str__(self):
         return self.email
@@ -114,7 +110,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.is_admin
+        return self.is_superuser
 
 
 class Category(models.Model):
