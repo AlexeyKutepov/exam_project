@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-import datetime
+from django.utils import timezone
 from exam_project import settings
 
 
@@ -78,7 +78,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # The user's job
     job = models.CharField(max_length=500, blank=True)
     # The user's registration date
-    registration_date = models.DateTimeField(default=datetime.datetime.now())
+    registration_date = models.DateTimeField(default=timezone.now())
     # How many tests complete this user and how many tests created this user.
     rating = models.IntegerField(default=0)
 
@@ -119,7 +119,7 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=128, unique=True)
     # Date and time
-    date_and_time = models.DateTimeField(default=datetime.datetime.now())
+    date_and_time = models.DateTimeField(default=timezone.now())
 
     def __str__(self):
         return self.name
@@ -141,7 +141,7 @@ class Test(models.Model):
     # The category of the test
     category = models.ForeignKey(Category)
     # Date and time
-    date_and_time = models.DateTimeField(default=datetime.datetime.now())
+    date_and_time = models.DateTimeField(default=timezone.now())
     # How many users complete this test.
     rating = models.IntegerField(default=0)
     # Public or not public test
@@ -161,7 +161,7 @@ class Journal(models.Model):
     # The completed test
     test = models.ForeignKey(Test)
     # Date and time
-    date_and_time = models.DateTimeField(default=datetime.datetime.now())
+    date_and_time = models.DateTimeField(default=timezone.now())
     # The result of test
     result = models.IntegerField(default=0)
     # The report of the test (JSON - file)'
