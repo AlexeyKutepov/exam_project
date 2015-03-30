@@ -9,12 +9,12 @@ from django.views.decorators.csrf import csrf_protect
 @csrf_protect
 def sign_in(request):
     if "email" in request.POST and "password" in request.POST:
-        username = request.POST.get("email")
+        email = request.POST.get("email")
         password = request.POST.get("password")
-        user = auth.authenticate(username=username, password=password)
+        user = auth.authenticate(email=email, password=password)
         if user is not None and user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/dashboard/")
         else:
             return HttpResponseRedirect("/")
             # return render("main/login.html",
