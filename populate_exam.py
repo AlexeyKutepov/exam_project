@@ -147,7 +147,7 @@ def add_user(email, password, first_name, middle_name, last_name, birthday, gend
     :param city:
     :return:
     """
-    user_profile = UserProfile.objects.get_or_create(
+    user_profile = django.contrib.auth.get_user_model().objects.create_user(
         email=email,
         password=password,
         first_name=first_name,
@@ -157,7 +157,7 @@ def add_user(email, password, first_name, middle_name, last_name, birthday, gend
         gender=gender,
         country=country,
         city=city
-    )[0]
+    )
     return user_profile
 
 

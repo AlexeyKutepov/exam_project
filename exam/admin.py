@@ -37,15 +37,15 @@ class UserProfileAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'date_of_birth', 'gender', 'country', 'city', 'address', 'institution', 'job', 'registration_date', 'rating', 'is_admin',)
-    list_filter = ('gender', 'country', 'city', 'institution', 'job', 'registration_date', 'rating', 'is_admin',)
+    list_display = ('email', 'date_of_birth', 'gender', 'country', 'city', 'address', 'institution', 'job', 'registration_date', 'rating', 'is_superuser',)
+    list_filter = ('gender', 'country', 'city', 'institution', 'job', 'registration_date', 'rating', 'is_superuser',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('last_name', 'first_name', 'middle_name', 'date_of_birth', 'gender', 'picture',)}),
         ('Address info', {'fields': ('country', 'city', 'address',)}),
         ('Profile info', {'fields': ('registration_date', 'rating',)}),
         ('Job info', {'fields': ('institution', 'job',)}),
-        ('Permissions', {'fields': ('is_admin', 'is_active',)}),
+        ('Permissions', {'fields': ('is_superuser', 'is_active',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.

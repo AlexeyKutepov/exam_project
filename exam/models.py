@@ -1,43 +1,41 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 import datetime
 from exam_project import settings
 
 
 class UserProfileManager(BaseUserManager):
-
-    def create_user(self, email, date_of_birth, password):
+    def _create_user(self, email, date_of_birth, password,
+                     is_staff, is_superuser, **extra_fields):
         """
         Creates and saves a User with the given email, date of
         birth and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
-
+        email = self.normalize_email(email)
         user = self.model(
-            email=self.normalize_email(email),
+            email=email,
             date_of_birth=date_of_birth,
+            is_staff=is_staff,
+            is_active=True,
+            is_superuser=is_superuser,
+            **extra_fields
         )
-
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
-        user = self.create_user(email,
-            password=password,
-            date_of_birth=date_of_birth
-        )
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
+    def create_user(self, email, date_of_birth, password=None, **extra_fields):
+        return self._create_user(email, date_of_birth, password, False, False,
+                                 **extra_fields)
+
+    def create_superuser(self, email, date_of_birth, password, **extra_fields):
+        return self._create_user(email, date_of_birth, password, True, True,
+                                 **extra_fields)
 
 
-class UserProfile(AbstractBaseUser):
+class UserProfile(AbstractBaseUser, PermissionsMixin):
     """
     The user-profile model
     """
@@ -54,8 +52,8 @@ class UserProfile(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
 
     # The additional attributes we wish to include.
 
