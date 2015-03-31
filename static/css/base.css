@@ -9,10 +9,7 @@ body {
     background-color: #CDDC39;
 }
 
-.k-margin-top-35 {
-    margin-top: 35px;
-}
-
-.k-margin-top-60 {
-    margin-top: 60px;
+.vertical-align {
+    display: flex;
+    align-items: center;
 }
