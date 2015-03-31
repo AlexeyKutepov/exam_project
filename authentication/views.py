@@ -2,7 +2,6 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 
 
@@ -17,14 +16,11 @@ def sign_in(request):
             return HttpResponseRedirect("/dashboard/")
         else:
             return render(request, "exam/index.html", {"login_error": "has-error"})
-            # return render("main/login.html",
-            #                           {"access_denied": "Access denied", "access_denied_class":"access_denied_text"},
-            #                           context_instance=RequestContext(request))
     else:
         return render(request, "exam/index.html", {"login_error": "has-error"})
-        # return render("main/login.html", context_instance=RequestContext(request))
 
-@login_required
+
+@login_required(login_url='/')
 def sign_out(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
