@@ -45,7 +45,10 @@
 
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Тесты</a></li>
+                        {% if user.is_authenticated %}
+                            <li class="active"><a href="{% url "dashboard" %}">Рабочий стол</a></li>
+                        {% endif %}
+                        <li><a href="#">Тесты</a></li>
                         <li><a href="#">О проекте</a></li>
                     </ul>
                     {% if user.is_authenticated %}
@@ -55,7 +58,7 @@
                         </form>
                     {% else %}
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Регистрация</a></li>
+                            <li><a href="{% url 'create_profile' %}">Регистрация</a></li>
                         </ul>
                         <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
                             {% csrf_token %}

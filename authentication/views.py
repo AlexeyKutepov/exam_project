@@ -24,3 +24,7 @@ def sign_in(request):
 def sign_out(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
+
+
+def create_profile(request):
+    return render(request, "authentication/create_profile.html")
