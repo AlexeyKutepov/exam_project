@@ -76,7 +76,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # The institution where the user works or studies
     institution = models.CharField(max_length=500, blank=True)
     # The user's job
-    job = models.CharField(max_length=500, blank=True)
+    position = models.CharField(max_length=500, blank=True)
     # The user's registration date
     registration_date = models.DateTimeField(default=timezone.now())
     # How many tests complete this user and how many tests created this user.

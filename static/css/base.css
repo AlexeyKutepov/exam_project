@@ -1,11 +1,16 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+  padding-top: 60px;
   padding-bottom: 20px;
 }
 
 .k-panel {
-    height: 200px;
+    height: 170px;
+    background-color: #CDDC39;
+}
+
+.k-panel-header {
+    height: 40px;
     background-color: #CDDC39;
 }
 
