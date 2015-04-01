@@ -12,6 +12,8 @@
 {% endblock %}
 {% block content %}
     <p></p>
+    <form id="formCreateProfile" action="{% url "create_profile" %}" method="post">
+    {% csrf_token %}
     <div class="row">
         <div class="col-lg-3 col-lg-offset-2">
             <div class="form-group">
@@ -19,21 +21,21 @@
                          src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                          alt="Generic placeholder image" width="140" height="140">
                 <p></p>
-                  <input id="id_picture" name="picture" type="file" >
+                  <input id="inputPicture" name="picture" type="file">
             </div>
         </div>
         <div class="col-lg-5">
             <div class="form-group">
                 <label class="control-label" for="inputEmail"><b>Адрес электронной почты:</b></label>
-                <input type="email" class="form-control" id="inputEmail">
+                <input id="inputEmail" name="email" type="email" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputPassword1"><b>Пароль:</b></label>
-                <input type="password" class="form-control" id="inputPassword1">
+                <input id="inputPassword1" name="password1" type="password" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputPassword2"><b>Подтверждение пароля:</b></label>
-                <input type="password" class="form-control" id="inputPassword2">
+                <input id="inputPassword2" name="password2" type="password" class="form-control">
             </div>
         </div>
     </div>
@@ -41,65 +43,66 @@
         <div class="col-lg-4 col-lg-offset-2">
             <div class="form-group">
                 <label class="control-label" for="inputLastName">Фамилия:</label>
-                <input type="text" class="form-control" id="inputLastName">
+                <input id="inputLastName" name="lastName" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputFirstName">Имя:</label>
-                <input type="text" class="form-control" id="inputFirstName">
+                <input id="inputFirstName" name="firstName" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputMiddleName">Отчество:</label>
-                <input type="text" class="form-control" id="inputMiddleName">
+                <input id="inputMiddleName" name="middleName" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputDateOfBirth"><b>Дата рождения:</b></label>
-                <input type="date" class="form-control" id="inputDateOfBirth">
+                <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control">
             </div>
             <label class="control-label" for="divGender">Пол:</label>
             <div id="divGender" class="row">
                 <div class="col-lg-6">
-                    <label><input type="radio" name="radioGender">Мужской</label>
+                    <label><input id="radioMale" type="radio" name="gender" value="MALE">Мужской</label>
                 </div>
                 <div class="col-lg-6">
-                    <label><input type="radio" name="radioGender">Женский</label>
+                    <label><input id="radioFemale" type="radio" name="gender" value="FEMALE">Женский</label>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label class="control-label" for="inputCountry">Страна:</label>
-                <input type="text" class="form-control" id="inputCountry">
+                <input id="inputCountry" name="country" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputCity">Город:</label>
-                <input type="text" class="form-control" id="inputCity">
+                <input  id="inputCity" name="city" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputAddress">Адрес:</label>
-                <input type="text" class="form-control" id="inputAddress">
+                <input  id="inputAddress" name="address" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputInstitution">Место работы/учёбы:</label>
-                <input type="text" class="form-control" id="inputInstitution">
+                <input id="inputInstitution" name="institution" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputPosition">Должность:</label>
-                <input type="text" class="form-control" id="inputPosition">
+                <input id="inputPosition" name="position" type="text" class="form-control">
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="has-success col-lg-offset-2">
+        <div class="has-success col-lg-offset-2 col-lg-6">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" id="checkboxSuccess" value="option1">
-                    Даю своё согласие, вся фигня...
+                    <input type="checkbox" value="option1" id="checkboxSuccess">
+                    Согласен с правилами пользования сервисом Exam
                 </label>
             </div>
         </div>
-        <div class="col-lg-offset-2">
-            <button type="button" class="btn btn-success">Зарегистрироваться</button>
-            <button type="button" class="btn btn-default">Отмена</button>
+        <div class="col-lg-offset-2 col-lg-6">
+            <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+            <button type="reset" class="btn btn-default">Отмена</button>
         </div>
     </div>
+    </form>
 {% endblock %}
