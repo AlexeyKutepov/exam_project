@@ -3,7 +3,7 @@
     <div class="k-panel-header vertical-align">
         <div class="container">
             <div class="row vertical-align">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-lg-offset-2">
                     <h4>Регистрация</h4>
                 </div>
             </div>
@@ -12,70 +12,94 @@
 {% endblock %}
 {% block content %}
     <p></p>
-    <div class="form-group">
-        <label class="control-label" for="inputEmail"><b>Адрес электронной почты:</b></label>
-        <input type="email" class="form-control" id="inputEmail">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputPhoto">Фото:</label>
-        <input type="text" class="form-control" id="inputPhoto">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputPassword1"><b>Пароль:</b></label>
-        <input type="password" class="form-control" id="inputPassword1">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputPassword2"><b>Подтверждение пароля:</b></label>
-        <input type="password" class="form-control" id="inputPassword2">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputLastName">Фамилия:</label>
-        <input type="text" class="form-control" id="inputLastName">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputFirstName">Имя:</label>
-        <input type="text" class="form-control" id="inputFirstName">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputMiddleName">Отчество:</label>
-        <input type="text" class="form-control" id="inputMiddleName">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputDateOfBirth"><b>Дата рождения:</b></label>
-        <input type="date" class="form-control" id="inputDateOfBirth">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputGender">Пол:</label>
-        <input type="text" class="form-control" id="inputGender">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputCountry">Страна:</label>
-        <input type="text" class="form-control" id="inputCountry">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputCity">Город:</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputAddress">Адрес:</label>
-        <input type="text" class="form-control" id="inputAddress">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputInstitution">Место работы/учёбы:</label>
-        <input type="text" class="form-control" id="inputInstitution">
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputPosition">Должность:</label>
-        <input type="text" class="form-control" id="inputPosition">
-    </div>
-    <div class="has-success">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" id="checkboxSuccess" value="option1">
-                Даю своё согласие, вся фигня...
-            </label>
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2">
+            <div class="form-group">
+                <img class="img-circle"
+                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                         alt="Generic placeholder image" width="140" height="140">
+                <p></p>
+                  <input id="id_picture" name="picture" type="file" >
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="form-group">
+                <label class="control-label" for="inputEmail"><b>Адрес электронной почты:</b></label>
+                <input type="email" class="form-control" id="inputEmail">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputPassword1"><b>Пароль:</b></label>
+                <input type="password" class="form-control" id="inputPassword1">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputPassword2"><b>Подтверждение пароля:</b></label>
+                <input type="password" class="form-control" id="inputPassword2">
+            </div>
         </div>
     </div>
-    <button type="button" class="btn btn-success">Зарегистрироваться</button>
-    <button type="button" class="btn btn-default">Отмена</button>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-2">
+            <div class="form-group">
+                <label class="control-label" for="inputLastName">Фамилия:</label>
+                <input type="text" class="form-control" id="inputLastName">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputFirstName">Имя:</label>
+                <input type="text" class="form-control" id="inputFirstName">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputMiddleName">Отчество:</label>
+                <input type="text" class="form-control" id="inputMiddleName">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputDateOfBirth"><b>Дата рождения:</b></label>
+                <input type="date" class="form-control" id="inputDateOfBirth">
+            </div>
+            <label class="control-label" for="divGender">Пол:</label>
+            <div id="divGender" class="row">
+                <div class="col-lg-6">
+                    <label><input type="radio" name="radioGender">Мужской</label>
+                </div>
+                <div class="col-lg-6">
+                    <label><input type="radio" name="radioGender">Женский</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label class="control-label" for="inputCountry">Страна:</label>
+                <input type="text" class="form-control" id="inputCountry">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputCity">Город:</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputAddress">Адрес:</label>
+                <input type="text" class="form-control" id="inputAddress">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputInstitution">Место работы/учёбы:</label>
+                <input type="text" class="form-control" id="inputInstitution">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputPosition">Должность:</label>
+                <input type="text" class="form-control" id="inputPosition">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="has-success col-lg-offset-2">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="checkboxSuccess" value="option1">
+                    Даю своё согласие, вся фигня...
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-offset-2">
+            <button type="button" class="btn btn-success">Зарегистрироваться</button>
+            <button type="button" class="btn btn-default">Отмена</button>
+        </div>
+    </div>
 {% endblock %}

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
+from authentication.forms import UserProfileForm
 
 
 @csrf_protect
@@ -27,4 +28,4 @@ def sign_out(request):
 
 
 def create_profile(request):
-    return render(request, "authentication/create_profile.html")
+    return render(request, "authentication/create_profile.html", {"profile_form": UserProfileForm})
