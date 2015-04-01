@@ -29,7 +29,6 @@
 <body>
 <div class="navbar-wrapper">
     <div class="container">
-
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -51,26 +50,28 @@
                         <li><a href="#">Тесты</a></li>
                         <li><a href="#">О проекте</a></li>
                     </ul>
-                    {% if user.is_authenticated %}
-                        <form id="formLogout" class="navbar-form navbar-right" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success">Выход</button>
-                        </form>
-                    {% else %}
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{% url 'create_profile' %}">Регистрация</a></li>
-                        </ul>
-                        <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group {{ login_error|default:"" }}">
-                                <input id="email" name="email" type="email" placeholder="Email" class="form-control">
-                            </div>
-                            <div class="form-group {{ login_error|default:"" }}">
-                                <input id="password" name="password" type="password" placeholder="Password" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-success">Вход</button>
-                        </form>
-                    {% endif %}
+                    {% block auth_bar %}
+                        {% if user.is_authenticated %}
+                            <form id="formLogout" class="navbar-form navbar-right" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Выход</button>
+                            </form>
+                        {% else %}
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{% url 'create_profile' %}">Регистрация</a></li>
+                            </ul>
+                            <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group {{ login_error|default:"" }}">
+                                    <input id="email" name="email" type="email" placeholder="Email" class="form-control">
+                                </div>
+                                <div class="form-group {{ login_error|default:"" }}">
+                                    <input id="password" name="password" type="password" placeholder="Password" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-success">Вход</button>
+                            </form>
+                        {% endif %}
+                    {% endblock %}
                 </div>
             </div>
         </nav>

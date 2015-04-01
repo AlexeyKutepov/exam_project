@@ -72,7 +72,7 @@ def create_profile(request):
         else:
             position = None
         if "picture" in request.POST:
-            picture = request.POST.get("picture")
+            picture = request.FILES['picture']
         else:
             picture = None
         user = auth.get_user_model().objects.create_user(

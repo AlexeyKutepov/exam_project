@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block auth_bar %}
+    <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="{% url 'create_profile' %}">Регистрация</a></li>
+    </ul>
+{% endblock %}
 {% block header_content %}
     <div class="k-panel-header vertical-align">
         <div class="container">
@@ -12,7 +17,7 @@
 {% endblock %}
 {% block content %}
     <p></p>
-    <form id="formCreateProfile" action="{% url "create_profile" %}" method="post">
+    <form id="formCreateProfile" action="{% url "create_profile" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
         <div class="col-lg-3 col-lg-offset-2">
