@@ -112,10 +112,10 @@ function checkFirstName(input) {
 function checkDateOfBirth(input) {
     if (input.value == "") {
         $("#divDateOfBirth").addClass("has-error").removeClass("has-success");
-        isFirstName=false;
+        isDateOfBirth=false;
     } else {
         $("#divDateOfBirth").removeClass("has-error").addClass("has-success");
-        isFirstName=true;
+        isDateOfBirth=true;
     }
 }
 
