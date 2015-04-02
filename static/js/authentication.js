@@ -120,15 +120,15 @@ function checkDateOfBirth(input) {
 }
 
 
-function submitForm() {
-    if (isEmail || isPass1 || isPass2 || isLastName || isFirstName || isDateOfBirth) {
-        document.getElementById("formCreateProfile").submit();
-    } else {
-        checkEmail($("#inputEmail"));
-        checkPassword1($("#inputPassword1"));
-        checkPassword2($("#inputPassword2"));
-        checkLastName($("#inputLastName"));
-        checkFirstName($("#inputFirstName"));
-        checkDateOfBirth($("#inputDateOfBirth"));
-    }
-}
+//function submitForm() {
+//    if (isEmail || isPass1 || isPass2 || isLastName || isFirstName || isDateOfBirth) {
+//        document.getElementById("formCreateProfile").submit();
+//    } else {
+//        checkEmail($("#inputEmail"));
+//        checkPassword1($("#inputPassword1"));
+//        checkPassword2($("#inputPassword2"));
+//        checkLastName($("#inputLastName"));
+//        checkFirstName($("#inputFirstName"));
+//        checkDateOfBirth($("#inputDateOfBirth"));
+//    }
+//}
