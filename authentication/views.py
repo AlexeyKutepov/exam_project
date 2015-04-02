@@ -29,6 +29,11 @@ def sign_out(request):
 
 
 def create_profile(request):
+    """
+    Creates new user profile
+    :param request:
+    :return:
+    """
     if "email" and "password1" and "password2" and "dateOfBirth" in request.POST:
         email = request.POST.get("email")
         password_1 = request.POST.get("password1")
@@ -71,8 +76,8 @@ def create_profile(request):
             position = request.POST.get("position")
         else:
             position = None
-        if "picture" in request.POST:
-            picture = request.FILES['picture']
+        if "picture" in request.FILES:
+            picture = request.FILES["picture"]
         else:
             picture = None
         user = auth.get_user_model().objects.create_user(

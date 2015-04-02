@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block head %}
+    <script src="/static/js/authentication.js"></script>
+{% endblock %}
 {% block auth_bar %}
     <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="{% url 'create_profile' %}">Регистрация</a></li>
@@ -22,11 +25,11 @@
     <div class="row">
         <div class="col-lg-3 col-lg-offset-2">
             <div class="form-group">
-                <img class="img-circle"
+                <img id="impPreview" class="img-circle"
                          src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                          alt="Generic placeholder image" width="140" height="140">
                 <p></p>
-                  <input id="inputPicture" name="picture" type="file">
+                  <input id="inputPicture" name="picture" type="file" onchange="onPreview(this)">
             </div>
         </div>
         <div class="col-lg-5">
@@ -106,7 +109,7 @@
         </div>
         <div class="col-lg-offset-2 col-lg-6">
             <button type="submit" class="btn btn-success">Зарегистрироваться</button>
-            <button type="reset" class="btn btn-default">Отмена</button>
+            <a href="/"><input type="button" class="btn btn-default" value="Отмена"/></a>
         </div>
     </div>
     </form>
