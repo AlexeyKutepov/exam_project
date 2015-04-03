@@ -9,3 +9,7 @@ def index(request):
 @login_required(login_url='/')
 def dashboard(request):
     return render(request, "exam/dashboard.html")
+
+@login_required(login_url='/')
+def create_new_test(request):
+    return render(request, "exam/create_new_test.html")

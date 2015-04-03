@@ -97,8 +97,7 @@ def create_profile(request):
         )
         return render(
             request,
-            "authentication/create_profile.html",
-            {"profile_form": UserProfileForm}
+            "exam/index.html",
         )
     else:
         return render(
