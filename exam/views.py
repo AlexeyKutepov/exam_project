@@ -25,7 +25,7 @@ def create_new_test(request):
             is_public = True
         else:
             is_public = False
-        test = Test.objects.get_or_create(
+        test = Test.objects.create(
             name=request.POST["name"],
             description=request.POST["description"],
             category=category,
