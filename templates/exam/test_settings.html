@@ -16,7 +16,7 @@
 {% endblock %}
 {% block content %}
 <p></p>
-    <form id="formCreateProfile" action="{% url "create_profile" %}" method="post" enctype="multipart/form-data">
+    <form id="formCreateProfile" action="/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col-lg-12">
@@ -28,8 +28,6 @@
                   <label for="inputDescription">Описание:</label>
                   <textarea id="inputDescription" name="description" class="form-control" rows="5"></textarea>
                 </div>
-
-
             </div>
         </div>
         <div class="row">
@@ -55,7 +53,10 @@
             </div>
         </div>
         <div class="row">
-
+        <div class="pull-right">
+            <a href="{% url "dashboard" %}"><input type="button" class="btn btn-default" value="Отмена"/></a>
+            <button id="btnNext" type="submit" class="btn btn-success">Далее</button>
         </div>
+    </div>
     </form>
 {% endblock %}
