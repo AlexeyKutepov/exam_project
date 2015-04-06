@@ -2,6 +2,27 @@
 {% block head %}
 {% endblock %}
 {% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4">
+                    <h4>Вопрос №{{ number_of_question|default:"1" }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% if  type_list %}
+                <label for="selectCategoryList"><b>Тип вопроса:</b></label>
+                <select id="selectCategoryList" name="category" class="selectpicker">
+                    {% for type in type_list %}
+                     <option>{{ type }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

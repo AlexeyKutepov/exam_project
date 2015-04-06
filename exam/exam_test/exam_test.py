@@ -120,3 +120,6 @@ class ExamTest:
         if not isinstance(question, Question):
             raise AttributeError("The attribute 'question' is not instance of Question class")
         self._questions.append(question)
+
+    def get_questions(self):
+        return self._questions
