@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from exam.models import Category
 
 
 def index(request):
@@ -12,4 +13,5 @@ def dashboard(request):
 
 @login_required(login_url='/')
 def create_new_test(request):
-    return render(request, "exam/create_new_test.html")
+    category_list = Category.objects.all()
+    return render(request, "exam/test_settings.html", {"category_list": category_list})
