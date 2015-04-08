@@ -9,6 +9,7 @@ $(document).ready(function(){
      $("#selectType").change(function(){
          switch ($(this).val()) {
              case "1":
+                 $("[name='trueAnswer']").prop('type', "checkbox");
                  $("#divAnswersType1").show();
                  $("#divAnswersType2").hide();
                  $("#divAnswersType3").hide();
@@ -19,6 +20,7 @@ $(document).ready(function(){
                  }
                  break;
              case "2":
+                 $("[name='trueAnswer']").prop('type', "radio");
                  $("#divAnswersType1").hide();
                  $("#divAnswersType2").show();
                  $("#divAnswersType3").hide();
