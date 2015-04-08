@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
+    <script src="/static/js/exam.js"></script>
 {% endblock %}
 {% block header_content %}
     <div class="k-panel-header vertical-align">
@@ -14,7 +15,12 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="inputQuestion">Вопрос:</label>
+                <textarea id="inputQuestion" name="question" class="form-control" rows="5"></textarea>
+            </div>
+
             {% if  type_list %}
                 <label for="selectCategoryList"><b>Тип вопроса:</b></label>
                 <select id="selectCategoryList" name="category" class="selectpicker">
@@ -23,6 +29,53 @@
                     {% endfor %}
                 </select>
             {% endif %}
+            <div id="divAnswers">
+                <label>Варианты ответов:</label>
+                <div id="divAnswer1" class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input id="checkboxAnswe1" name="isAnswer1" type="checkbox">
+                        </span>
+                        <input id="inputAnswer1" name="answer1" type="text" class="form-control">
+                    </div>
+                </div>
+                <div id="divAnswer2" class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input id="checkboxAnswe2" name="isAnswer2" type="checkbox">
+                        </span>
+                        <input id="inputAnswer2" name="answer2" type="text" class="form-control">
+                    </div>
+                </div>
+                <div id="divAnswer3" class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input id="checkboxAnswe3" name="isAnswer3" type="checkbox">
+                        </span>
+                        <input id="inputAnswer3" name="answer3" type="text" class="form-control">
+                    </div>
+                </div>
+                <div id="divAnswer4" class="row"></div>
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <button id="btnAddAnswer" type="button" class="btn btn-success">Добавить</button>
+                </div>
+                <div class="col-lg-6">
+                    <button id="btnDeleteAnswer" type="button" class="btn btn-danger pull-right">Удалить</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label for="divImage">Изображение:</label>
+            <div id="divImage" class="form-group">
+                <img id="impPreview" class="img-thumbnail"
+                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                         alt="Generic placeholder image" width="300" height="300">
+                <p></p>
+                  <input id="inputPicture" name="picture" type="file" onchange="onPreview(this)">
+            </div>
         </div>
     </div>
 {% endblock %}

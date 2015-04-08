@@ -48,6 +48,7 @@
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="active"><a href="{% url "dashboard" %}">Рабочий стол</a></li>
+                            <li><a href="{% url "create_new_test" %}">Конструктор тестов</a></li>
                         {% endif %}
                         <li><a href="#">Тесты</a></li>
                         <li><a href="#">О проекте</a></li>
