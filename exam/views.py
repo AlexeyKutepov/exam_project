@@ -40,4 +40,9 @@ def create_new_test(request):
 
 @login_required(login_url='/')
 def create_new_question(request):
-    return render(request, "exam/create_new_question.html")
+    type_list = [
+        "Содержит один или несколько правильных вариантов ответа",
+        "Содержит только один правильный вариант ответа",
+        "Вопрос со свободной формой ответа"
+    ]
+    return render(request, "exam/create_new_question.html", {"type_list": type_list})

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
+    <link rel="stylesheet" href="/static/css/bootstrap-select.min.css"/>
+    <script src="/static/js/bootstrap-select.js"></script>
     <script src="/static/js/exam.js"></script>
 {% endblock %}
 {% block header_content %}
@@ -22,40 +24,76 @@
             </div>
 
             {% if  type_list %}
-                <label for="selectCategoryList"><b>Тип вопроса:</b></label>
-                <select id="selectCategoryList" name="category" class="selectpicker">
+                <label for="selectType"><b>Тип вопроса:</b></label>
+                <select id="selectType" name="category" class="selectpicker form-control">
                     {% for type in type_list %}
-                     <option>{{ type }}</option>
+                     <option value="{{forloop.counter}}">{{ type }}</option>
                     {% endfor %}
                 </select>
             {% endif %}
-            <div id="divAnswers">
-                <label>Варианты ответов:</label>
-                <div id="divAnswer1" class="row">
+            <div id="divAnswersType1">
+                <label>Варианты ответа:</label>
+                <div id="divAnswer1Type1" class="row">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input id="checkboxAnswe1" name="isAnswer1" type="checkbox">
+                            <input id="checkboxAnswer1" name="checkboxAnswer1" type="checkbox">
                         </span>
-                        <input id="inputAnswer1" name="answer1" type="text" class="form-control">
+                        <input id="inputAnswer1Type1" name="answer1type1" type="text" class="form-control">
                     </div>
                 </div>
-                <div id="divAnswer2" class="row">
+                <div id="divAnswer2Type1" class="row">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input id="checkboxAnswe2" name="isAnswer2" type="checkbox">
+                            <input id="checkboxAnswer2" name="checkboxAnswer2" type="checkbox">
                         </span>
-                        <input id="inputAnswer2" name="answer2" type="text" class="form-control">
+                        <input id="inputAnswer2Type1" name="answer2type1" type="text" class="form-control">
                     </div>
                 </div>
-                <div id="divAnswer3" class="row">
+                <div id="divAnswer3Type1" class="row">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input id="checkboxAnswe3" name="isAnswer3" type="checkbox">
+                            <input id="checkboxAnswer3" name="checkboxAnswer3" type="checkbox">
                         </span>
-                        <input id="inputAnswer3" name="answer3" type="text" class="form-control">
+                        <input id="inputAnswer3Type1" name="answer3type1" type="text" class="form-control">
                     </div>
                 </div>
-                <div id="divAnswer4" class="row"></div>
+                <div id="divAnswer4Type1" class="row"></div>
+            </div>
+            <div id="divAnswersType2" hidden>
+                <label>Варианты ответа:</label>
+                <div id="divAnswer1Type2" class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input id="radioAnswer1" name="radioAnswer" value="1" type="radio">
+                        </span>
+                        <input id="inputAnswer1Type2" name="answer1type2" type="text" class="form-control">
+                    </div>
+                </div>
+                <div id="divAnswer2Type2" class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input id="radioAnswer2" name="radioAnswer" value="2" type="radio">
+                        </span>
+                        <input id="inputAnswer2Type2" name="answer2type2" type="text" class="form-control">
+                    </div>
+                </div>
+                <div id="divAnswer3Type2" class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input id="radioAnswer3" name="radioAnswer" value="3" type="radio">
+                        </span>
+                        <input id="inputAnswer3Type2" name="answer3type2" type="text" class="form-control">
+                    </div>
+                </div>
+                <div id="divAnswer4Type2" class="row"></div>
+            </div>
+            <div id="divAnswersType1" class="row" hidden>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label" for="inputTestName">Введите правильный ответ:</label>
+                        <input id="inputAnswerType3" name="answertype3" type="text" class="form-control" required>
+                    </div>
+                </div>
             </div>
             <p></p>
             <div class="row">
