@@ -9,7 +9,8 @@ $(document).ready(function () {
         switch ($(this).val()) {
             case "1":
                 $("[name='trueAnswer']").prop('type', "checkbox");
-                $("#divAnswersType3").hide();
+                $('#divCloseAnswer').show();
+                $("#divOpenAnswer").hide();
                 if (i == 1) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
@@ -18,12 +19,17 @@ $(document).ready(function () {
                 break;
             case "2":
                 $("[name='trueAnswer']").prop('type', "radio");
-                $("#divAnswersType3").hide();
+                $('#divCloseAnswer').show();
+                $("#divOpenAnswer").hide();
                 if (i == 1) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
                     $("#btnDeleteAnswer").toggleClass('disabled', false);
                 }
+                break;
+            case "3":
+                $('#divCloseAnswer').hide();
+                $("#divOpenAnswer").show();
                 break;
         }
     });
@@ -43,7 +49,7 @@ $(document).ready(function () {
                 "<div class='input-group'><span class='input-group-addon'><input id='isTrueAnswer" + (i + 1) + "' name='trueAnswer' type='" + type + "'></span><input id='inputAnswer" + (i + 1) + "' name='answer" + (i + 1) + "' type='text' class='form-control'></div>"
         );
         i++;
-        $('#divCloseAnswers').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
+        $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
 
         $("#btnDeleteAnswer").toggleClass('disabled', false);
     });
@@ -53,7 +59,7 @@ $(document).ready(function () {
             $('#divAnswer' + i).html('');
             $('#divAnswer' + (i + 1)).html('');
             i--;
-            $('#divCloseAnswers').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
+            $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
         }
         if (i == 1) {
             $(this).toggleClass('disabled', true);

@@ -16,7 +16,7 @@
 {% endblock %}
 {% block content %}
 <p></p>
-    <form id="formCreateProfile" action="{% url "create_new_test" %}" method="post" enctype="multipart/form-data">
+    <form id="formCreateNewTest" action="{% url "create_new_test" %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col-lg-12">
