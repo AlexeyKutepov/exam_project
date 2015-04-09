@@ -62,7 +62,11 @@ def create_new_question(request, id):
         else:
             json_test = pickle.loads(test.test)
         question_type = int(request.POST["type"])
-        image = TestImage.objects.get_or_create(image=request.FILES["image"])
+        if "image" in request.FILES:
+            image = TestImage.objects.get_or_create(image=request.FILES["image"])
+            image_id = image[0].id
+        else:
+            image_id = None
         answers = None
         if question_type == 1:
             answers = []
@@ -81,7 +85,7 @@ def create_new_question(request, id):
             "number_of_question": len(json_test) + 1,
             "question": request.POST["question"],
             "type": question_type,
-            "image": image[0].id,
+            "image": image_id,
             "answers": answers
         }
         json_test.append(question)
