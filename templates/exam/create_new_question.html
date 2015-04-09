@@ -23,7 +23,7 @@
             <div class="col-lg-7">
                 <div class="form-group">
                     <label for="inputQuestion">Вопрос:</label>
-                    <textarea id="inputQuestion" name="question" class="form-control" rows="5"></textarea>
+                    <textarea id="inputQuestion" name="question" class="form-control" rows="5" required></textarea>
                 </div>
 
                 {% if  type_list %}
@@ -42,7 +42,7 @@
                         <span class="input-group-addon">
                             <input id="isTrueAnswer1" name="trueAnswer" value="1" type="checkbox">
                         </span>
-                            <input id="inputAnswer1" name="answer1" type="text" class="form-control">
+                            <input id="inputAnswer1" name="answer1" type="text" class="form-control" required>
                         </div>
                     </div>
                     <div id="divAnswer2" class="row">
@@ -50,7 +50,7 @@
                         <span class="input-group-addon">
                             <input id="isTrueAnswer2" name="trueAnswer" value="2" type="checkbox">
                         </span>
-                            <input id="inputAnswer2" name="answer2" type="text" class="form-control">
+                            <input id="inputAnswer2" name="answer2" type="text" class="form-control" required>
                         </div>
                     </div>
                     <div id="divAnswer3" class="row">
@@ -67,7 +67,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="control-label" for="inputOpenAnswer">Введите правильный ответ:</label>
-                            <input id="inputOpenAnswer" name="openAnswer" type="text" class="form-control" required>
+                            <input id="inputOpenAnswer" name="openAnswer" type="text" class="form-control">
                         </div>
                     </div>
                 </div>

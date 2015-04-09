@@ -11,6 +11,9 @@ $(document).ready(function () {
                 $("[name='trueAnswer']").prop('type', "checkbox");
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
+                $("#inputOpenAnswer").prop('required', false);
+                $("#inputAnswer1").prop('required', true);
+                $("#inputAnswer2").prop('required', true);
                 if (i == 2) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
@@ -21,6 +24,9 @@ $(document).ready(function () {
                 $("[name='trueAnswer']").prop('type', "radio");
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
+                $("#inputOpenAnswer").prop('required',false);
+                $("#inputAnswer1").prop('required', true);
+                $("#inputAnswer2").prop('required', true);
                 if (i == 2) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
@@ -30,6 +36,9 @@ $(document).ready(function () {
             case "3":
                 $('#divCloseAnswer').hide();
                 $("#divOpenAnswer").show();
+                $("#inputOpenAnswer").prop('required',true);
+                $("#inputAnswer1").prop('required', false);
+                $("#inputAnswer2").prop('required', false);
                 break;
         }
     });

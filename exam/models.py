@@ -134,8 +134,8 @@ class Test(models.Model):
     name = models.CharField(max_length=500)
     # The description of test
     description = models.TextField(blank=True)
-    # The file of the test
-    test = models.BinaryField(blank=True)
+    # The JSON of the test
+    test = models.TextField(blank=True)
     # The author of the test
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     # The category of the test
@@ -169,3 +169,10 @@ class Journal(models.Model):
 
     def __str__(self):
         return self.user.user.last_name + " " + self.user.user.first_name + " " + self.user.middle_name
+
+
+class TestImage(models.Model):
+    """
+    There are images for tests
+    """
+    image = models.ImageField(upload_to='test_images', blank=True)
