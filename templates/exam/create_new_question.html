@@ -16,7 +16,7 @@
     </div>
 {% endblock %}
 {% block content %}
-    <form id="formCreateNewQuestion" action="{% url "create_new_question" %}" method="post"
+    <form id="formCreateNewQuestion" action="{% url "create_new_question" id=test_id  %}" method="post"
           enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
