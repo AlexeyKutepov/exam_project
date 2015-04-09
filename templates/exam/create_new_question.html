@@ -28,7 +28,7 @@
 
                 {% if  type_list %}
                     <label for="selectType"><b>Тип вопроса:</b></label>
-                    <select id="selectType" name="category" class="selectpicker form-control">
+                    <select id="selectType" name="type" class="selectpicker form-control">
                         {% for type in type_list %}
                             <option value="{{ forloop.counter }}">{{ type }}</option>
                         {% endfor %}

@@ -32,7 +32,7 @@ def create_new_test(request):
             author=request.user,
             is_public=is_public,
         )
-        return HttpResponseRedirect("/create_new_question/")
+        return HttpResponseRedirect("/create_new_question/?id=" + str(test.id))
     else:
         category_list = Category.objects.all()
         return render(request, "exam/create_new_test.html", {"category_list": category_list})
