@@ -11,7 +11,7 @@ $(document).ready(function () {
                 $("[name='trueAnswer']").prop('type', "checkbox");
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
-                if (i == 1) {
+                if (i == 2) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
                     $("#btnDeleteAnswer").toggleClass('disabled', false);
@@ -21,7 +21,7 @@ $(document).ready(function () {
                 $("[name='trueAnswer']").prop('type', "radio");
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
-                if (i == 1) {
+                if (i == 2) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
                     $("#btnDeleteAnswer").toggleClass('disabled', false);
@@ -55,13 +55,13 @@ $(document).ready(function () {
     });
 
     $("#btnDeleteAnswer").click(function () {
-        if (i > 1) {
+        if (i > 2) {
             $('#divAnswer' + i).html('');
             $('#divAnswer' + (i + 1)).html('');
             i--;
             $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
         }
-        if (i == 1) {
+        if (i == 2) {
             $(this).toggleClass('disabled', true);
         }
     });
