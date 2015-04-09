@@ -135,7 +135,7 @@ class Test(models.Model):
     # The description of test
     description = models.TextField(blank=True)
     # The JSON of the test
-    test = models.TextField(blank=True)
+    test = models.BinaryField(blank=True)
     # The author of the test
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     # The category of the test
