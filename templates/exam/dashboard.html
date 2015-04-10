@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block head %}
+    <script src="/static/js/exam.js"></script>
+{% endblock %}
 {% block header_content %}
     <div class="k-panel vertical-align">
         <div class="container">
@@ -44,7 +47,17 @@
                                     <td>{{ test.name }}</td>
                                     <td>{{ test.category }}</td>
                                     <td>{{ test.date_and_time|date:"d.m.Y" }}</td>
-                                    <td></td>
+                                    <td>
+                                        <button id="btnJournal{{ forloop.counter }}" type="button" class="btn btn-success" name="journal{{ test.id }}">
+                                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                        </button>
+                                        <button id="btnEdit{{ forloop.counter }}" type="button" class="btn btn-primary" name="edit{{ test.id }}">
+                                          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </button>
+                                        <button id="btnDel{{ forloop.counter }}" type="button" class="btn btn-danger" name="delete{{ test.id }}">
+                                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

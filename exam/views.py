@@ -14,6 +14,8 @@ def index(request):
 
 @login_required(login_url='/')
 def dashboard(request):
+    if "delete" in request.POST:
+        Test.objects.get(id=int(request.POST["delete"])).delete()
     test_list = Test.objects.filter(author=request.user)
     return render(request, "exam/dashboard.html", {"test_list": test_list})
 
