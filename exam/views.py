@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from exam.models import Category, Test, TestImage
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
 import pickle
 
@@ -35,7 +36,7 @@ def create_new_test(request):
             author=request.user,
             is_public=is_public,
         )
-        return HttpResponseRedirect("/create_new_question/" + str(test.id) + "/")
+        return HttpResponseRedirect(reverse("create_new_question", args=[test.id]))
     else:
         category_list = Category.objects.all()
         return render(request, "exam/create_new_test.html", {"category_list": category_list})
@@ -95,7 +96,7 @@ def create_new_question(request, id):
         test.test = pickle.dumps(exem_test)
         test.save()
         if "complete" in request.POST:
-            return HttpResponseRedirect("/dashboard/")
+            return HttpResponseRedirect(reverse('dashboard'))
         else:
             return render(
                 request,

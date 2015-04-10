@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from authentication.forms import UserProfileForm
 from django.contrib import auth
 from exam.models import UserProfile
+from django.core.urlresolvers import reverse
 
 
 @csrf_protect
@@ -15,7 +16,7 @@ def sign_in(request):
         user = auth.authenticate(email=email, password=password)
         if user is not None and user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect("/dashboard/")
+            return HttpResponseRedirect(reverse("dashboard"))
         else:
             return render(request, "exam/index.html", {"login_error": "has-error"})
     else:
@@ -25,7 +26,7 @@ def sign_in(request):
 @login_required(login_url='/')
 def sign_out(request):
     auth.logout(request)
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect(reverse("index"))
 
 
 def create_profile(request):
