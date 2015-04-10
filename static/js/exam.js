@@ -58,7 +58,7 @@ $(document).ready(function () {
         }
 
         $('#divAnswer' + (i + 1)).html(
-                "<div class='input-group'><span class='input-group-addon'><input id='isTrueAnswer" + (i + 1) + "' name='trueAnswer' type='" + type + "'></span><input id='inputAnswer" + (i + 1) + "' name='answer" + (i + 1) + "' type='text' class='form-control'></div>"
+                "<div class='input-group'><span class='input-group-addon'><input id='isTrueAnswer" + (i + 1) + "' name='trueAnswer' value='" + (i + 1) + "' type='" + type + "'></span><input id='inputAnswer" + (i + 1) + "' name='answer" + (i + 1) + "' type='text' class='form-control'></div>"
         );
         i++;
         $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");

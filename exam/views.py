@@ -14,7 +14,8 @@ def index(request):
 
 @login_required(login_url='/')
 def dashboard(request):
-    return render(request, "exam/dashboard.html")
+    test_list = Test.objects.filter(author=request.user)
+    return render(request, "exam/dashboard.html", {"test_list": test_list})
 
 @login_required(login_url='/')
 def create_new_test(request):
@@ -84,7 +85,15 @@ def create_new_question(request, id):
                 )
                 i += 1
         elif question_type == "2":
-            pass
+            i = 1
+            while "answer"+str(i) in request.POST:
+                question.add_new_answer(
+                    CloseAnswer(
+                        answer=request.POST["answer"+str(i)],
+                        is_correct=str(i) == request.POST["trueAnswer"]
+                    )
+                )
+                i += 1
         elif question_type == "3":
             question.add_new_answer(
                 Answer(
