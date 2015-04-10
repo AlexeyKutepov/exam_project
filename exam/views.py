@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from exam.models import Category, Test, TestImage
 from django.http import HttpResponseRedirect
+from exam.exam_test.exam_test import *
 import pickle
 
 
@@ -58,44 +59,46 @@ def create_new_question(request, id):
         ]
     if "type" in request.POST and int(request.POST["type"]) in (1, 2, 3):
         if test.test is None or test.test == b'':
-            json_test = []
+            exem_test = ExamTest()
         else:
-            json_test = pickle.loads(test.test)
-        question_type = int(request.POST["type"])
+            exem_test = pickle.loads(test.test)
+        question_type = request.POST["type"]
+        question = Question(question_type)
+
         if "image" in request.FILES:
             image = TestImage.objects.get_or_create(image=request.FILES["image"])
             image_id = image[0].id
         else:
             image_id = None
-        answers = None
-        if question_type == 1:
-            answers = []
+        question.set_image(image_id)
+
+        if question_type == "1":
             i = 1
-            while ("answer"+str(i) in request.POST):
-                answers.append({
-                    "answer": request.POST["answer"+str(i)],
-                    "is_correct": str(i) in request.POST.getlist("trueAnswer")
-                })
+            while "answer"+str(i) in request.POST:
+                question.add_new_answer(
+                    CloseAnswer(
+                        answer=request.POST["answer"+str(i)],
+                        is_correct=str(i) in request.POST.getlist("trueAnswer")
+                    )
+                )
                 i += 1
-        elif question_type == 2:
+        elif question_type == "2":
             pass
-        elif question_type == 3:
-            answers = request.POST["openAnswer"]
-        question = {
-            "number_of_question": len(json_test) + 1,
-            "question": request.POST["question"],
-            "type": question_type,
-            "image": image_id,
-            "answers": answers
-        }
-        json_test.append(question)
-        test.test = pickle.dumps(json_test)
+        elif question_type == "3":
+            question.add_new_answer(
+                Answer(
+                    request.POST["openAnswer"]
+                )
+            )
+
+        exem_test.add_question(question)
+        test.test = pickle.dumps(exem_test)
         test.save()
         return render(
             request,
             "exam/create_new_question.html",
             {
-                "number_of_question": len(json_test) + 1,
+                "number_of_question": len(exem_test.get_questions()) + 1,
                 "type_list": type_list,
                 "test_id": id
             }

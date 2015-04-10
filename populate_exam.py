@@ -1,9 +1,10 @@
+import pickle
+import random
+
 __author__ = 'Alexey Kutepov'
 
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'exam_project.settings')
-
-import json
 
 import django
 django.setup()
@@ -179,10 +180,24 @@ def add_test(name, description, author, category):
     :param category:
     :return:
     """
+    test = exam_test.ExamTest()
+    number_of_questions = random.randint(1, 100)
+    number_of_answers = random.randint(2, 10)
+    for i in range(number_of_questions):
+        question = exam_test.Question()
+        for j in range(number_of_answers):
+            if random.randint(0, 1) == 0:
+                is_correct = False
+            else:
+                is_correct = True
+            answer = exam_test.CloseAnswer("answer " + str(j), is_correct)
+            question.add_new_answer(answer)
+        test.add_question(question)
+    test_dump = pickle.dumps(test)
     result = Test.objects.get_or_create(
         name=name,
         description=description,
-        test="{test: test}",
+        test=test_dump,
         author=author,
         category=category
     )[0]

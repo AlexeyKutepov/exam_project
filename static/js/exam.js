@@ -14,6 +14,7 @@ $(document).ready(function () {
                 $("#inputOpenAnswer").prop('required', false);
                 $("#inputAnswer1").prop('required', true);
                 $("#inputAnswer2").prop('required', true);
+                $("#divAddDel").show();
                 if (i == 2) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
@@ -27,6 +28,7 @@ $(document).ready(function () {
                 $("#inputOpenAnswer").prop('required',false);
                 $("#inputAnswer1").prop('required', true);
                 $("#inputAnswer2").prop('required', true);
+                $("#divAddDel").show();
                 if (i == 2) {
                     $("#btnDeleteAnswer").toggleClass('disabled', true);
                 } else {
@@ -39,6 +41,7 @@ $(document).ready(function () {
                 $("#inputOpenAnswer").prop('required',true);
                 $("#inputAnswer1").prop('required', false);
                 $("#inputAnswer2").prop('required', false);
+                $("#divAddDel").hide();
                 break;
         }
     });

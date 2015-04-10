@@ -38,9 +38,9 @@ class TestType(Enum):
     """
     Test type constants:
     """
-    OPEN_TYPE = "0"
-    CLOSE_TYPE_ONE_CORRECT_ANSWER = "1"
-    CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS = "2"
+    OPEN_TYPE = "3"
+    CLOSE_TYPE_ONE_CORRECT_ANSWER = "2"
+    CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS = "1"
 
 
 class Question:
