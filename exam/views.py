@@ -94,15 +94,18 @@ def create_new_question(request, id):
         exem_test.add_question(question)
         test.test = pickle.dumps(exem_test)
         test.save()
-        return render(
-            request,
-            "exam/create_new_question.html",
-            {
-                "number_of_question": len(exem_test.get_questions()) + 1,
-                "type_list": type_list,
-                "test_id": id
-            }
-        )
+        if "complete" in request.POST:
+            return HttpResponseRedirect("/dashboard/")
+        else:
+            return render(
+                request,
+                "exam/create_new_question.html",
+                {
+                    "number_of_question": len(exem_test.get_questions()) + 1,
+                    "type_list": type_list,
+                    "test_id": id
+                }
+            )
     else:
         return render(
             request,
