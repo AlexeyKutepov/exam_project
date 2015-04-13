@@ -50,7 +50,7 @@
                             <li class="active"><a href="{% url "dashboard" %}">Рабочий стол</a></li>
                             <li><a href="{% url "create_new_test" %}">Конструктор тестов</a></li>
                         {% endif %}
-                        <li><a href="#">Тесты</a></li>
+                        <li><a href="{% url "get_test_list" %}">Тесты</a></li>
                         <li><a href="#">О проекте</a></li>
                     </ul>
                     {% block auth_bar %}

@@ -19,6 +19,12 @@ def dashboard(request):
     test_list = Test.objects.filter(author=request.user)
     return render(request, "exam/dashboard.html", {"test_list": test_list})
 
+
+def get_test_list(request):
+    test_list = Test.objects.all()
+    return render(request, "exam/test_list.html", {"test_list": test_list})
+
+
 @login_required(login_url='/')
 def create_new_test(request):
     """
