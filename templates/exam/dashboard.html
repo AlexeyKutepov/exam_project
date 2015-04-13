@@ -50,14 +50,13 @@
                                     <td>
                                         <form action="{% url "dashboard" %}" method="post">
                                             {% csrf_token %}
-                                            <input type="hidden" name="test_id" value="{{ test.id }}" />
-                                            <button id="btnJournal{{ forloop.counter }}" type="submit" class="btn btn-success" name="journal">
+                                            <button id="btnJournal{{ forloop.counter }}" type="submit" class="btn btn-success" name="journal" value="{{ test.id }}">
                                               <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                                             </button>
-                                            <button id="btnEdit{{ forloop.counter }}" type="submit" class="btn btn-primary" name="edit">
+                                            <button id="btnEdit{{ forloop.counter }}" type="submit" class="btn btn-primary" name="edit" value="{{ test.id }}">
                                               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             </button>
-                                            <button id="btnDel{{ forloop.counter }}" type="submit" class="btn btn-danger" name="delete">
+                                            <button id="btnDel{{ forloop.counter }}" type="submit" class="btn btn-danger" name="delete" value="{{ test.id }}">
                                               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
                                         </form>
