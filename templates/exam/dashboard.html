@@ -48,15 +48,19 @@
                                     <td>{{ test.category }}</td>
                                     <td>{{ test.date_and_time|date:"d.m.Y" }}</td>
                                     <td>
-                                        <button id="btnJournal{{ forloop.counter }}" type="button" class="btn btn-success" name="journal{{ test.id }}">
-                                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                        </button>
-                                        <button id="btnEdit{{ forloop.counter }}" type="button" class="btn btn-primary" name="edit{{ test.id }}">
-                                          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </button>
-                                        <button id="btnDel{{ forloop.counter }}" type="button" class="btn btn-danger" name="delete{{ test.id }}">
-                                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </button>
+                                        <form action="{% url "dashboard" %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="test_id" value="{{ test.id }}" />
+                                            <button id="btnJournal{{ forloop.counter }}" type="submit" class="btn btn-success" name="journal">
+                                              <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                            </button>
+                                            <button id="btnEdit{{ forloop.counter }}" type="submit" class="btn btn-primary" name="edit">
+                                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            </button>
+                                            <button id="btnDel{{ forloop.counter }}" type="submit" class="btn btn-danger" name="delete">
+                                              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {% endfor %}

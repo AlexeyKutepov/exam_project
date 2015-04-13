@@ -86,24 +86,6 @@ $(document).ready(function () {
     /**
      * Create test page end
      */
-
-    /**
-     * Delete test
-     */
-    $("button[name*='delete']").click(function () {
-        var testId = parseInt(this.name.split("delete")[1]);
-        $.ajax({
-            type: "POST",
-            url: this.baseURI,
-            data: {
-                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                delete: testId
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                alert("Please report this error: "+errorThrown+xhr.status+xhr.responseText);
-            }
-        });
-    });
 });
 
 /**
