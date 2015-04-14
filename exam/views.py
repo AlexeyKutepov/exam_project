@@ -25,6 +25,27 @@ def get_test_list(request):
     return render(request, "exam/test_list.html", {"test_list": test_list})
 
 
+def start_test(request):
+    if "run" in request.POST:
+        test = Test.objects.get(id=int(request.POST["run"]))
+        if test.test:
+            exem_test = pickle.loads(test.test)
+            number_of_questions = len(exem_test.get_questions())
+        else:
+            number_of_questions = None
+        return render(
+            request,
+            "exam/start_test_page.html",
+            {
+                "test": test,
+                "number_of_questions": number_of_questions
+            }
+        )
+    else:
+        return HttpResponseRedirect(reverse("get_test_list"))
+
+
+
 @login_required(login_url='/')
 def create_new_test(request):
     """
@@ -34,7 +55,7 @@ def create_new_test(request):
     """
     if "name" and "description" and "category" in request.POST:
         category = Category.objects.get(name=request.POST["category"])
-        if request.POST["isPublic"] == 'public':
+        if "isPublic" in request.POST and request.POST["isPublic"] == 'public':
             is_public = True
         else:
             is_public = False
