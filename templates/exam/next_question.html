@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <h4>Вопрос №{{ number_of_question }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <form action="#" method="post">
+        <div class="row">
+            <div class="col-lg-7">
+                <h5>{{ question }}</h5>
+                <p></p>
+                {% if type1 %}
+                    <p>Варианты ответа:</p>
+                    {% for variant in variant_list %}
+                        <input id="isTrueAnswer{{ forloop.counter }}" name="answer" value="{{ forloop.counter }}" type="checkbox">{{ variant }}<br>
+                    {% endfor %}
+                {% endif %}
+                {% if type2 %}
+                    <p>Варианты ответа:</p>
+                    {% for variant in variant_list %}
+                        <input id="isTrueAnswer{{ forloop.counter }}" name="answer" value="{{ forloop.counter }}" type="radio">{{ variant }}<br>
+                    {% endfor %}
+                {% endif %}
+                {% if type3 %}
+                    <div class="form-group">
+                        <label class="control-label" for="inputOpenAnswer">Введите правильный ответ:</label>
+                        <input id="inputOpenAnswer" name="answer" type="text" class="form-control">
+                    </div>
+                {% endif %}
+            </div>
+            {% if image %}
+            <div class="col-lg-5">
+                <label for="divImage">Изображение:</label>
+
+                <div id="divImage" class="form-group">
+                    <img id="impPreview" class="img-thumbnail"
+                         src="{{ image }}"
+                         alt="Изображение" width="auto" height="auto">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}
