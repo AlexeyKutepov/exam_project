@@ -45,6 +45,39 @@ def start_test(request):
         return HttpResponseRedirect(reverse("get_test_list"))
 
 
+def next_question(request, id, number):
+    """
+    Shows next question
+    :param request:
+    :param id: - id of test
+    :param number: number of question
+    :return:
+    """
+    id = int(id)
+    number = int(number)
+    test = Test.objects.get(id=id)
+    exem_test = pickle.loads(test.test)
+    question = exem_test.get_questions()[number]
+    answers = question.get_answers()
+    if question.get_test_type() != TestType.OPEN_TYPE:
+        variant_list = []
+        for answer in answers:
+            variant_list.append(answer.get_answer())
+    else:
+        variant_list = None
+
+    return render(
+        request,
+        "exam/next_question.html",
+        {
+            "number_of_question": number + 1,
+            "question": question.get_question(),
+            "type": question.get_test_type(),
+            "variant_list": variant_list
+        }
+    )
+
+
 
 @login_required(login_url='/')
 def create_new_test(request):

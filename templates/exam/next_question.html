@@ -5,7 +5,7 @@
     <div class="k-panel-header vertical-align">
         <div class="container">
             <div class="row vertical-align">
-                <div class="col-lg-4 col-lg-offset-2">
+                <div class="col-lg-4">
                     <h4>Вопрос №{{ number_of_question }}</h4>
                 </div>
             </div>
@@ -18,19 +18,19 @@
             <div class="col-lg-7">
                 <h5>{{ question }}</h5>
                 <p></p>
-                {% if type1 %}
+                {% if type == 1 %}
                     <p>Варианты ответа:</p>
                     {% for variant in variant_list %}
                         <input id="isTrueAnswer{{ forloop.counter }}" name="answer" value="{{ forloop.counter }}" type="checkbox">{{ variant }}<br>
                     {% endfor %}
                 {% endif %}
-                {% if type2 %}
+                {% if type == 2 %}
                     <p>Варианты ответа:</p>
                     {% for variant in variant_list %}
                         <input id="isTrueAnswer{{ forloop.counter }}" name="answer" value="{{ forloop.counter }}" type="radio">{{ variant }}<br>
                     {% endfor %}
                 {% endif %}
-                {% if type3 %}
+                {% if type == 3 %}
                     <div class="form-group">
                         <label class="control-label" for="inputOpenAnswer">Введите правильный ответ:</label>
                         <input id="inputOpenAnswer" name="answer" type="text" class="form-control">

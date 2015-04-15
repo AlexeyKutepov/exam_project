@@ -97,7 +97,7 @@ class Question:
                 self._answer.append(answer)
                 self._correct_count += 1
 
-    def get_answer(self):
+    def get_answers(self):
         return self._answer
 
     def get_correct_count(self):
