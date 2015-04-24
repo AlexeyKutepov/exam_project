@@ -72,7 +72,7 @@ def next_question(request, id, number):
         {
             "number_of_question": number + 1,
             "question": question.get_question(),
-            "type": question.get_test_type(),
+            "type": question.get_test_type().value,
             "variant_list": variant_list
         }
     )
@@ -126,8 +126,12 @@ def create_new_question(request, id):
             exem_test = ExamTest()
         else:
             exem_test = pickle.loads(test.test)
-        question_type = request.POST["type"]
-        question = Question(question_type)
+        question_type = int(request.POST["type"])
+
+        if "question" in request.POST["question"]:
+            question = Question(request.POST["question"], question_type)
+        else:
+            question = Question(None, question_type)
 
         if "image" in request.FILES:
             image = TestImage.objects.get_or_create(image=request.FILES["image"])
@@ -136,7 +140,7 @@ def create_new_question(request, id):
             image_id = None
         question.set_image(image_id)
 
-        if question_type == "1":
+        if question_type == TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
             i = 1
             while "answer"+str(i) in request.POST:
                 question.add_new_answer(
@@ -146,7 +150,7 @@ def create_new_question(request, id):
                     )
                 )
                 i += 1
-        elif question_type == "2":
+        elif question_type == TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
             i = 1
             while "answer"+str(i) in request.POST:
                 question.add_new_answer(
@@ -156,7 +160,7 @@ def create_new_question(request, id):
                     )
                 )
                 i += 1
-        elif question_type == "3":
+        elif question_type == TestType.OPEN_TYPE:
             question.add_new_answer(
                 Answer(
                     request.POST["openAnswer"]

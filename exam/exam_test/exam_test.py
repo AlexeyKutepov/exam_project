@@ -38,9 +38,9 @@ class TestType(Enum):
     """
     Test type constants:
     """
-    OPEN_TYPE = "3"
-    CLOSE_TYPE_ONE_CORRECT_ANSWER = "2"
-    CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS = "1"
+    OPEN_TYPE = 3
+    CLOSE_TYPE_ONE_CORRECT_ANSWER = 2
+    CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS = 1
 
 
 class Question:
@@ -48,8 +48,8 @@ class Question:
     This is structure of the question
     """
 
-    def __init__(self, test_type=TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS):
-        self._question = None
+    def __init__(self, question, test_type=TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS):
+        self._question = question
         self._image = None
         self._test_type = test_type
         self._answer = None

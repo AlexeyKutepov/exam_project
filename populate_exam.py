@@ -184,7 +184,7 @@ def add_test(name, description, author, category):
     number_of_questions = random.randint(1, 100)
     number_of_answers = random.randint(2, 10)
     for i in range(number_of_questions):
-        question = exam_test.Question()
+        question = exam_test.Question("question " + str(i))
         for j in range(number_of_answers):
             if random.randint(0, 1) == 0:
                 is_correct = False
