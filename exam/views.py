@@ -70,6 +70,7 @@ def next_question(request, id, number):
         request,
         "exam/next_question.html",
         {
+            "test_id": id,
             "number_of_question": number + 1,
             "question": question.get_question(),
             "type": question.get_test_type().value,
