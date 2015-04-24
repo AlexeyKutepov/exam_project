@@ -134,7 +134,7 @@ class Test(models.Model):
     name = models.CharField(max_length=500)
     # The description of test
     description = models.TextField(blank=True)
-    # The JSON of the test
+    # The test
     test = models.BinaryField(blank=True)
     # The author of the test
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -156,7 +156,7 @@ class Journal(models.Model):
     The result journal
     """
 
-    # The user, who complete a test
+    # The user, who was complete the test
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     # The completed test
     test = models.ForeignKey(Test)
@@ -169,6 +169,21 @@ class Journal(models.Model):
 
     def __str__(self):
         return self.user.user.last_name + " " + self.user.user.first_name + " " + self.user.middle_name
+
+
+class Progress(models.Model):
+    """
+    The progress of the performing tests by users
+    """
+
+    # The user, who  performs the test
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    # Update date
+    update_date = models.DateTimeField(default=timezone.now())
+    # The performed test by user
+    test = models.ForeignKey(Test)
+    # The current result
+    current_result = models.BinaryField(blank=True)
 
 
 class TestImage(models.Model):
