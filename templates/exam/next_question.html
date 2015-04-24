@@ -21,8 +21,11 @@
             {% else %}
                 <div class="col-lg-12">
             {% endif %}
-            <p></p>
-
+            <div class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%">
+                <span class="sr-only">{{ progress }}% Complete</span>
+              </div>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h5>{{ question }}</h5>
@@ -63,10 +66,10 @@
                 </div>
             {% endif %}
             </div>
-            <div class="row">
-                <div class="col-lg-12 centered">
-                    <button id="btnNext" name="next" type="submit" class="btn btn-success">Ответить</button>
-                </div>
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <button id="btnNext" name="next" type="submit" class="btn btn-success">Ответить</button>
             </div>
+        </div>
     </form>
 {% endblock %}

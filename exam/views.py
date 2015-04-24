@@ -55,9 +55,14 @@ def next_question(request, id, number):
     """
     id = int(id)
     number = int(number)
+
+    if "answer" in request.POST:
+        number += 1
+
     test = Test.objects.get(id=id)
     exem_test = pickle.loads(test.test)
     question = exem_test.get_questions()[number]
+    progress = 100/len(exem_test.get_questions()) * number
     answers = question.get_answers()
     if question.get_test_type() != TestType.OPEN_TYPE:
         variant_list = []
@@ -71,6 +76,7 @@ def next_question(request, id, number):
         "exam/next_question.html",
         {
             "test_id": id,
+            "progress": progress,
             "number_of_question": number,
             "question": question.get_question(),
             "type": question.get_test_type().value,
