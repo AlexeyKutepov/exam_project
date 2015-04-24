@@ -64,6 +64,11 @@ def next_question(request, id, number):
     question = exem_test.get_questions()[number]
     progress = 100/len(exem_test.get_questions()) * number
     answers = question.get_answers()
+    if question.get_image():
+        image_test = TestImage.objects.get(id=question.get_image())
+        image = image_test.image.url
+    else:
+        image = None
     if question.get_test_type() != TestType.OPEN_TYPE:
         variant_list = []
         for answer in answers:
@@ -80,7 +85,8 @@ def next_question(request, id, number):
             "number_of_question": number,
             "question": question.get_question(),
             "type": question.get_test_type().value,
-            "variant_list": variant_list
+            "variant_list": variant_list,
+            "image": image
         }
     )
 
@@ -133,9 +139,9 @@ def create_new_question(request, id):
             exem_test = ExamTest()
         else:
             exem_test = pickle.loads(test.test)
-        question_type = int(request.POST["type"])
+        question_type = TestType(int(request.POST["type"]))
 
-        if "question" in request.POST["question"]:
+        if "question" in request.POST:
             question = Question(request.POST["question"], question_type)
         else:
             question = Question(None, question_type)
@@ -147,7 +153,7 @@ def create_new_question(request, id):
             image_id = None
         question.set_image(image_id)
 
-        if question_type == TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
+        if question_type is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
             i = 1
             while "answer"+str(i) in request.POST:
                 question.add_new_answer(
@@ -157,7 +163,7 @@ def create_new_question(request, id):
                     )
                 )
                 i += 1
-        elif question_type == TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
+        elif question_type is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
             i = 1
             while "answer"+str(i) in request.POST:
                 question.add_new_answer(
@@ -167,7 +173,7 @@ def create_new_question(request, id):
                     )
                 )
                 i += 1
-        elif question_type == TestType.OPEN_TYPE:
+        elif question_type is TestType.OPEN_TYPE:
             question.add_new_answer(
                 Answer(
                     request.POST["openAnswer"]
