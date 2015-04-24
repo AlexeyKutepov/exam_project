@@ -71,7 +71,7 @@ def next_question(request, id, number):
         "exam/next_question.html",
         {
             "test_id": id,
-            "number_of_question": number + 1,
+            "number_of_question": number,
             "question": question.get_question(),
             "type": question.get_test_type().value,
             "variant_list": variant_list
