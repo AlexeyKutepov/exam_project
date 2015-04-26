@@ -178,8 +178,10 @@ class Progress(models.Model):
 
     # The user, who  performs the test
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    # Update date
-    update_date = models.DateTimeField(default=timezone.now())
+    # Start date time
+    start_date = models.DateTimeField(default=timezone.now())
+    # End date time
+    end_date = models.DateTimeField(blank=True)
     # The performed test by user
     test = models.ForeignKey(Test)
     # The current result
