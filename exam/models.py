@@ -181,11 +181,11 @@ class Progress(models.Model):
     # Start date time
     start_date = models.DateTimeField(default=timezone.now())
     # End date time
-    end_date = models.DateTimeField(blank=True)
+    end_date = models.DateTimeField(blank=True, null=True)
     # The performed test by user
     test = models.ForeignKey(Test)
     # The current result
-    current_result = models.BinaryField(blank=True)
+    current_result = models.BinaryField(blank=True, null=True)
 
 
 class TestImage(models.Model):
