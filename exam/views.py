@@ -31,7 +31,7 @@ def start_test(request):
     Starts selected test
 
     :param request: request for starting test
-    :return: start_test_page.html
+    :return: start_test.html
     """
 
     if "run" in request.POST:
@@ -60,7 +60,7 @@ def start_test(request):
             progress.save()
         return render(
             request,
-            "exam/start_test_page.html",
+            "exam/start_test.html",
             {
                 "test": test,
                 "number_of_questions": number_of_questions
@@ -68,6 +68,7 @@ def start_test(request):
         )
     else:
         return HttpResponseRedirect(reverse("get_test_list"))
+
 
 def next_question(request, id, number):
     """
@@ -84,17 +85,17 @@ def next_question(request, id, number):
     result_list = []
 
     if not progress.result_list:
-        if (number == 1 and not ("answer" in request.POST)) or (number > 1):
-            return HttpResponseRedirect(reverse("next_question", args=[test.id, 0]))
+        if number > 1:
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, 1]))
     else:
         result_list = pickle.loads(progress.result_list)
-        if len(result_list) > number:
-            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list)]))
-        elif (len(result_list) + 1 == number and not ("answer" in request.POST)) or (len(result_list) + 1 < number):
-            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list)]))
+        if len(result_list) > number - 1:
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
+        elif len(result_list) + 1 < number:
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
 
     exem_test = pickle.loads(test.test)
-    question = exem_test.get_questions()[number]
+    question = exem_test.get_questions()[number - 1]
 
     if "answer" in request.POST:
         is_correct = True
@@ -126,7 +127,7 @@ def next_question(request, id, number):
         progress.result_list = pickle.dumps(result_list)
         progress.save()
 
-        if number + 1 == len(exem_test.get_questions()):
+        if number == len(exem_test.get_questions()):
             progress.end_date = timezone.now()
             progress.save()
 
@@ -146,7 +147,7 @@ def next_question(request, id, number):
             number += 1
             return HttpResponseRedirect(reverse("next_question", args=[test.id, number]))
 
-    progress = 100/len(exem_test.get_questions()) * number
+    progress = 100/len(exem_test.get_questions()) * (number - 1)
     answers = question.get_answers()
     if question.get_image():
         image_test = TestImage.objects.get(id=question.get_image())

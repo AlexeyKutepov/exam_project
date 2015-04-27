@@ -15,7 +15,7 @@
 {% block content %}
     <p></p>
     {% if user.is_authenticated %}
-        <form action="{% url "next_question" id=test.id number=0 %}" method="post">
+        <form action="{% url "next_question" id=test.id number=1 %}" method="post">
         {% csrf_token %}
         <div class="row">
             <blockquote>
@@ -41,7 +41,7 @@
         </form>
     {% else %}
         {% if test.is_public %}
-            <form action="{% url "next_question" id=test.id number=0 %}" method="post">
+            <form action="{% url "next_question" id=test.id number=1 %}" method="post">
             {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-6">
