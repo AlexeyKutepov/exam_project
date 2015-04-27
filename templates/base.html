@@ -13,6 +13,8 @@
 
     <script src="/static/js/bootstrap.min.js"></script>
 
+    <script src="/static/js/menu.js"></script>
+
     <!-- Just to make our placeholder images work.-->
     <script src="/static/js/holder.js"></script>
 
@@ -47,11 +49,11 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
-                            <li class="active"><a href="{% url "dashboard" %}">Рабочий стол</a></li>
-                            <li><a href="{% url "create_new_test" %}">Конструктор тестов</a></li>
+                            <li id="liDashboard"><a href="{% url "dashboard" %}">Рабочий стол</a></li>
+                            <li id="liTestConstructor"><a href="{% url "create_new_test" %}">Конструктор тестов</a></li>
                         {% endif %}
-                        <li><a href="{% url "get_test_list" %}">Тесты</a></li>
-                        <li><a href="#">О проекте</a></li>
+                        <li id="liTests"><a href="{% url "get_test_list" %}">Тесты</a></li>
+                        <li id="liAbout"><a href="#">О проекте</a></li>
                     </ul>
                     {% block auth_bar %}
                         {% if user.is_authenticated %}
