@@ -161,9 +161,9 @@ class Journal(models.Model):
     # The completed test
     test = models.ForeignKey(Test)
     # Date and time of start test
-    date_and_time_start = models.DateTimeField(default=timezone.now())
+    start_date = models.DateTimeField(default=timezone.now())
     # Date and time of end test
-    date_and_time_end = models.DateTimeField(default=timezone.now())
+    end_date = models.DateTimeField(default=timezone.now())
     # Number of questions
     number_of_questions = models.IntegerField()
     # Number of correct answers

@@ -1,7 +1,7 @@
 from django.core.exceptions import SuspiciousOperation
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from exam.models import Category, Test, TestImage, Progress
+from exam.models import Category, Test, TestImage, Progress, Journal
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
@@ -41,7 +41,7 @@ def start_test(request):
             number_of_questions = len(exem_test.get_questions())
         else:
             number_of_questions = None
-        progress = Progress.objects.filter(user=request.user, test=test)[0]
+        progress = Progress.objects.filter(user=request.user, test=test)
         if not progress:
             Progress.objects.get_or_create(
                 user=request.user,
@@ -52,6 +52,7 @@ def start_test(request):
                 current_result=0
             )
         else:
+            progress = progress[0]
             progress.start_date = timezone.now()
             progress.end_date = None
             progress.result_list = None
@@ -67,7 +68,6 @@ def start_test(request):
         )
     else:
         return HttpResponseRedirect(reverse("get_test_list"))
-
 
 def next_question(request, id, number):
     """
@@ -125,8 +125,26 @@ def next_question(request, id, number):
         )
         progress.result_list = pickle.dumps(result_list)
         progress.save()
-        number += 1
-        return HttpResponseRedirect(reverse("next_question", args=[test.id, number]))
+
+        if number + 1 == len(exem_test.get_questions()):
+            progress.end_date = timezone.now()
+            progress.save()
+
+            result_of_test = int(100/len(exem_test.get_questions()) * progress.current_result)
+            journal = Journal.objects.create(
+                user=request.user,
+                test=test,
+                start_date=progress.start_date,
+                end_date=progress.end_date,
+                number_of_questions=len(exem_test.get_questions()),
+                number_of_correct_answers=progress.current_result,
+                result=result_of_test,
+                report=progress.result_list
+            )
+            return HttpResponseRedirect(reverse("end_test", args=[journal.id]))
+        else:
+            number += 1
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, number]))
 
     progress = 100/len(exem_test.get_questions()) * number
     answers = question.get_answers()
@@ -155,6 +173,19 @@ def next_question(request, id, number):
             "image": image
         }
     )
+
+
+def end_test(request, id):
+    """
+    Renders simple result form (without detail report)
+    :param request:
+    :param id: id of Journal field
+    :return: end_test.html
+    """
+    journal = Journal.objects.get(id=id)
+    if not journal:
+        raise SuspiciousOperation("Некорректный запрос")
+    return render(request, "exam/end_test.html", {})
 
 
 
