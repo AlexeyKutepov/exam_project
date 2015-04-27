@@ -164,6 +164,8 @@ class Journal(models.Model):
     start_date = models.DateTimeField(default=timezone.now())
     # Date and time of end test
     end_date = models.DateTimeField(default=timezone.now())
+    # Time for test
+    time_for_test = models.DateTimeField(blank=True, null=True)
     # Number of questions
     number_of_questions = models.IntegerField()
     # Number of correct answers

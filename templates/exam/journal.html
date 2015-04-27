@@ -41,7 +41,11 @@
                 {% endif %}
                     <td>{{ journal.user.get_full_name }}</td>
                     <td>{{ journal.end_date|date:"d.m.Y" }}</td>
-                    <td></td>
+                    <td>
+                    {% if  journal.time_for_test %}
+                        {{ journal.time_for_test }}
+                    {% endif %}
+                    </td>
                     <td>{{ journal.number_of_questions }}</td>
                     <td>{{ journal.number_of_correct_answers }}</td>
                     <td>{{ journal.result }}%</td>
