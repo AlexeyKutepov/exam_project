@@ -107,7 +107,7 @@ def next_question(request, id, number):
             for item in range(len(question.get_answers())):
                 if question.get_answers()[item].is_correct():
                     correct_answer_list.append(str(item + 1))
-            is_correct = correct_answer_list == request.POST["answer"]
+            is_correct = correct_answer_list == request.POST.getlist("answer")
         elif question.get_test_type() is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
             correct_answer = 1
             for item in range(len(question.get_answers())):
@@ -186,7 +186,18 @@ def end_test(request, id):
     journal = Journal.objects.get(id=id)
     if not journal:
         raise SuspiciousOperation("Некорректный запрос")
-    return render(request, "exam/end_test.html", {})
+    return render(
+        request,
+        "exam/end_test.html",
+        {
+            "test_name": journal.test.name,
+            "date": journal.end_date,
+            "time_of_test": journal.end_date - journal.start_date,
+            "number_of_questions": journal.number_of_questions,
+            "number_of_correct_answers": journal.number_of_correct_answers,
+            "rating": journal.result,
+        }
+    )
 
 
 
