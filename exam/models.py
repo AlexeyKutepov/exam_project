@@ -160,12 +160,18 @@ class Journal(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     # The completed test
     test = models.ForeignKey(Test)
-    # Date and time
-    date_and_time = models.DateTimeField(default=timezone.now())
-    # The result of test
+    # Date and time of start test
+    date_and_time_start = models.DateTimeField(default=timezone.now())
+    # Date and time of end test
+    date_and_time_end = models.DateTimeField(default=timezone.now())
+    # Number of questions
+    number_of_questions = models.IntegerField()
+    # Number of correct answers
+    number_of_correct_answers = models.IntegerField(default=0)
+    # The result of test (%)
     result = models.IntegerField(default=0)
     # The report of the test (JSON - file)'
-    report = models.TextField()
+    report = models.BinaryField()
 
     def __str__(self):
         return self.user.user.last_name + " " + self.user.user.first_name + " " + self.user.middle_name
@@ -185,7 +191,9 @@ class Progress(models.Model):
     # The performed test by user
     test = models.ForeignKey(Test)
     # The current result
-    current_result = models.BinaryField(blank=True, null=True)
+    result_list = models.BinaryField(blank=True, null=True)
+    # Number of correct answers
+    current_result = models.IntegerField(default=0)
 
 
 class TestImage(models.Model):

@@ -123,3 +123,25 @@ class ExamTest:
 
     def get_questions(self):
         return self._questions
+
+
+class ExamResult:
+    """
+    The result of the question answer
+    """
+
+    def __init__(self, is_correct, answer):
+        self._is_correct = is_correct
+        self._answer = answer
+
+    def is_correct(self):
+        return self._is_correct
+
+    def get_answer(self):
+        return self._answer
+
+    def set_is_correct(self, is_correct):
+        self._is_correct = is_correct
+
+    def set_answer(self, answer):
+        self._is_correct = answer

@@ -21,9 +21,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Journal)
 class JournalAdmin(admin.ModelAdmin):
-    list_display = ('user', 'test', 'date_and_time', 'result')
-    list_filter = ('user', 'test', 'date_and_time', 'result')
-    date_hierarchy = 'date_and_time'
+    list_display = ('user', 'test', 'date_and_time_start', 'date_and_time_end', 'number_of_questions', 'number_of_correct_answers', 'result')
+    list_filter = ('user', 'test', 'date_and_time_start', 'date_and_time_end', 'number_of_questions', 'number_of_correct_answers', 'result')
+    date_hierarchy = 'date_and_time_end'
 
 
 @admin.register(UserProfile)

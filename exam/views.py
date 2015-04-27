@@ -41,19 +41,22 @@ def start_test(request):
             number_of_questions = len(exem_test.get_questions())
         else:
             number_of_questions = None
-        progress = Progress.objects.filter(user=request.user, test=test)
+        progress = Progress.objects.filter(user=request.user, test=test)[0]
         if not progress:
             Progress.objects.get_or_create(
                 user=request.user,
                 start_date=timezone.now(),
                 end_date=None,
                 test=test,
-                current_result=None
+                result_list=None,
+                current_result=0
             )
         else:
             progress.start_date = timezone.now()
             progress.end_date = None
-            progress.current_result = None
+            progress.result_list = None
+            progress.current_result=0
+            progress.save()
         return render(
             request,
             "exam/start_test_page.html",
@@ -80,27 +83,51 @@ def next_question(request, id, number):
     progress = Progress.objects.filter(user=request.user, test=test)[0]
     result_list = []
 
-    if not progress.current_result:
+    if not progress.result_list:
         if (number == 1 and not ("answer" in request.POST)) or (number > 1):
             return HttpResponseRedirect(reverse("next_question", args=[test.id, 0]))
     else:
-        result_list = pickle.loads(progress.current_result)
+        result_list = pickle.loads(progress.result_list)
         if len(result_list) > number:
             return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list)]))
         elif (len(result_list) + 1 == number and not ("answer" in request.POST)) or (len(result_list) + 1 < number):
             return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list)]))
 
+    exem_test = pickle.loads(test.test)
+    question = exem_test.get_questions()[number]
+
     if "answer" in request.POST:
+        is_correct = True
+        if question.get_test_type() is TestType.OPEN_TYPE:
+            if question.get_answers().get_answer() != request.POST["answer"]:
+                is_correct = False
+        elif question.get_test_type() is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
+            correct_answer_list = []
+            for item in range(len(question.get_answers())):
+                if question.get_answers()[item].is_correct():
+                    correct_answer_list.append(str(item + 1))
+            is_correct = correct_answer_list == request.POST["answer"]
+        elif question.get_test_type() is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
+            correct_answer = 1
+            for item in range(len(question.get_answers())):
+                if question.get_answers()[item].is_correct():
+                    correct_answer = item + 1
+                    break
+            is_correct = str(correct_answer) == request.POST["answer"]
+
+        if is_correct:
+            progress.current_result += 1
         result_list.append(
-            ""
+            ExamResult(
+                is_correct=is_correct,
+                answer=request.POST["answer"]
+            )
         )
-        progress.current_result = pickle.dumps(result_list)
+        progress.result_list = pickle.dumps(result_list)
         progress.save()
         number += 1
         return HttpResponseRedirect(reverse("next_question", args=[test.id, number]))
 
-    exem_test = pickle.loads(test.test)
-    question = exem_test.get_questions()[number]
     progress = 100/len(exem_test.get_questions()) * number
     answers = question.get_answers()
     if question.get_image():
