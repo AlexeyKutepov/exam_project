@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row vertical-align">
                 <div class="col-lg-4">
-                    <h4>Результаты теста</h4>
+                    <h4>Журнал</h4>
                 </div>
             </div>
         </div>
@@ -14,17 +14,11 @@
 {% endblock %}
 {% block content %}
     <p></p>
-    {% if rating >= 70 %}
-    <div class="panel panel-success">
-    {% elif rating >= 40 %}
-    <div class="panel panel-warning">
-    {% else %}
-    <div class="panel panel-danger">
-    {% endif %}
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <b class="white_color">{{ test_name }}</b>
+            <b>{{ test.name }}</b>
         </div>
-        <table class="table">
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>Пользователь</th>
@@ -33,17 +27,27 @@
                 <th>Количество вопросов</th>
                 <th>Количество правильных ответов</th>
                 <th>Оценка</th>
+                <th>Действия</th>
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ user.get_short_name }}</td>
-                    <td>{{ date|date:"d.m.Y" }}</td>
-                    <td>{{ time_of_test }}</td>
-                    <td>{{ number_of_questions }}</td>
-                    <td>{{ number_of_correct_answers }}</td>
-                    <td>{{ rating }}%</td>
+            {% for journal in journal_list %}
+                {% if journal.result >= 70 %}
+                <tr class="success">
+                {% elif journal.result >= 40 %}
+                <tr class="warning">
+                {% else %}
+                <tr class="danger">
+                {% endif %}
+                    <td>{{ journal.user.get_full_name }}</td>
+                    <td>{{ journal.end_date|date:"d.m.Y" }}</td>
+                    <td></td>
+                    <td>{{ journal.number_of_questions }}</td>
+                    <td>{{ journal.number_of_correct_answers }}</td>
+                    <td>{{ journal.result }}%</td>
+                    <td></td>
                 </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

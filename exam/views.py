@@ -17,8 +17,28 @@ def index(request):
 def dashboard(request):
     if "delete" in request.POST:
         Test.objects.get(id=int(request.POST["delete"])).delete()
-    test_list = Test.objects.filter(author=request.user)
-    return render(request, "exam/dashboard.html", {"test_list": test_list})
+        test_list = Test.objects.filter(author=request.user)
+        return render(request, "exam/dashboard.html", {"test_list": test_list})
+    elif "journal" in request.POST:
+        return HttpResponseRedirect(reverse("journal", args=[request.POST["journal"]]))
+    else:
+        test_list = Test.objects.filter(author=request.user)
+        return render(request, "exam/dashboard.html", {"test_list": test_list})
+
+
+
+@login_required(login_url='/')
+def journal(request, id):
+    test = Test.objects.get(id=id)
+    journal_list = Journal.objects.filter(test=test)
+    return render(
+        request,
+        "exam/journal.html",
+        {
+            "test": test,
+            "journal_list": journal_list
+        }
+    )
 
 
 def get_test_list(request):
