@@ -1,8 +1,10 @@
 from django.core.exceptions import SuspiciousOperation
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.template import Context
+from django.template.loader import get_template
 from exam.models import Category, Test, TestImage, Progress, Journal
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
 from django.utils import timezone
@@ -13,6 +15,32 @@ def index(request):
     return render(request, "exam/index.html")
 
 
+def prepare_test_html(id):
+    """
+    Prepares the interactive html-file containing test for download
+    :param id: id of the test
+    :return:
+    """
+    test = Test.objects.get(id=id)
+    if test.test:
+        exem_test = pickle.loads(test.test)
+    else:
+        exem_test = None
+
+    template = get_template("exam/test_template.html")
+    context = Context(
+        {
+            "test": test,
+            "exem_test": exem_test
+        }
+    )
+    html = template.render(context)
+
+    response = HttpResponse(html, content_type='application/html')
+    response['Content-Disposition'] = 'attachment; filename="test_' + str(id) + '.html"'
+
+    return response
+
 @login_required(login_url='/')
 def dashboard(request):
     if "delete" in request.POST:
@@ -22,6 +50,8 @@ def dashboard(request):
         return HttpResponseRedirect(reverse('dashboard'))
     elif "journal" in request.POST:
         return HttpResponseRedirect(reverse("journal", args=[request.POST["journal"]]))
+    elif "save" in request.POST:
+        return prepare_test_html(int(request.POST["save"]))
     else:
         test_list = Test.objects.filter(author=request.user)
         return render(
