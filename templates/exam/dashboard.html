@@ -57,6 +57,26 @@
                                         <td>
                                             <form action="{% url "dashboard" %}" method="post">
                                                 {% csrf_token %}
+                                                <!-- Modal dialog delete -->
+                                                <div class="modal fade" id="modalDelete{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                                        aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Удаление теста</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Вы действительно хотите удалить тест "{{ test.name }}"?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Нет</button>
+                                                                <button type="submit" name="delete" value="{{ test.id }}" class="btn btn-default">Да</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <button id="btnJournal{{ forloop.counter }}" type="submit"
                                                         class="btn btn-success" name="journal" value="{{ test.id }}">
                                                     <span class="glyphicon glyphicon-list-alt"
@@ -66,8 +86,8 @@
                                                         class="btn btn-primary" name="edit" value="{{ test.id }}">
                                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                                 </button>
-                                                <button id="btnDel{{ forloop.counter }}" type="submit"
-                                                        class="btn btn-danger" name="delete" value="{{ test.id }}">
+                                                <button id="btnDel{{ forloop.counter }}" type="button" data-toggle="modal"
+                                                        data-target="#modalDelete{{ forloop.counter }}" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
                                             </form>
