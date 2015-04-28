@@ -8,7 +8,7 @@
             <div class="row vertical-align">
                 <div class="col-lg-2">
                     <img class="img-circle"
-                         src="{{MEDIA_URL}}{{ user.picture }}"
+                         src="{{ MEDIA_URL }}{{ user.picture }}"
                          alt="Generic placeholder image" width="140" height="140">
                 </div>
                 <div class="col-lg-8">
@@ -19,59 +19,111 @@
     </div>
 {% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h5>Мои тесты:</h5>
-                    <a class="pull-right" href="{% url "create_new_test" %}"><input type="button" class="btn btn-default" value="Создать новый тест"></a>
+    {% if dashboard %}
+        <ul class="nav nav-tabs nav-justified lead">
+            <li role="presentation" class="active"><a href="{% url "dashboard" %}">Мои тесты</a></li>
+            <li role="presentation"><a href="{% url "dashboard_results" %}">Пройденные тесты</a></li>
+        </ul>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p></p>
+                        <a class="pull-right" href="{% url "create_new_test" %}"><input type="button"
+                                                                                        class="btn btn-default"
+                                                                                        value="Создать новый тест"></a>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    {% if test_list %}
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Название теста</th>
-                                <th>Категория</th>
-                                <th>Дата создания</th>
-                                <th width="170px">Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for test in test_list %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% if test_list %}
+                            <table class="table table-striped table-hover">
+                                <thead>
                                 <tr>
-                                    <th>{{ forloop.counter }}</th>
-                                    <td>{{ test.name }}</td>
-                                    <td>{{ test.category }}</td>
-                                    <td>{{ test.date_and_time|date:"d.m.Y" }}</td>
-                                    <td>
-                                        <form action="{% url "dashboard" %}" method="post">
-                                            {% csrf_token %}
-                                            <button id="btnJournal{{ forloop.counter }}" type="submit" class="btn btn-success" name="journal" value="{{ test.id }}">
-                                              <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                            </button>
-                                            <button id="btnEdit{{ forloop.counter }}" type="submit" class="btn btn-primary" name="edit" value="{{ test.id }}">
-                                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button id="btnDel{{ forloop.counter }}" type="submit" class="btn btn-danger" name="delete" value="{{ test.id }}">
-                                              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Название теста</th>
+                                    <th>Категория</th>
+                                    <th>Дата создания</th>
+                                    <th width="170px">Действия</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                        <blockquote>
-                        <h4 class="center-block">Вы ещё не создали ни одного теста</h4>
-                        </blockquote>
-                    {% endif %}
+                                </thead>
+                                <tbody>
+                                {% for test in test_list %}
+                                    <tr>
+                                        <th>{{ forloop.counter }}</th>
+                                        <td>{{ test.name }}</td>
+                                        <td>{{ test.category }}</td>
+                                        <td>{{ test.date_and_time|date:"d.m.Y" }}</td>
+                                        <td>
+                                            <form action="{% url "dashboard" %}" method="post">
+                                                {% csrf_token %}
+                                                <button id="btnJournal{{ forloop.counter }}" type="submit"
+                                                        class="btn btn-success" name="journal" value="{{ test.id }}">
+                                                    <span class="glyphicon glyphicon-list-alt"
+                                                          aria-hidden="true"></span>
+                                                </button>
+                                                <button id="btnEdit{{ forloop.counter }}" type="submit"
+                                                        class="btn btn-primary" name="edit" value="{{ test.id }}">
+                                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button id="btnDel{{ forloop.counter }}" type="submit"
+                                                        class="btn btn-danger" name="delete" value="{{ test.id }}">
+                                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <blockquote>
+                                <h4 class="center-block">Вы ещё не создали ни одного теста</h4>
+                            </blockquote>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <ul class="nav nav-tabs nav-justified lead">
+            <li role="presentation"><a href="{% url "dashboard" %}">Мои тесты</a></li>
+            <li role="presentation" class="active"><a href="{% url "dashboard_results" %}">Пройденные тесты</a></li>
+        </ul>
+        <p></p>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Название теста</th>
+                        <th>Начало тестирования</th>
+                        <th>Завершение тестирования</th>
+                        <th>Количество вопросов</th>
+                        <th>Количество правильных ответов</th>
+                        <th>Оценка</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for journal in journal_list %}
+                        {% if journal.result >= 70 %}
+                            <tr class="success">
+                                {% elif journal.result >= 40 %}
+                            <tr class="warning">
+                                {% else %}
+                            <tr class="danger">
+                        {% endif %}
+                    <td>{{ journal.test.name }}</td>
+                    <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.number_of_questions }}</td>
+                    <td>{{ journal.number_of_correct_answers }}</td>
+                    <td>{{ journal.result }}%</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

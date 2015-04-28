@@ -14,11 +14,5 @@ window.onload=function() {
         $("#liTestConstructor").addClass("active");
     } else if (pathname.indexOf('tests') + 1) {
         $("#liTests").addClass("active");
-    } else if (pathname.indexOf('start_test') + 1) {
-        $("#liTests").addClass("active");
-    } else if (pathname.indexOf('next_question') + 1) {
-        $("#liTests").addClass("active");
-    } else if (pathname.indexOf('end_test') + 1) {
-        $("#liTests").addClass("active");
     }
 };

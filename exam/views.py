@@ -19,13 +19,38 @@ def dashboard(request):
     if "delete" in request.POST:
         Test.objects.get(id=int(request.POST["delete"])).delete()
         test_list = Test.objects.filter(author=request.user)
-        return render(request, "exam/dashboard.html", {"test_list": test_list})
+        return render(
+            request,
+            "exam/dashboard.html",
+            {
+                "dashboard": True,
+                "test_list": test_list
+            }
+        )
     elif "journal" in request.POST:
         return HttpResponseRedirect(reverse("journal", args=[request.POST["journal"]]))
     else:
         test_list = Test.objects.filter(author=request.user)
-        return render(request, "exam/dashboard.html", {"test_list": test_list})
+        return render(
+            request,
+            "exam/dashboard.html",
+            {
+                "dashboard": True,
+                "test_list": test_list
+            }
+        )
 
+@login_required(login_url='/')
+def dashboard_results(request):
+    journal_list = Journal.objects.filter(user=request.user)
+    return render(
+        request,
+        "exam/dashboard.html",
+        {
+            "dashboard": False,
+            "journal_list": journal_list
+        }
+    )
 
 
 @login_required(login_url='/')
@@ -262,7 +287,7 @@ def create_new_question(request, id):
     type_list = [
             "Содержит один или несколько правильных вариантов ответа",
             "Содержит только один правильный вариант ответа",
-            "Вопрос со свободной формой ответа"
+            "Вопрос со свободной формой ответа",
         ]
     if "type" in request.POST and int(request.POST["type"]) in (1, 2, 3):
         if test.test is None or test.test == b'':
