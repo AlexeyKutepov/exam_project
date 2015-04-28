@@ -44,7 +44,7 @@
                                     <th>Название теста</th>
                                     <th>Категория</th>
                                     <th>Дата создания</th>
-                                    <th width="170px">Действия</th>
+                                    <th width="220px">Действия</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -78,16 +78,24 @@
                                                 </div>
 
                                                 <button id="btnJournal{{ forloop.counter }}" type="submit"
-                                                        class="btn btn-success" name="journal" value="{{ test.id }}">
+                                                        class="btn btn-success" name="journal" value="{{ test.id }}"
+                                                        title="Журнал с оценками">
                                                     <span class="glyphicon glyphicon-list-alt"
                                                           aria-hidden="true"></span>
                                                 </button>
                                                 <button id="btnEdit{{ forloop.counter }}" type="submit"
-                                                        class="btn btn-primary" name="edit" value="{{ test.id }}">
+                                                        class="btn btn-primary" name="edit" value="{{ test.id }}"
+                                                        title="Редактировать тест">
                                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                                 </button>
+                                                <button id="btnEdit{{ forloop.counter }}" type="submit"
+                                                        class="btn btn-info" name="save" value="{{ test.id }}"
+                                                        title="Скачать тест и сохранить на диск">
+                                                    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                </button>
                                                 <button id="btnDel{{ forloop.counter }}" type="button" data-toggle="modal"
-                                                        data-target="#modalDelete{{ forloop.counter }}" class="btn btn-danger">
+                                                        data-target="#modalDelete{{ forloop.counter }}" class="btn btn-danger"
+                                                        title="Удалить тест">
                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
                                             </form>
