@@ -48,16 +48,20 @@ def dashboard_results(request):
 
 @login_required(login_url='/')
 def journal(request, id):
-    test = Test.objects.get(id=id)
-    journal_list = Journal.objects.filter(test=test)
-    return render(
-        request,
-        "exam/journal.html",
-        {
-            "test": test,
-            "journal_list": journal_list
-        }
-    )
+    if "delete" in request.POST:
+        Journal.objects.get(id=int(request.POST["delete"])).delete()
+        return HttpResponseRedirect(reverse('journal', args=[id]))
+    else:
+        test = Test.objects.get(id=id)
+        journal_list = Journal.objects.filter(test=test)
+        return render(
+            request,
+            "exam/journal.html",
+            {
+                "test": test,
+                "journal_list": journal_list
+            }
+        )
 
 
 def get_test_list(request):
