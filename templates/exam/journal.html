@@ -33,20 +33,32 @@
             <tbody>
             {% for journal in journal_list %}
                 {% if journal.result >= 70 %}
-                <tr class="success">
-                {% elif journal.result >= 40 %}
-                <tr class="warning">
-                {% else %}
-                <tr class="danger">
+                    <tr class="success">
+                        {% elif journal.result >= 40 %}
+                    <tr class="warning">
+                        {% else %}
+                    <tr class="danger">
                 {% endif %}
-                    <td>{{ journal.user.get_full_name }}</td>
-                    <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
-                    <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
-                    <td>{{ journal.number_of_questions }}</td>
-                    <td>{{ journal.number_of_correct_answers }}</td>
-                    <td>{{ journal.result }}%</td>
-                    <td></td>
-                </tr>
+            <td>{{ journal.user.get_full_name }}</td>
+            <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+            <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
+            <td>{{ journal.number_of_questions }}</td>
+            <td>{{ journal.number_of_correct_answers }}</td>
+            <td>{{ journal.result }}%</td>
+            <td>
+                <form action="{% url "journal" id=test.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="btnJournal{{ forloop.counter }}" type="submit"
+                            class="btn btn-success" name="report" value="{{ journal.id }}">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </button>
+                    <button id="btnDel{{ forloop.counter }}" type="submit"
+                            class="btn btn-danger" name="delete" value="{{ journal.id }}">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </td>
+            </tr>
             {% endfor %}
             </tbody>
         </table>

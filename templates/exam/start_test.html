@@ -32,12 +32,14 @@
                 <b>Количество вопросов: </b>{{ number_of_questions }}
             </blockquote>
         </div>
-        <div class="row centered">
-            <button id="btnStart" type="submit" class="btn btn-primary"
-                    name="start" value="{{ test.id }}">
-                Начать тестирование
-            </button>
-        </div>
+        {% if number_of_questions != 0 %}
+            <div class="row centered">
+                <button id="btnStart" type="submit" class="btn btn-primary"
+                        name="start" value="{{ test.id }}">
+                    Начать тестирование
+                </button>
+            </div>
+        {% endif %}
         </form>
     {% else %}
         {% if test.is_public %}
@@ -83,12 +85,14 @@
                         </blockquote>
                     </div>
                 </div>
+            {% if number_of_questions != 0 %}
                 <div class="row centered">
                     <button id="btnStart" type="submit" class="btn btn-primary"
                             name="start" value="{{ test.id }}">
                         Начать тестирование
                     </button>
                 </div>
+            {% endif %}
             </form>
         {% else %}
             <blockquote>

@@ -1,4 +1,3 @@
-from datetime import timedelta
 from django.core.exceptions import SuspiciousOperation
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -19,6 +18,8 @@ def dashboard(request):
     if "delete" in request.POST:
         Test.objects.get(id=int(request.POST["delete"])).delete()
         test_list = Test.objects.filter(author=request.user)
+        request.user.rating -= 10
+        request.user.save()
         return render(
             request,
             "exam/dashboard.html",
@@ -86,7 +87,7 @@ def start_test(request):
             exem_test = pickle.loads(test.test)
             number_of_questions = len(exem_test.get_questions())
         else:
-            number_of_questions = None
+            number_of_questions = 0
         progress = Progress.objects.filter(user=request.user, test=test)
         if not progress:
             Progress.objects.get_or_create(
@@ -191,6 +192,12 @@ def next_question(request, id, number):
                 result=result_of_test,
                 report=progress.result_list
             )
+
+            test.rating += 1
+            test.save()
+            request.user.rating += 1
+            request.user.save()
+
             return HttpResponseRedirect(reverse("end_test", args=[journal.id]))
         else:
             number += 1
@@ -235,7 +242,6 @@ def end_test(request, id):
     journal = Journal.objects.get(id=id)
     if not journal:
         raise SuspiciousOperation("Некорректный запрос")
-
     return render(
         request,
         "exam/end_test.html",
@@ -267,6 +273,8 @@ def create_new_test(request):
             author=request.user,
             is_public=is_public,
         )
+        request.user.rating += 10
+        request.user.save()
         return HttpResponseRedirect(reverse("create_new_question", args=[test.id]))
     else:
         category_list = Category.objects.all()
@@ -338,6 +346,8 @@ def create_new_question(request, id):
         exem_test.add_question(question)
         test.test = pickle.dumps(exem_test)
         test.save()
+        request.user.rating += 1
+        request.user.save()
         if "complete" in request.POST:
             return HttpResponseRedirect(reverse('dashboard'))
         else:

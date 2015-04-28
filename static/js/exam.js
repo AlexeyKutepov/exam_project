@@ -14,6 +14,7 @@ $(document).ready(function () {
         switch ($(this).val()) {
             case "1":
                 $("[name='trueAnswer']").prop('type', "checkbox");
+                $("#isTrueAnswer1").prop( "required", false )
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
                 $("#inputOpenAnswer").prop('required', false);
@@ -28,6 +29,7 @@ $(document).ready(function () {
                 break;
             case "2":
                 $("[name='trueAnswer']").prop('type', "radio");
+                $("#isTrueAnswer1").prop( "required", true );
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
                 $("#inputOpenAnswer").prop('required',false);
@@ -41,6 +43,7 @@ $(document).ready(function () {
                 }
                 break;
             case "3":
+                $("#isTrueAnswer1").prop( "required", false )
                 $('#divCloseAnswer').hide();
                 $("#divOpenAnswer").show();
                 $("#inputOpenAnswer").prop('required',true);
