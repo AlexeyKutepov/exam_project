@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.core.exceptions import SuspiciousOperation
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -103,6 +104,7 @@ def next_question(request, id, number):
     test = Test.objects.get(id=id)
     progress = Progress.objects.filter(user=request.user, test=test)[0]
     result_list = []
+    exem_test = pickle.loads(test.test)
 
     if not progress.result_list:
         if number > 1:
@@ -113,8 +115,10 @@ def next_question(request, id, number):
             return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
         elif len(result_list) + 1 < number:
             return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
+        elif number > len(exem_test.get_questions()):
+            return HttpResponseRedirect(reverse("get_test_list"))
 
-    exem_test = pickle.loads(test.test)
+
     question = exem_test.get_questions()[number - 1]
 
     if "answer" in request.POST:
@@ -206,16 +210,13 @@ def end_test(request, id):
     journal = Journal.objects.get(id=id)
     if not journal:
         raise SuspiciousOperation("Некорректный запрос")
+
     return render(
         request,
         "exam/end_test.html",
         {
-            "test_name": journal.test.name,
-            "date": journal.end_date,
-            "time_of_test": journal.end_date - journal.start_date,
-            "number_of_questions": journal.number_of_questions,
-            "number_of_correct_answers": journal.number_of_correct_answers,
-            "rating": journal.result,
+            "journal": journal,
+            "time_for_test": journal.end_date - journal.start_date
         }
     )
 

@@ -14,22 +14,22 @@
 {% endblock %}
 {% block content %}
     <p></p>
-    {% if rating >= 70 %}
+    {% if journal.result >= 70 %}
     <div class="panel panel-success">
-    {% elif rating >= 40 %}
+    {% elif journal.result >= 40 %}
     <div class="panel panel-warning">
     {% else %}
     <div class="panel panel-danger">
     {% endif %}
         <div class="panel-heading">
-            <b class="white_color">{{ test_name }}</b>
+            <b class="white_color">{{ journal.test.name }}</b>
         </div>
         <table class="table">
             <thead>
             <tr>
                 <th>Пользователь</th>
-                <th>Дата</th>
-                <th>Время выполнения теста</th>
+                <th>Начало тестирования</th>
+                <th>Завершение тестирования</th>
                 <th>Количество вопросов</th>
                 <th>Количество правильных ответов</th>
                 <th>Оценка</th>
@@ -38,11 +38,11 @@
             <tbody>
                 <tr>
                     <td>{{ user.get_short_name }}</td>
-                    <td>{{ date|date:"d.m.Y" }}</td>
-                    <td>{{ time_of_test }}</td>
-                    <td>{{ number_of_questions }}</td>
-                    <td>{{ number_of_correct_answers }}</td>
-                    <td>{{ rating }}%</td>
+                    <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.number_of_questions }}</td>
+                    <td>{{ journal.number_of_correct_answers }}</td>
+                    <td>{{ journal.result }}%</td>
                 </tr>
             </tbody>
         </table>

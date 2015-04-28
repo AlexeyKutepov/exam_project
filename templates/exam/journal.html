@@ -22,8 +22,8 @@
             <thead>
             <tr>
                 <th>Пользователь</th>
-                <th>Дата</th>
-                <th>Время выполнения теста</th>
+                <th>Начало тестирования</th>
+                <th>Завершение тестирования</th>
                 <th>Количество вопросов</th>
                 <th>Количество правильных ответов</th>
                 <th>Оценка</th>
@@ -40,12 +40,8 @@
                 <tr class="danger">
                 {% endif %}
                     <td>{{ journal.user.get_full_name }}</td>
-                    <td>{{ journal.end_date|date:"d.m.Y" }}</td>
-                    <td>
-                    {% if  journal.time_for_test %}
-                        {{ journal.time_for_test }}
-                    {% endif %}
-                    </td>
+                    <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ journal.number_of_questions }}</td>
                     <td>{{ journal.number_of_correct_answers }}</td>
                     <td>{{ journal.result }}%</td>
