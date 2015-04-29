@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
 from django.utils import timezone
 import pickle
+import math
 
 
 def index(request):
@@ -96,6 +97,9 @@ def journal(request, id):
 
 
 def get_test_list(request, page):
+    page = int(page)
+    if page < 1:
+        return HttpResponseRedirect(reverse("get_test_list", args=[1]))
     search_query = None
     if "search" in request.GET:
         search_query = request.GET["search"]
@@ -103,15 +107,28 @@ def get_test_list(request, page):
         for term in search_query.split():
             query_set |= Q(name__contains=term)
         test_list = Test.objects.filter(query_set)
+        number_of_pages = math.ceil(len(test_list) / 5)
     else:
         test_list = Test.objects.order_by('-date_and_time', '-rating')
+        number_of_pages = math.ceil(len(test_list) / 5)
+    if page > number_of_pages:
+        return HttpResponseRedirect(reverse("get_test_list", args=[number_of_pages]))
 
+    a = (page - 1) * 5
+    b = page * 5
+
+    start_page = int(page/10) * 10
+    end_page = start_page + 10
+    if end_page > number_of_pages:
+        end_page = number_of_pages
     return render(
         request,
         "exam/test_list.html",
         {
-            "test_list": test_list,
-            "search_query": search_query
+            "test_list": test_list[a: b],
+            "search_query": search_query,
+            "number_of_pages": [i+1 for i in range(start_page, end_page)],
+            "current_page": page
         }
     )
 
