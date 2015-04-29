@@ -52,7 +52,7 @@
                             <li id="liDashboard"><a href="{% url "dashboard" %}">Рабочий стол</a></li>
                             <li id="liTestConstructor"><a href="{% url "create_new_test" %}">Конструктор тестов</a></li>
                         {% endif %}
-                        <li id="liTests"><a href="{% url "get_test_list" %}">Тесты</a></li>
+                        <li id="liTests"><a href="{% url "get_test_list" page=1 %}">Тесты</a></li>
                         <li id="liAbout"><a href="#">О проекте</a></li>
                     </ul>
                     {% block auth_bar %}

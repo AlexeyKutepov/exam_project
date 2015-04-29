@@ -95,7 +95,7 @@ def journal(request, id):
         )
 
 
-def get_test_list(request):
+def get_test_list(request, page):
     search_query = None
     if "search" in request.GET:
         search_query = request.GET["search"]
@@ -105,6 +105,7 @@ def get_test_list(request):
         test_list = Test.objects.filter(query_set)
     else:
         test_list = Test.objects.order_by('-date_and_time', '-rating')
+
     return render(
         request,
         "exam/test_list.html",
@@ -156,7 +157,7 @@ def start_test(request):
             }
         )
     else:
-        return HttpResponseRedirect(reverse("get_test_list"))
+        return HttpResponseRedirect(reverse("get_test_list", args=[1]))
 
 
 def next_question(request, id, number):
@@ -184,7 +185,7 @@ def next_question(request, id, number):
         elif len(result_list) + 1 < number:
             return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
         elif number > len(exem_test.get_questions()):
-            return HttpResponseRedirect(reverse("get_test_list"))
+            return HttpResponseRedirect(reverse("get_test_list", args=[1]))
 
 
     question = exem_test.get_questions()[number - 1]

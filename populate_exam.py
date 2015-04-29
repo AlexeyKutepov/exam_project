@@ -32,12 +32,13 @@ def populate():
         "Moscow"
     )
     category1 = add_cat("category 1")
-    add_test(
-        "test 1",
-        "test 1 description",
-        user1,
-        category1
-    )
+    for i in range(20):
+        add_test(
+            "test " + str(i) + " cat 1",
+            "test " + str(i) + " description",
+            user1,
+            category1
+        )
     user2 = add_user(
         "ipetrov@gmail.com",
         "petrov_pass",
@@ -50,12 +51,13 @@ def populate():
         "Moscow"
     )
     category2 = add_cat("category 2")
-    add_test(
-        "test 2",
-        "test 2 description",
-        user2,
-        category2
-    )
+    for i in range(20):
+        add_test(
+            "test " + str(i) + " cat 2",
+            "test " + str(i) + " description",
+            user2,
+            category2
+        )
     user3 = add_user(
         "nikolaev@gmail.com",
         "nikolaev_pass",
@@ -68,12 +70,13 @@ def populate():
         "Moscow"
     )
     category3 = add_cat("category 3")
-    add_test(
-        "test 3",
-        "test 3 description",
-        user3,
-        category3
-    )
+    for i in range(20):
+        add_test(
+            "test " + str(i) + " cat 3",
+            "test " + str(i) + " description",
+            user3,
+            category3
+        )
     user4 = add_user(
         "vasileva@gmail.com",
         "vasileva_pass",
@@ -86,12 +89,13 @@ def populate():
         "Moscow"
     )
     category4 = add_cat("category 4")
-    add_test(
-        "test 4",
-        "test 4 description",
-        user4,
-        category4
-    )
+    for i in range(20):
+        add_test(
+            "test " + str(i) + " cat 4",
+            "test " + str(i) + " description",
+            user4,
+            category4
+        )
     user5 = add_user(
         "nikiforova@gmail.com",
         "nikiforova_pass",
@@ -104,12 +108,13 @@ def populate():
         "Moscow"
     )
     category5 = add_cat("category 5")
-    add_test(
-        "test 5",
-        "test 5 description",
-        user5,
-        category5
-    )
+    for i in range(20):
+        add_test(
+            "test " + str(i) + " cat 5",
+            "test " + str(i) + " description",
+            user5,
+            category5
+        )
     add_cat("category 6")
     add_cat("category 7")
     add_cat("category 8")
@@ -181,10 +186,10 @@ def add_test(name, description, author, category):
     :return:
     """
     test = exam_test.ExamTest()
-    number_of_questions = random.randint(1, 100)
-    number_of_answers = random.randint(2, 10)
+    number_of_questions = random.randint(1, 50)
     for i in range(number_of_questions):
         question = exam_test.Question("question " + str(i))
+        number_of_answers = random.randint(2, 10)
         for j in range(number_of_answers):
             if random.randint(0, 1) == 0:
                 is_correct = False
