@@ -31,7 +31,7 @@ def prepare_test_html(id):
     context = Context(
         {
             "test": test,
-            "exem_test": exem_test
+            "question_list": exem_test.get_questions()
         }
     )
     html = template.render(context)
