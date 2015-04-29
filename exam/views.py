@@ -117,7 +117,7 @@ def get_test_list(request, page):
     a = (page - 1) * 5
     b = page * 5
 
-    start_page = int(page/10) * 10
+    start_page = int((page-1)/10) * 10
     end_page = start_page + 10
     if end_page > number_of_pages:
         end_page = number_of_pages
