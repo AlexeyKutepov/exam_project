@@ -107,15 +107,15 @@ def get_test_list(request, page):
         for term in search_query.split():
             query_set |= Q(name__contains=term)
         test_list = Test.objects.filter(query_set)
-        number_of_pages = math.ceil(len(test_list) / 5)
+        number_of_pages = math.ceil(len(test_list) / 20)
     else:
         test_list = Test.objects.order_by('-date_and_time', '-rating')
-        number_of_pages = math.ceil(len(test_list) / 5)
+        number_of_pages = math.ceil(len(test_list) / 20)
     if page > number_of_pages:
         return HttpResponseRedirect(reverse("get_test_list", args=[number_of_pages]))
 
-    a = (page - 1) * 5
-    b = page * 5
+    a = (page - 1) * 20
+    b = page * 20
 
     start_page = int((page-1)/10) * 10
     end_page = start_page + 10
