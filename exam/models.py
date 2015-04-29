@@ -140,7 +140,7 @@ class Test(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     # The category of the test
     category = models.ForeignKey(Category)
-    # Date and time
+    # date and time of create test
     date_and_time = models.DateTimeField(default=timezone.now())
     # How many users complete this test.
     rating = models.IntegerField(default=0)

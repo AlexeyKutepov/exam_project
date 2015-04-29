@@ -1,4 +1,5 @@
 from django.core.exceptions import SuspiciousOperation
+from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import Context
@@ -95,7 +96,14 @@ def journal(request, id):
 
 
 def get_test_list(request):
-    test_list = Test.objects.all()
+    if "search" in request.GET:
+        search_query = request.GET["search"]
+        query_set = Q()
+        for term in search_query.split():
+            query_set |= Q(name__contains=term)
+        test_list = Test.objects.filter(query_set)
+    else:
+        test_list = Test.objects.order_by('-date_and_time', '-rating')
     return render(request, "exam/test_list.html", {"test_list": test_list})
 
 

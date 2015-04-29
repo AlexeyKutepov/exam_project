@@ -14,6 +14,23 @@
     </div>
 {% endblock %}
 {% block content %}
+    <p></p>
+    <div class="row">
+        <div class="col-lg-4">
+            <form action="{% url "get_test_list" %}" method="get">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input id="inputSearch" type="text" name="search" class="form-control" placeholder="Поиск...">
+                    <span class="input-group-btn">
+                        <button id="btnSearch" class="btn btn-default" type="submit" name="btnSearch">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <p></p>
     <div class="row">
         <div class="col-lg-12">
             {% if test_list %}
@@ -23,6 +40,7 @@
                         <th>#</th>
                         <th>Название теста</th>
                         <th>Категория</th>
+                        <th>Дата создания</th>
                         <th>Автор</th>
                         <th>Рейтинг</th>
                         <th>Действия</th>
@@ -34,6 +52,7 @@
                             <th>{{ forloop.counter }}</th>
                             <td>{{ test.name }}</td>
                             <td>{{ test.category }}</td>
+                            <td>{{ test.date_and_time|date:"d.m.Y" }}</td>
                             <td>{{ test.author.get_short_name }}</td>
                             <td>{{ test.rating }}</td>
                             <td>
