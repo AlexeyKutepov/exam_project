@@ -96,6 +96,7 @@ def journal(request, id):
 
 
 def get_test_list(request):
+    search_query = None
     if "search" in request.GET:
         search_query = request.GET["search"]
         query_set = Q()
@@ -104,7 +105,14 @@ def get_test_list(request):
         test_list = Test.objects.filter(query_set)
     else:
         test_list = Test.objects.order_by('-date_and_time', '-rating')
-    return render(request, "exam/test_list.html", {"test_list": test_list})
+    return render(
+        request,
+        "exam/test_list.html",
+        {
+            "test_list": test_list,
+            "search_query": search_query
+        }
+    )
 
 
 def start_test(request):

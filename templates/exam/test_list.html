@@ -20,7 +20,11 @@
             <form action="{% url "get_test_list" %}" method="get">
                 {% csrf_token %}
                 <div class="input-group">
-                    <input id="inputSearch" type="text" name="search" class="form-control" placeholder="Поиск...">
+                    {% if search_query %}
+                        <input id="inputSearch" type="text" name="search" class="form-control" placeholder="Поиск..." value="{{ search_query }}">
+                    {% else %}
+                        <input id="inputSearch" type="text" name="search" class="form-control" placeholder="Поиск...">
+                    {% endif %}
                     <span class="input-group-btn">
                         <button id="btnSearch" class="btn btn-default" type="submit" name="btnSearch">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
