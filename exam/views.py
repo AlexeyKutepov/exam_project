@@ -96,6 +96,37 @@ def journal(request, id):
         )
 
 
+def get_test_list_search(request, page, search):
+    page = int(page)
+    if page < 1:
+        return HttpResponseRedirect(reverse("get_test_list_search", args=[1, search]))
+    query_set = Q()
+    query_set |= Q(name__contains=search)
+    test_list = Test.objects.filter(query_set)
+    number_of_pages = math.ceil(len(test_list) / 20)
+
+    if page > number_of_pages:
+        return HttpResponseRedirect(reverse("get_test_list_search", args=[number_of_pages, search]))
+
+    a = (page - 1) * 20
+    b = page * 20
+
+    start_page = int((page-1)/10) * 10
+    end_page = start_page + 10
+    if end_page > number_of_pages:
+        end_page = number_of_pages
+    return render(
+        request,
+        "exam/test_list.html",
+        {
+            "test_list": test_list[a: b],
+            "search_query": search,
+            "number_of_pages": [i+1 for i in range(start_page, end_page)],
+            "current_page": page,
+            "start_test_number": a
+        }
+    )
+
 def get_test_list(request, page):
     page = int(page)
     if page < 1:
@@ -104,13 +135,24 @@ def get_test_list(request, page):
     if "search" in request.GET:
         search_query = request.GET["search"]
         query_set = Q()
-        for term in search_query.split():
-            query_set |= Q(name__contains=term)
+        query_set |= Q(name__contains=search_query)
         test_list = Test.objects.filter(query_set)
         number_of_pages = math.ceil(len(test_list) / 20)
     else:
         test_list = Test.objects.order_by('-date_and_time', '-rating')
         number_of_pages = math.ceil(len(test_list) / 20)
+    if number_of_pages == 0:
+        return render(
+            request,
+            "exam/test_list.html",
+            {
+                "test_list": None,
+                "search_query": search_query,
+                "number_of_pages": 1,
+                "current_page": page,
+                "start_test_number": 0
+            }
+    )
     if page > number_of_pages:
         return HttpResponseRedirect(reverse("get_test_list", args=[number_of_pages]))
 
