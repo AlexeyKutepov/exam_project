@@ -97,6 +97,13 @@ def journal(request, id):
 
 
 def get_test_list_search(request, page, search):
+    """
+    Renders test list page with search query
+    :param request: request
+    :param page: current page
+    :param search: search query
+    :return:
+    """
     page = int(page)
     if page < 1:
         return HttpResponseRedirect(reverse("get_test_list_search", args=[1, search]))
@@ -127,7 +134,14 @@ def get_test_list_search(request, page, search):
         }
     )
 
+
 def get_test_list(request, page):
+    """
+    Renders test list page
+    :param request: request
+    :param page: current page
+    :return:
+    """
     page = int(page)
     if page < 1:
         return HttpResponseRedirect(reverse("get_test_list", args=[1]))
@@ -152,7 +166,7 @@ def get_test_list(request, page):
                 "current_page": page,
                 "start_test_number": 0
             }
-    )
+        )
     if page > number_of_pages:
         return HttpResponseRedirect(reverse("get_test_list", args=[number_of_pages]))
 
