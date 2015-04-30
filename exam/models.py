@@ -157,7 +157,7 @@ class UnregisteredUser(models.Model):
     """
 
     # e-mail
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     # user's first name
     first_name = models.TextField()
     # user's middle name
@@ -172,7 +172,7 @@ class Journal(models.Model):
     """
 
     # The user, who was complete the test
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     # unregistered user
     unregistered_user = models.ForeignKey(UnregisteredUser, blank=True, null=True)
     # The completed test
@@ -200,7 +200,7 @@ class Progress(models.Model):
     """
 
     # The user, who  performs the test
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     # unregistered user
     unregistered_user = models.ForeignKey(UnregisteredUser, blank=True, null=True)
     # Start date time
