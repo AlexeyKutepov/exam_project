@@ -54,7 +54,7 @@
                     <tbody>
                     {% for test in test_list %}
                         <tr>
-                            <th>{{ forloop.counter }}</th>
+                            <th>{{ start_test_number|add:forloop.counter }}</th>
                             <td>{{ test.name }}</td>
                             <td>{{ test.category }}</td>
                             <td>{{ test.date_and_time|date:"d.m.Y" }}</td>

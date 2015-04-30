@@ -128,7 +128,8 @@ def get_test_list(request, page):
             "test_list": test_list[a: b],
             "search_query": search_query,
             "number_of_pages": [i+1 for i in range(start_page, end_page)],
-            "current_page": page
+            "current_page": page,
+            "start_test_number": a
         }
     )
 
