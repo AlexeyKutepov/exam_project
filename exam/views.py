@@ -205,23 +205,24 @@ def start_test(request):
             number_of_questions = len(exem_test.get_questions())
         else:
             number_of_questions = 0
-        progress = Progress.objects.filter(user=request.user, test=test)
-        if not progress:
-            Progress.objects.get_or_create(
-                user=request.user,
-                start_date=timezone.now(),
-                end_date=None,
-                test=test,
-                result_list=None,
-                current_result=0
-            )
-        else:
-            progress = progress[0]
-            progress.start_date = timezone.now()
-            progress.end_date = None
-            progress.result_list = None
-            progress.current_result=0
-            progress.save()
+        if request.user.id:
+            progress = Progress.objects.filter(user=request.user, test=test)
+            if not progress:
+                Progress.objects.get_or_create(
+                    user=request.user,
+                    start_date=timezone.now(),
+                    end_date=None,
+                    test=test,
+                    result_list=None,
+                    current_result=0
+                )
+            else:
+                progress = progress[0]
+                progress.start_date = timezone.now()
+                progress.end_date = None
+                progress.result_list = None
+                progress.current_result=0
+                progress.save()
         return render(
             request,
             "exam/start_test.html",

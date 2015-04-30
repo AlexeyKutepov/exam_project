@@ -151,6 +151,21 @@ class Test(models.Model):
         return self.name
 
 
+class UnregisteredUser(models.Model):
+    """
+    Unregistered user
+    """
+
+    # e-mail
+    email = models.EmailField()
+    # user's first name
+    first_name = models.TextField()
+    # user's middle name
+    middle_name = models.TextField(blank=True)
+    # user's last name
+    last_name = models.TextField()
+
+
 class Journal(models.Model):
     """
     The result journal
@@ -158,6 +173,8 @@ class Journal(models.Model):
 
     # The user, who was complete the test
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    # unregistered user
+    unregistered_user = models.ForeignKey(UnregisteredUser, blank=True, null=True)
     # The completed test
     test = models.ForeignKey(Test)
     # Date and time of start test
@@ -184,6 +201,8 @@ class Progress(models.Model):
 
     # The user, who  performs the test
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    # unregistered user
+    unregistered_user = models.ForeignKey(UnregisteredUser, blank=True, null=True)
     # Start date time
     start_date = models.DateTimeField(default=timezone.now())
     # End date time
@@ -201,3 +220,6 @@ class TestImage(models.Model):
     There are images for tests
     """
     image = models.ImageField(upload_to='test_images', blank=True)
+
+
+
