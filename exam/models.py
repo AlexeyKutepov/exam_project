@@ -157,13 +157,19 @@ class UnregisteredUser(models.Model):
     """
 
     # e-mail
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     # user's first name
     first_name = models.TextField()
     # user's middle name
-    middle_name = models.TextField(blank=True)
+    middle_name = models.TextField(blank=True, null=True)
     # user's last name
     last_name = models.TextField()
+
+    def get_full_name(self):
+        return self.last_name + ' ' + self.first_name + ' ' + self.middle_name
+
+    def get_short_name(self):
+        return self.first_name + ' ' + self.last_name
 
 
 class Journal(models.Model):

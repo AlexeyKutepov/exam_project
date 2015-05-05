@@ -41,7 +41,11 @@
                     <tr class="danger">
                 {% endif %}
             <th>{{ forloop.counter }}</th>
+            {% if journal.user %}
             <td>{{ journal.user.get_full_name }}</td>
+            {% else %}
+            <td>{{ journal.unregistered_user.get_full_name }}</td>
+            {% endif %}
             <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
             <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
             <td>{{ journal.number_of_questions }}</td>

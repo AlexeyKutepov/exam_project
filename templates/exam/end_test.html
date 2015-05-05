@@ -37,7 +37,11 @@
             </thead>
             <tbody>
                 <tr>
+                    {% if user.is_authenticated %}
                     <td>{{ user.get_short_name }}</td>
+                    {% else %}
+                    <td>{{ journal.unregistered_user.get_full_name }}</td>
+                    {% endif %}
                     <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ journal.number_of_questions }}</td>

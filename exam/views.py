@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import Context
 from django.template.loader import get_template
-from exam.models import Category, Test, TestImage, Progress, Journal
+from exam.models import Category, Test, TestImage, Progress, Journal, UnregisteredUser
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
@@ -25,15 +25,15 @@ def prepare_test_html(id):
     """
     test = Test.objects.get(id=id)
     if test.test:
-        exem_test = pickle.loads(test.test)
+        exam_test = pickle.loads(test.test)
     else:
-        exem_test = None
+        exam_test = None
 
     template = get_template("exam/test_template.html")
     context = Context(
         {
             "test": test,
-            "question_list": exem_test.get_questions()
+            "question_list": exam_test.get_questions()
         }
     )
     html = template.render(context)
@@ -201,11 +201,11 @@ def start_test(request):
     if "run" in request.POST:
         test = Test.objects.get(id=int(request.POST["run"]))
         if test.test:
-            exem_test = pickle.loads(test.test)
-            number_of_questions = len(exem_test.get_questions())
+            exam_test = pickle.loads(test.test)
+            number_of_questions = len(exam_test.get_questions())
         else:
             number_of_questions = 0
-        if request.user.id:
+        if request.user.is_authenticated():
             progress = Progress.objects.filter(user=request.user, test=test)
             if not progress:
                 Progress.objects.get_or_create(
@@ -221,7 +221,7 @@ def start_test(request):
                 progress.start_date = timezone.now()
                 progress.end_date = None
                 progress.result_list = None
-                progress.current_result=0
+                progress.current_result = 0
                 progress.save()
         return render(
             request,
@@ -231,39 +231,68 @@ def start_test(request):
                 "number_of_questions": number_of_questions
             }
         )
+    elif "start" and "email" and "firstName" and "lastName" in request.POST:
+        test = Test.objects.get(id=int(request.POST["start"]))
+        middle_name = None
+        if "middleName" in request.POST:
+            middle_name = request.POST["middleName"]
+        unregistered_user = UnregisteredUser.objects.get_or_create(
+            email=request.POST["email"],
+            first_name=request.POST["firstName"],
+            middle_name=middle_name,
+            last_name=request.POST["lastName"]
+        )
+        progress = Progress.objects.filter(unregistered_user=unregistered_user[0], test=test)
+        if not progress or len(progress) < 1:
+                progress = Progress.objects.get_or_create(
+                    unregistered_user=unregistered_user[0],
+                    start_date=timezone.now(),
+                    end_date=None,
+                    test=test,
+                    result_list=None,
+                    current_result=0
+                )
+        else:
+            progress[0].start_date = timezone.now()
+            progress[0].end_date = None
+            progress[0].result_list = None
+            progress[0].current_result = 0
+            progress[0].save()
+        return HttpResponseRedirect(reverse("next_question_unregistered_user", args=[test.id, progress[0].id, 1]))
     else:
         return HttpResponseRedirect(reverse("get_test_list", args=[1]))
 
 
-def next_question(request, id, number):
+def next_question_unregistered_user(request, id, progress_id, number):
     """
-    Shows next question
+    Shows the next question to unregistered user
     :param request:
-    :param id: - id of test
-    :param number: number of question
+    :param id:
+    :param progress:
+    :param number:
     :return:
     """
     id = int(id)
+    progress_id = int(progress_id)
     number = int(number)
     test = Test.objects.get(id=id)
-    progress = Progress.objects.filter(user=request.user, test=test)[0]
+    progress = Progress.objects.get(id=progress_id)
     result_list = []
-    exem_test = pickle.loads(test.test)
+    exam_test = pickle.loads(test.test)
 
     if not progress.result_list:
         if number > 1:
-            return HttpResponseRedirect(reverse("next_question", args=[test.id, 1]))
+            return HttpResponseRedirect(reverse("next_question_unregistered_user", args=[test.id, progress_id, 1]))
     else:
         result_list = pickle.loads(progress.result_list)
         if len(result_list) > number - 1:
-            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
+            return HttpResponseRedirect(reverse("next_question_unregistered_user", args=[test.id, progress_id, len(result_list) + 1]))
         elif len(result_list) + 1 < number:
-            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
-        elif number > len(exem_test.get_questions()):
+            return HttpResponseRedirect(reverse("next_question_unregistered_user", args=[test.id, progress_id, len(result_list) + 1]))
+        elif number > len(exam_test.get_questions()):
             return HttpResponseRedirect(reverse("get_test_list", args=[1]))
 
-
-    question = exem_test.get_questions()[number - 1]
+    question = exam_test.get_questions()[number - 1]
 
     if "answer" in request.POST:
         is_correct = True
@@ -295,17 +324,132 @@ def next_question(request, id, number):
         progress.result_list = pickle.dumps(result_list)
         progress.save()
 
-        if number == len(exem_test.get_questions()):
+        if number == len(exam_test.get_questions()):
             progress.end_date = timezone.now()
             progress.save()
 
-            result_of_test = int(100/len(exem_test.get_questions()) * progress.current_result)
+            result_of_test = int(100/len(exam_test.get_questions()) * progress.current_result)
+            journal = Journal.objects.create(
+                unregistered_user=progress.unregistered_user,
+                test=test,
+                start_date=progress.start_date,
+                end_date=progress.end_date,
+                number_of_questions=len(exam_test.get_questions()),
+                number_of_correct_answers=progress.current_result,
+                result=result_of_test,
+                report=progress.result_list
+            )
+
+            test.rating += 1
+            test.save()
+
+            return HttpResponseRedirect(reverse("end_test", args=[journal.id]))
+        else:
+            number += 1
+            return HttpResponseRedirect(reverse("next_question_unregistered_user", args=[test.id, progress_id, number]))
+
+    progress_value = 100/len(exam_test.get_questions()) * (number - 1)
+    answers = question.get_answers()
+    if question.get_image():
+        image_test = TestImage.objects.get(id=question.get_image())
+        image = image_test.image.url
+    else:
+        image = None
+    if question.get_test_type() != TestType.OPEN_TYPE:
+        variant_list = []
+        for answer in answers:
+            variant_list.append(answer.get_answer())
+    else:
+        variant_list = None
+
+    return render(
+        request,
+        "exam/next_question.html",
+        {
+            "test_id": id,
+            "progress": progress_value,
+            "progress_id": progress_id,
+            "number_of_question": number,
+            "question": question.get_question(),
+            "type": question.get_test_type().value,
+            "variant_list": variant_list,
+            "image": image
+        }
+    )
+
+
+
+def next_question(request, id, number):
+    """
+    Shows next question
+    :param request:
+    :param id: - id of test
+    :param number: number of question
+    :return:
+    """
+    id = int(id)
+    number = int(number)
+    test = Test.objects.get(id=id)
+    progress = Progress.objects.filter(user=request.user, test=test)[0]
+    result_list = []
+    exam_test = pickle.loads(test.test)
+
+    if not progress.result_list:
+        if number > 1:
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, 1]))
+    else:
+        result_list = pickle.loads(progress.result_list)
+        if len(result_list) > number - 1:
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
+        elif len(result_list) + 1 < number:
+            return HttpResponseRedirect(reverse("next_question", args=[test.id, len(result_list) + 1]))
+        elif number > len(exam_test.get_questions()):
+            return HttpResponseRedirect(reverse("get_test_list", args=[1]))
+
+
+    question = exam_test.get_questions()[number - 1]
+
+    if "answer" in request.POST:
+        is_correct = True
+        if question.get_test_type() is TestType.OPEN_TYPE:
+            if question.get_answers().get_answer() != request.POST["answer"]:
+                is_correct = False
+        elif question.get_test_type() is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
+            correct_answer_list = []
+            for item in range(len(question.get_answers())):
+                if question.get_answers()[item].is_correct():
+                    correct_answer_list.append(str(item + 1))
+            is_correct = correct_answer_list == request.POST.getlist("answer")
+        elif question.get_test_type() is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
+            correct_answer = 1
+            for item in range(len(question.get_answers())):
+                if question.get_answers()[item].is_correct():
+                    correct_answer = item + 1
+                    break
+            is_correct = str(correct_answer) == request.POST["answer"]
+
+        if is_correct:
+            progress.current_result += 1
+        result_list.append(
+            ExamResult(
+                is_correct=is_correct,
+                answer=request.POST["answer"]
+            )
+        )
+        progress.result_list = pickle.dumps(result_list)
+        progress.save()
+
+        if number == len(exam_test.get_questions()):
+            progress.end_date = timezone.now()
+            progress.save()
+
+            result_of_test = int(100/len(exam_test.get_questions()) * progress.current_result)
             journal = Journal.objects.create(
                 user=request.user,
                 test=test,
                 start_date=progress.start_date,
                 end_date=progress.end_date,
-                number_of_questions=len(exem_test.get_questions()),
+                number_of_questions=len(exam_test.get_questions()),
                 number_of_correct_answers=progress.current_result,
                 result=result_of_test,
                 report=progress.result_list
@@ -321,7 +465,7 @@ def next_question(request, id, number):
             number += 1
             return HttpResponseRedirect(reverse("next_question", args=[test.id, number]))
 
-    progress = 100/len(exem_test.get_questions()) * (number - 1)
+    progress = 100/len(exam_test.get_questions()) * (number - 1)
     answers = question.get_answers()
     if question.get_image():
         image_test = TestImage.objects.get(id=question.get_image())
@@ -359,6 +503,8 @@ def end_test(request, id):
     """
     journal = Journal.objects.get(id=id)
     if not journal:
+        raise SuspiciousOperation("Некорректный запрос")
+    elif not request.user.is_authenticated() and journal.user:
         raise SuspiciousOperation("Некорректный запрос")
     return render(
         request,
@@ -417,9 +563,9 @@ def create_new_question(request, id):
         ]
     if "type" in request.POST and int(request.POST["type"]) in (1, 2, 3):
         if test.test is None or test.test == b'':
-            exem_test = ExamTest()
+            exam_test = ExamTest()
         else:
-            exem_test = pickle.loads(test.test)
+            exam_test = pickle.loads(test.test)
         question_type = TestType(int(request.POST["type"]))
 
         if "question" in request.POST:
@@ -461,8 +607,8 @@ def create_new_question(request, id):
                 )
             )
 
-        exem_test.add_question(question)
-        test.test = pickle.dumps(exem_test)
+        exam_test.add_question(question)
+        test.test = pickle.dumps(exam_test)
         test.save()
         request.user.rating += 1
         request.user.save()
@@ -473,7 +619,7 @@ def create_new_question(request, id):
                 request,
                 "exam/create_new_question.html",
                 {
-                    "number_of_question": len(exem_test.get_questions()) + 1,
+                    "number_of_question": len(exam_test.get_questions()) + 1,
                     "type_list": type_list,
                     "test_id": id
                 }

@@ -43,7 +43,7 @@
         </form>
     {% else %}
         {% if test.is_public %}
-            <form action="{% url "next_question" id=test.id number=1 %}" method="post">
+            <form action="{% url "start_test" %}" method="post">
             {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-6">

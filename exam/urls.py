@@ -14,5 +14,6 @@ urlpatterns = patterns('',
         url(r'^tests/(?P<page>\d+)/$', views.get_test_list, name='get_test_list'),
         url(r'^start_test/', views.start_test, name='start_test'),
         url(r'^next_question/(?P<id>\d+)/(?P<number>\d+)/$', views.next_question, name='next_question'),
+        url(r'^next_question/(?P<id>\d+)/(?P<progress_id>\d+)/(?P<number>\d+)/$', views.next_question_unregistered_user, name='next_question_unregistered_user'),
         url(r'^end_test/(?P<id>\d+)/$', views.end_test, name='end_test'),
 )
