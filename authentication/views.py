@@ -110,8 +110,39 @@ def create_profile(request):
 
 @login_required(login_url='/')
 def settings(request):
-    return render(
-            request,
-            "authentication/settings.html",
-            {}
-        )
+    if "save" in request.POST:
+        if "picture" in request.FILES:
+            picture = request.FILES["picture"]
+        else:
+            picture = None
+        user = UserProfile.objects.get(id=request.user.id)
+        email = request.POST["email"]
+        user.email = email
+        password1 = request.POST["password1"]
+        password2 = request.POST["password2"]
+        password = None
+        if password1 and password2 and password1 != "" and password2 != "" and password1 == password2:
+            password = request.POST["password1"]
+            user.password = password
+        user.first_name = request.POST["firstName"]
+        user.middle_name = request.POST["middleName"]
+        user.last_name = request.POST["lastName"]
+        user.date_of_birth = request.POST["dateOfBirth"]
+        user.gender = request.POST["gender"]
+        user.country = request.POST["country"]
+        user.city = request.POST["city"]
+        user.address = request.POST["address"]
+        user.institution = request.POST["institution"]
+        user.position = request.POST["position"]
+        if picture:
+            user.picture = picture
+        user.save()
+        if password:
+            auth.authenticate(email=email, password=password)
+        return HttpResponseRedirect(reverse("dashboard"))
+    else:
+        return render(
+                request,
+                "authentication/settings.html",
+                {}
+            )

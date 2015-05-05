@@ -15,7 +15,7 @@
 {% endblock %}
 {% block content %}
     <p></p>
-    <form id="formCreateProfile" action="{% url "create_profile" %}" method="post" enctype="multipart/form-data">
+    <form id="formSettings" action="{% url "settings" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
         <div class="col-lg-3 col-lg-offset-2">
@@ -41,15 +41,23 @@
                 <input id="inputEmail" name="email" type="email" class="form-control" onchange="checkEmail(this)" onkeyup="checkEmail(this)" value="{{ user.email }}" required>
                 <label id="labelErrorEmail" class="control-label" for="inputEmail" hidden>Не корректный адрес электронной почты</label>
             </div>
-            <div id="divPassword1" class="form-group">
-                <label class="control-label" for="inputPassword1"><b>Пароль (не менее 6 символов):</b></label>
-                <input id="inputPassword1" name="password1" type="password" class="form-control" onchange="checkPassword1(this)" onkeyup="checkPassword1(this)" required>
-                <label id="labelErrorPassword1" class="control-label" for="inputPassword1" hidden>Пароль должен быть не меннее 6 символов</label>
-            </div>
-            <div id="divPassword2" class="form-group">
-                <label class="control-label" for="inputPassword2"><b>Подтверждение пароля:</b></label>
-                <input id="inputPassword2" name="password2" type="password" class="form-control" onchange="checkPassword2(this)" onkeyup="checkPassword2(this)" required>
-                <label id="labelErrorPassword2" class="control-label" for="inputPassword1" hidden>Пароли не совпадают</label>
+            <button id="btnChangePassword" name="changePassword" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" value="0" onclick="onChangePasswordClick(this)">
+                Изменить пароль
+            </button>
+            <p></p>
+            <div class="collapse" id="collapseExample">
+                <div class="well">
+                    <div id="divPassword1" class="form-group">
+                        <label class="control-label" for="inputPassword1"><b>Пароль (не менее 6 символов):</b></label>
+                        <input id="inputPassword1" name="password1" type="password" class="form-control" onchange="checkPassword1(this)" onkeyup="checkPassword1(this)">
+                        <label id="labelErrorPassword1" class="control-label" for="inputPassword1" hidden>Пароль должен быть не меннее 6 символов</label>
+                    </div>
+                    <div id="divPassword2" class="form-group">
+                        <label class="control-label" for="inputPassword2"><b>Подтверждение пароля:</b></label>
+                        <input id="inputPassword2" name="password2" type="password" class="form-control" onchange="checkPassword2(this)" onkeyup="checkPassword2(this)">
+                        <label id="labelErrorPassword2" class="control-label" for="inputPassword1" hidden>Пароли не совпадают</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -69,7 +77,7 @@
             </div>
             <div id="divDateOfBirth" class="form-group">
                 <label class="control-label" for="inputDateOfBirth"><b>Дата рождения:</b></label>
-                <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control" onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" value="{{ user.date_of_birth }}" required>
+                <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control" onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" value="{{ user.date_of_birth|date:"Y-m-d" }}" required>
             </div>
             <label class="control-label" for="divGender">Пол:</label>
             {% if user.gender == "MALE" %}
@@ -117,8 +125,8 @@
     </div>
     <div class="row">
         <div class="col-lg-offset-2 col-lg-6">
-            <button id="btnRegister" type="submit" class="btn btn-success">Сохранить изменения</button>
-            <a href="/"><input type="button" class="btn btn-default" value="Отмена"/></a>
+            <button id="btnRegister" type="submit" class="btn btn-success" name="save">Сохранить изменения</button>
+            <a href="{% url "dashboard" %}"><input type="button" class="btn btn-default" value="Отмена"/></a>
         </div>
     </div>
     </form>

@@ -120,15 +120,37 @@ function checkDateOfBirth(input) {
 }
 
 
+function onChangePasswordClick(input) {
+    if (input.value == 0) {
+        input.value = 1;
+        $("#inputPassword1").prop('required', true);
+        $("#inputPassword2").prop('required', true);
+        isPass1 = false;
+        isPass2 = false;
+        input.innerHTML = "Отмена"
+    } else {
+        input.value = 0;
+        $("#inputPassword1").prop('required', false).val('');
+        $("#inputPassword2").prop('required', false).val('');
+        $("#divPassword1").removeClass("has-error").removeClass("has-success");
+        $("#divPassword2").removeClass("has-error").removeClass("has-success");
+        $("#labelErrorPassword1").hide();
+        $("#labelErrorPassword2").hide();
+        isPass1 = true;
+        isPass2 = true;
+        input.innerHTML = "Изменить пароль"
+    }
+}
+
+
 //function submitForm() {
+//    checkEmail($("#inputEmail"));
+//    checkPassword1($("#inputPassword1")[0]);
+//    checkPassword2($("#inputPassword2")[0]);
+//    checkLastName($("#inputLastName"));
+//    checkFirstName($("#inputFirstName"));
+//    checkDateOfBirth($("#inputDateOfBirth"));
 //    if (isEmail || isPass1 || isPass2 || isLastName || isFirstName || isDateOfBirth) {
-//        document.getElementById("formCreateProfile").submit();
-//    } else {
-//        checkEmail($("#inputEmail"));
-//        checkPassword1($("#inputPassword1"));
-//        checkPassword2($("#inputPassword2"));
-//        checkLastName($("#inputLastName"));
-//        checkFirstName($("#inputFirstName"));
-//        checkDateOfBirth($("#inputDateOfBirth"));
+//        document.getElementById("formSettings").submit();
 //    }
 //}
