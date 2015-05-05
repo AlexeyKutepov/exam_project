@@ -106,3 +106,12 @@ def create_profile(request):
             "authentication/create_profile.html",
             {"profile_form": UserProfileForm}
         )
+
+
+@login_required(login_url='/')
+def settings(request):
+    return render(
+            request,
+            "authentication/settings.html",
+            {}
+        )

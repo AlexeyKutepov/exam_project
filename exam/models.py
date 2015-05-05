@@ -42,8 +42,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     MALE = 'MALE'
     FEMALE = 'FEMALE'
     GENDER = (
-        (MALE, 'Male'),
-        (FEMALE, 'Female'),
+        (MALE, 'MALE'),
+        (FEMALE, 'FEMALE'),
     )
 
     email = models.EmailField(

@@ -23,6 +23,14 @@
                 <div class="col-lg-8">
                     <h3>{{ user.get_short_name|default:"Имя не задано" }}</h3>
                 </div>
+                <div class="col-lg-2">
+                    <form action="{% url "settings" %}" method="get">
+                        <button id="btnSettings" type="submit" name="settings"
+                                class="btn btn-primary pull-right" title="Настройки">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
