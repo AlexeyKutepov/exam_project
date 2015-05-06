@@ -543,7 +543,7 @@ def create_new_test(request):
         return HttpResponseRedirect(reverse("create_new_question", args=[test.id]))
     else:
         category_list = Category.objects.all()
-        return render(request, "exam/create_new_test.html", {"category_list": category_list})
+        return render(request, "exam/create_test.html", {"category_list": category_list})
 
 
 @login_required(login_url='/')
@@ -618,7 +618,7 @@ def create_new_question(request, id):
         else:
             return render(
                 request,
-                "exam/edit_question.html",
+                "exam/create_question.html",
                 {
                     "number_of_question": len(exam_test.get_questions()) + 1,
                     "type_list": type_list,
@@ -628,7 +628,7 @@ def create_new_question(request, id):
     else:
         return render(
             request,
-            "exam/edit_question.html",
+            "exam/create_question.html",
             {
                 "type_list": type_list,
                 "test_id": id
@@ -640,6 +640,21 @@ def edit_test(request, id):
     id = int(id)
     test = Test.objects.get(id=id)
     category_list = Category.objects.all()
+
+    if "save" in request.POST:
+        category = Category.objects.get(name=request.POST["category"])
+        if "isPublic" in request.POST and request.POST["isPublic"] == 'public':
+            is_public = True
+        else:
+            is_public = False
+
+        test.name = request.POST["name"]
+        test.description = request.POST["description"]
+        test.category = category
+        test.is_public = is_public
+        test.save()
+        return HttpResponseRedirect(reverse("dashboard"))
+
     if test.test:
         exam_test = pickle.loads(test.test)
         if "delete" in request.POST:
