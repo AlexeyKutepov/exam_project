@@ -797,16 +797,71 @@ def edit_question(request, id, number):
     if test.test is None or test.test == b'':
         raise SuspiciousOperation("Некорректный запрос")
     exam_test = pickle.loads(test.test)
-    question = exam_test.get_questions()[number-1]
+    if "type" in request.POST and int(request.POST["type"]) in (1, 2, 3):
+        question_type = TestType(int(request.POST["type"]))
 
-    return render(
-            request,
-            "exam/edit_question.html",
-            {
-                "number_of_question": number,
-                "operation": "edit_test_edit_question",
-                "type_list": TYPE_LIST,
-                "test_id": id,
-                "question": question
-            }
-        )
+        if "question" in request.POST:
+            question = Question(request.POST["question"], question_type)
+        else:
+            question = Question(None, question_type)
+
+        if "image" in request.FILES:
+            image = TestImage.objects.get_or_create(image=request.FILES["image"])
+            question.set_image(image[0].id)
+        else:
+            question.set_image(exam_test.get_questions()[number-1].get_image())
+
+        if question_type is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
+            i = 1
+            while "answer"+str(i) in request.POST:
+                question.add_new_answer(
+                    CloseAnswer(
+                        answer=request.POST["answer"+str(i)],
+                        is_correct=str(i) in request.POST.getlist("trueAnswer")
+                    )
+                )
+                i += 1
+        elif question_type is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
+            i = 1
+            while "answer"+str(i) in request.POST:
+                question.add_new_answer(
+                    CloseAnswer(
+                        answer=request.POST["answer"+str(i)],
+                        is_correct=str(i) == request.POST["trueAnswer"]
+                    )
+                )
+                i += 1
+        elif question_type is TestType.OPEN_TYPE:
+            question.add_new_answer(
+                Answer(
+                    request.POST["openAnswer"]
+                )
+            )
+
+        exam_test.get_questions()[number-1] = question
+        test.test = pickle.dumps(exam_test)
+        test.save()
+        request.user.rating += 1
+        request.user.save()
+
+        return HttpResponseRedirect(reverse("edit_test", args=[id]))
+    else:
+        question = exam_test.get_questions()[number-1]
+        if question.get_image():
+            image_test = TestImage.objects.get(id=question.get_image())
+            image = image_test.image.url
+        else:
+            image = None
+
+        return render(
+                request,
+                "exam/edit_question.html",
+                {
+                    "number_of_question": number,
+                    "operation": "edit_test_edit_question",
+                    "type_list": TYPE_LIST,
+                    "test_id": id,
+                    "question": question,
+                    "image": image
+                }
+            )
