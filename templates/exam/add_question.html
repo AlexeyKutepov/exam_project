@@ -16,13 +16,8 @@
     </div>
 {% endblock %}
 {% block content %}
-    {% if operation == "edit_test_add_question" %}
     <form id="formCreateNewQuestion" action="{% url "edit_test_add_question" id=test_id  %}" method="post"
           enctype="multipart/form-data">
-    {% else %}
-    <form id="formCreateNewQuestion" action="{% url "edit_test_edit_question" id=test_id number=number  %}" method="post"
-          enctype="multipart/form-data">
-    {% endif %}
         {% csrf_token %}
         <div class="row">
             <div class="col-lg-7">

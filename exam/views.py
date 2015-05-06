@@ -56,6 +56,11 @@ def index(request):
 
 @login_required(login_url='/')
 def dashboard(request):
+    """
+    Shows the dashboard
+    :param request:
+    :return:
+    """
     if "delete" in request.POST:
         Test.objects.get(id=int(request.POST["delete"])).delete()
         request.user.rating -= 10
@@ -80,6 +85,11 @@ def dashboard(request):
 
 @login_required(login_url='/')
 def dashboard_results(request):
+    """
+    Shows the dashboard
+    :param request:
+    :return:
+    """
     journal_list = Journal.objects.filter(user=request.user)
     return render(
         request,
@@ -93,6 +103,12 @@ def dashboard_results(request):
 
 @login_required(login_url='/')
 def journal(request, id):
+    """
+    Shows the journal
+    :param request:
+    :param id: id of test
+    :return:
+    """
     if "delete" in request.POST:
         Journal.objects.get(id=int(request.POST["delete"])).delete()
         return HttpResponseRedirect(reverse('journal', args=[id]))
@@ -643,6 +659,14 @@ def create_new_question(request, id):
 
 @login_required(login_url='/')
 def edit_test(request, id):
+    """
+    Edits the test
+    :param request:
+    :param id: id of test
+    :return:
+    """
+    if "edit" in request.POST:
+        return HttpResponseRedirect(reverse("edit_test_edit_question", args=[id, request.POST["edit"]]))
     id = int(id)
     test = Test.objects.get(id=id)
     category_list = Category.objects.all()
@@ -667,6 +691,7 @@ def edit_test(request, id):
             exam_test.get_questions().pop(int(request.POST["delete"]) - 1)
             test.test = pickle.dumps(exam_test)
             test.save()
+            return HttpResponseRedirect(reverse("edit_test", args=[id]))
         question_list = exam_test.get_questions()
     else:
         question_list = None
@@ -683,6 +708,12 @@ def edit_test(request, id):
 
 
 def add_question(request, id):
+    """
+    Adds the question to test
+    :param request:
+    :param id: id of the test
+    :return:
+    """
     test = Test.objects.get(id=id)
     if test.test is None or test.test == b'':
         exam_test = ExamTest()
@@ -741,13 +772,11 @@ def add_question(request, id):
 
         return HttpResponseRedirect(reverse("edit_test", args=[id]))
     else:
-
         return render(
             request,
-            "exam/question_editor.html",
+            "exam/add_question.html",
             {
                 "number_of_question": len(exam_test.get_questions()) + 1,
-                "operation": "edit_test_add_question",
                 "type_list": TYPE_LIST,
                 "test_id": id
             }
@@ -755,4 +784,29 @@ def add_question(request, id):
 
 
 def edit_question(request, id, number):
-    return None
+    """
+    Edits the question in the test
+    :param request:
+    :param id: id of test
+    :param number: number of question
+    :return:
+    """
+    id = int(id)
+    number = int(number)
+    test = Test.objects.get(id=id)
+    if test.test is None or test.test == b'':
+        raise SuspiciousOperation("Некорректный запрос")
+    exam_test = pickle.loads(test.test)
+    question = exam_test.get_questions()[number-1]
+
+    return render(
+            request,
+            "exam/edit_question.html",
+            {
+                "number_of_question": number,
+                "operation": "edit_test_edit_question",
+                "type_list": TYPE_LIST,
+                "test_id": id,
+                "question": question
+            }
+        )
