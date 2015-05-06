@@ -640,11 +640,17 @@ def edit_test(request, id):
     id = int(id)
     test = Test.objects.get(id=id)
     category_list = Category.objects.all()
+    if test.test:
+        exam_test = pickle.loads(test.test)
+        question_list = exam_test.get_questions()
+    else:
+        question_list = None
     return render(
             request,
             "exam/edit_test.html",
             {
                 "test": test,
-                "category_list": category_list
+                "category_list": category_list,
+                "question_list": question_list
             }
         )
