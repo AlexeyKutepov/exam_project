@@ -123,7 +123,7 @@ def settings(request):
         password = None
         if password1 and password2 and password1 != "" and password2 != "" and password1 == password2:
             password = request.POST["password1"]
-            user.password = password
+            user.set_password(password)
         user.first_name = request.POST["firstName"]
         user.middle_name = request.POST["middleName"]
         user.last_name = request.POST["lastName"]
@@ -138,7 +138,9 @@ def settings(request):
             user.picture = picture
         user.save()
         if password:
-            auth.authenticate(email=email, password=password)
+            user = auth.authenticate(email=email, password=password)
+            if user is not None and user.is_active:
+                auth.login(request, user)
         return HttpResponseRedirect(reverse("dashboard"))
     else:
         return render(
