@@ -642,9 +642,14 @@ def edit_test(request, id):
     category_list = Category.objects.all()
     if test.test:
         exam_test = pickle.loads(test.test)
+        if "delete" in request.POST:
+            exam_test.get_questions().pop(int(request.POST["delete"]) - 1)
+            test.test = pickle.dumps(exam_test)
+            test.save()
         question_list = exam_test.get_questions()
     else:
         question_list = None
+
     return render(
             request,
             "exam/edit_test.html",

@@ -78,7 +78,7 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{ question.get_question }}</td>
                     <td>
-                        <form action="{% url "journal" id=test.id %}" method="post">
+                        <form action="{% url "edit_test" id=test.id %}" method="post">
                             {% csrf_token %}
                             <!-- Modal dialog delete -->
                             <div class="modal fade" id="modalDelete{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -106,7 +106,7 @@
                             </button>
                             <button id="btnDel{{ forloop.counter }}" type="button" data-toggle="modal"
                                     data-target="#modalDelete{{ forloop.counter }}" class="btn btn-danger"
-                                    title="Удалить запись в журнале">
+                                    title="Удалить вопрос">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
                         </form>
