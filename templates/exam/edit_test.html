@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="/static/css/bootstrap-select.min.css"/>
+    <script src="/static/js/bootstrap-select.js"></script>
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4">
+                    <h4>Редактирование теста</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="control-label" for="inputTestName"><b>Название теста:</b></label>
+                <input id="inputTestName" name="name" type="text" class="form-control" value="{{ test.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="inputDescription">Описание:</label>
+                <textarea id="inputDescription" name="description" class="form-control" rows="5">{{ test.description }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            {% if  category_list %}
+                <label for="selectCategoryList"><b>Категория:</b></label>
+                <select id="selectCategoryList" name="category" class="selectpicker">
+                    {% for category in category_list %}
+                        {% if category == test.category %}
+                        <option selected>{{ category }}</option>
+                        {% else %}
+                        <option>{{ category }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+        <div class="col-lg-6">
+            <div class="has-default pull-right">
+                <div class="checkbox">
+                    <label>
+                        {% if test.is_public %}
+                        <input id="checkboxSuccess" name="isPublic" type="checkbox" value="public" checked>
+                        {% else %}
+                        <input id="checkboxSuccess" name="isPublic" type="checkbox" value="public">
+                        {% endif %}
+                        Сделать тест доступным для незарегестрированных пользователей
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b>Список вопросов:</b>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Название</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for journal in journal_list %}
+                        {% if journal.result >= 70 %}
+                            <tr class="success">
+                                {% elif journal.result >= 40 %}
+                            <tr class="warning">
+                                {% else %}
+                            <tr class="danger">
+                        {% endif %}
+                    <th>{{ forloop.counter }}</th>
+                    {% if journal.user %}
+                    <td>{{ journal.user.get_full_name }}</td>
+                    {% else %}
+                    <td>{{ journal.unregistered_user.get_full_name }}</td>
+                    {% endif %}
+                    <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.number_of_questions }}</td>
+                    <td>{{ journal.number_of_correct_answers }}</td>
+                    <td>{{ journal.result }}%</td>
+                    <td>
+                        <form action="{% url "journal" id=test.id %}" method="post">
+                            {% csrf_token %}
+                            <!-- Modal dialog delete -->
+                            <div class="modal fade" id="modalDelete{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Удаление теста</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Вы действительно хотите удалить запись №{{ forloop.counter }} в журнале оценок?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Нет</button>
+                                            <button type="submit" name="delete" value="{{ journal.id }}" class="btn btn-default">Да</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="btnJournal{{ forloop.counter }}" type="submit"
+                                    class="btn btn-success" name="report" value="{{ journal.id }}">
+                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            </button>
+                            <button id="btnDel{{ forloop.counter }}" type="button" data-toggle="modal"
+                                    data-target="#modalDelete{{ forloop.counter }}" class="btn btn-danger"
+                                    title="Удалить запись в журнале">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

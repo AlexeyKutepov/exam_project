@@ -50,6 +50,8 @@ def dashboard(request):
         request.user.rating -= 10
         request.user.save()
         return HttpResponseRedirect(reverse('dashboard'))
+    elif "edit" in request.POST:
+        return HttpResponseRedirect(reverse("edit_test", args=[request.POST["edit"]]))
     elif "journal" in request.POST:
         return HttpResponseRedirect(reverse("journal", args=[request.POST["journal"]]))
     elif "save" in request.POST:
@@ -377,8 +379,7 @@ def next_question_unregistered_user(request, id, progress_id, number):
         }
     )
 
-
-
+@login_required(login_url='/')
 def next_question(request, id, number):
     """
     Shows next question
@@ -631,5 +632,19 @@ def create_new_question(request, id):
             {
                 "type_list": type_list,
                 "test_id": id
+            }
+        )
+
+@login_required(login_url='/')
+def edit_test(request, id):
+    id = int(id)
+    test = Test.objects.get(id=id)
+    category_list = Category.objects.all()
+    return render(
+            request,
+            "exam/edit_test.html",
+            {
+                "test": test,
+                "category_list": category_list
             }
         )
