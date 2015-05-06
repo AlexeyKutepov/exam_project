@@ -16,8 +16,13 @@
     </div>
 {% endblock %}
 {% block content %}
-    <form id="formCreateNewQuestion" action="{% url "create_new_question" id=test_id  %}" method="post"
+    {% if operation == "edit_test_add_question" %}
+    <form id="formCreateNewQuestion" action="{% url "edit_test_add_question" id=test_id  %}" method="post"
           enctype="multipart/form-data">
+    {% else %}
+    <form id="formCreateNewQuestion" action="{% url "edit_test_edit_question" id=test_id number=number  %}" method="post"
+          enctype="multipart/form-data">
+    {% endif %}
         {% csrf_token %}
         <div class="row">
             <div class="col-lg-7">
@@ -100,7 +105,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pull-right">
-                    <a href="{% url "dashboard" %}"><input type="button" class="btn btn-default" value="Отмена"/></a>
+                    <a href="{% url "edit_test" id=test_id %}"><input type="button" class="btn btn-default" value="Отмена"/></a>
                     <button id="btnSave" type="submit" class="btn btn-success">Сохранить</button>
                 </div>
             </div>

@@ -13,9 +13,11 @@ import pickle
 import math
 
 
-def index(request):
-    return render(request, "exam/index.html")
-
+TYPE_LIST = [
+            "Содержит один или несколько правильных вариантов ответа",
+            "Содержит только один правильный вариант ответа",
+            "Вопрос со свободной формой ответа",
+        ]
 
 def prepare_test_html(id):
     """
@@ -42,6 +44,15 @@ def prepare_test_html(id):
     response['Content-Disposition'] = 'attachment; filename="test_' + str(id) + '.html"'
 
     return response
+
+
+def index(request):
+    """
+    Index page
+    :param request:
+    :return:
+    """
+    return render(request, "exam/index.html")
 
 @login_required(login_url='/')
 def dashboard(request):
@@ -557,11 +568,6 @@ def create_new_question(request, id):
     test = Test.objects.get(id=id)
     if request.user != test.author:
         raise SuspiciousOperation("Некорректный id теста")
-    type_list = [
-            "Содержит один или несколько правильных вариантов ответа",
-            "Содержит только один правильный вариант ответа",
-            "Вопрос со свободной формой ответа",
-        ]
     if "type" in request.POST and int(request.POST["type"]) in (1, 2, 3):
         if test.test is None or test.test == b'':
             exam_test = ExamTest()
@@ -621,7 +627,7 @@ def create_new_question(request, id):
                 "exam/create_question.html",
                 {
                     "number_of_question": len(exam_test.get_questions()) + 1,
-                    "type_list": type_list,
+                    "type_list": TYPE_LIST,
                     "test_id": id
                 }
             )
@@ -630,7 +636,7 @@ def create_new_question(request, id):
             request,
             "exam/create_question.html",
             {
-                "type_list": type_list,
+                "type_list": TYPE_LIST,
                 "test_id": id
             }
         )
@@ -674,3 +680,79 @@ def edit_test(request, id):
                 "question_list": question_list
             }
         )
+
+
+def add_question(request, id):
+    test = Test.objects.get(id=id)
+    if test.test is None or test.test == b'':
+        exam_test = ExamTest()
+    else:
+        exam_test = pickle.loads(test.test)
+
+    if request.user != test.author:
+        raise SuspiciousOperation("Некорректный id теста")
+    if "type" in request.POST and int(request.POST["type"]) in (1, 2, 3):
+        question_type = TestType(int(request.POST["type"]))
+
+        if "question" in request.POST:
+            question = Question(request.POST["question"], question_type)
+        else:
+            question = Question(None, question_type)
+
+        if "image" in request.FILES:
+            image = TestImage.objects.get_or_create(image=request.FILES["image"])
+            image_id = image[0].id
+        else:
+            image_id = None
+        question.set_image(image_id)
+
+        if question_type is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
+            i = 1
+            while "answer"+str(i) in request.POST:
+                question.add_new_answer(
+                    CloseAnswer(
+                        answer=request.POST["answer"+str(i)],
+                        is_correct=str(i) in request.POST.getlist("trueAnswer")
+                    )
+                )
+                i += 1
+        elif question_type is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
+            i = 1
+            while "answer"+str(i) in request.POST:
+                question.add_new_answer(
+                    CloseAnswer(
+                        answer=request.POST["answer"+str(i)],
+                        is_correct=str(i) == request.POST["trueAnswer"]
+                    )
+                )
+                i += 1
+        elif question_type is TestType.OPEN_TYPE:
+            question.add_new_answer(
+                Answer(
+                    request.POST["openAnswer"]
+                )
+            )
+
+        exam_test.add_question(question)
+        test.test = pickle.dumps(exam_test)
+        test.save()
+        request.user.rating += 1
+        request.user.save()
+
+        return HttpResponseRedirect(reverse("edit_test", args=[id]))
+    else:
+
+        return render(
+            request,
+            "exam/question_editor.html",
+            {
+                "number_of_question": len(exam_test.get_questions()) + 1,
+                "operation": "edit_test_add_question",
+                "type_list": TYPE_LIST,
+                "test_id": id
+            }
+        )
+
+
+def edit_question(request, id, number):
+    return None

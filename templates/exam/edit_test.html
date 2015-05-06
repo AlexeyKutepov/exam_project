@@ -139,7 +139,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12 centered">
-            <form action="{% url "edit_test" id=test.id %}" method="post">
+            <form action="{% url "edit_test_add_question" id=test.id %}" method="post">
                 {% csrf_token %}
                 <button id="btnAdd" type="submit"
                     class="btn btn-success" name="add" value="{{ forloop.counter }}">
