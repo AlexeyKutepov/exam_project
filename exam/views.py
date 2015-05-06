@@ -617,7 +617,7 @@ def create_new_question(request, id):
         else:
             return render(
                 request,
-                "exam/create_new_question.html",
+                "exam/edit_question.html",
                 {
                     "number_of_question": len(exam_test.get_questions()) + 1,
                     "type_list": type_list,
@@ -627,7 +627,7 @@ def create_new_question(request, id):
     else:
         return render(
             request,
-            "exam/create_new_question.html",
+            "exam/edit_question.html",
             {
                 "type_list": type_list,
                 "test_id": id
