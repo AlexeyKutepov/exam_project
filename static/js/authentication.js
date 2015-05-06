@@ -1,8 +1,35 @@
 /**
- * Created by alexey on 02.04.15.
+ * Created by Kutepov Alexey on 02.04.15.
  */
 
 var isEmail=false, isPass1=false, isPass2=false, isLastName=false, isFirstName=false, isDateOfBirth=false;
+
+// The pattern for check e-mail
+var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+
+
+window.onload = function() {
+    if (pattern.test($("#inputEmail").val())) {
+        isEmail = true;
+    }
+    if (!$("#inputPassword1").prop("required")) {
+        isPass1 = true;
+    }
+    if (!$("#inputPassword2").prop("required")) {
+        isPass2 = true;
+    }
+    if ($("#inputLastName").val() != "") {
+        isLastName = true;
+    }
+    if ($("#inputFirstName").val() != "") {
+        isFirstName = true;
+    }
+     if ($("#inputDateOfBirth").val() != "") {
+        isDateOfBirth = true;
+    }
+
+    checkSubmit();
+};
 
 /**
  * Image preview
@@ -26,7 +53,6 @@ function onPreview(input) {
  * @param input
  */
 function checkEmail(input){
-    var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
     if (pattern.test($(input).val())) {
         $("#divEmail").removeClass("has-error").addClass("has-success");
         $("#labelErrorEmail").hide();
@@ -36,6 +62,7 @@ function checkEmail(input){
         $("#labelErrorEmail").show();
         isEmail=false;
     }
+    checkSubmit();
 }
 
 /**
@@ -52,6 +79,7 @@ function checkPassword1(input) {
         $("#labelErrorPassword1").hide();
         isPass1=true;
     }
+    checkSubmit();
 }
 
 /**
@@ -75,6 +103,7 @@ function checkPassword2(input) {
             isPass2 = true;
         }
     }
+    checkSubmit();
 }
 
 /**
@@ -89,6 +118,7 @@ function checkLastName(input) {
         $("#divLastName").removeClass("has-error").addClass("has-success");
         isLastName=true;
     }
+    checkSubmit();
 }
 
 /**
@@ -103,6 +133,7 @@ function checkFirstName(input) {
         $("#divFirstName").removeClass("has-error").addClass("has-success");
         isFirstName=true;
     }
+    checkSubmit();
 }
 
 /**
@@ -117,6 +148,7 @@ function checkDateOfBirth(input) {
         $("#divDateOfBirth").removeClass("has-error").addClass("has-success");
         isDateOfBirth=true;
     }
+    checkSubmit();
 }
 
 
@@ -140,17 +172,14 @@ function onChangePasswordClick(input) {
         isPass2 = true;
         input.innerHTML = "Изменить пароль"
     }
+    checkSubmit();
 }
 
 
-//function submitForm() {
-//    checkEmail($("#inputEmail"));
-//    checkPassword1($("#inputPassword1")[0]);
-//    checkPassword2($("#inputPassword2")[0]);
-//    checkLastName($("#inputLastName"));
-//    checkFirstName($("#inputFirstName"));
-//    checkDateOfBirth($("#inputDateOfBirth"));
-//    if (isEmail || isPass1 || isPass2 || isLastName || isFirstName || isDateOfBirth) {
-//        document.getElementById("formSettings").submit();
-//    }
-//}
+function checkSubmit() {
+    if (isEmail && isPass1 && isPass2 && isLastName && isFirstName && isDateOfBirth) {
+        $("#btnSubmit").prop('disabled', false);
+    } else {
+        $("#btnSubmit").prop('disabled', true);
+    }
+}
