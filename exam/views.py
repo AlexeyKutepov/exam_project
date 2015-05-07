@@ -44,11 +44,31 @@ def prepare_test_html(id):
                 image_list.append(None)
 
     template = get_template("exam/test_template.html")
+    question_list_json = []
+    for question in exam_test.get_questions():
+        if question.get_test_type().value == 1:
+            correct_list = []
+            counter = 0
+            for answer in question.get_answers():
+                if answer.is_correct():
+                    correct_list.append(counter)
+                counter += 1
+            question_list_json.append(correct_list)
+        elif question.get_test_type().value == 2:
+            counter = 0
+            for answer in question.get_answers():
+                if answer.is_correct():
+                    question_list_json.append(counter)
+                    break
+                counter += 1
+        else:
+            question_list_json.append(question.get_answers().get_answer())
     context = Context(
         {
             "test": test,
             "question_list": exam_test.get_questions(),
-            "image_list": image_list
+            "image_list": image_list,
+            "json": question_list_json
         }
     )
     html = template.render(context)

@@ -3,9 +3,6 @@
 <head lang="en">
 <meta charset="UTF-8">
 <title>{{ test.name }}</title>
-
-<link rel="stylesheet" href="/static/css/material.bootstrap.css"/>
-
 <style>
 @import url("//fonts.googleapis.com/css?family=Roboto:300,400,500,700");
 /*!
@@ -7307,9 +7304,25 @@ input[type="checkbox"]:disabled:checked:after,
 }
 
 </style>
+
+<script>
+    function checkTest() {
+        var json = [
+        {% for item in json %}
+            "{{ item }}",
+        {% endfor %}
+        ]
+        var correct = 0;
+        var result = 0;
+
+        for (var i = 0; i < json.length; i++) {
+
+        }
+    }
+</script>
+
 </head>
 <body>
-
 <div class="row">
     <div class="col-lg-8 col-lg-offset-2">
         <div class="page-header">
@@ -7327,7 +7340,7 @@ input[type="checkbox"]:disabled:checked:after,
 {% endif %}
 {% if question_list %}
     {% for question in question_list %}
-        <div class="row">
+        <div id="divQuestion{{ forloop.counter }}" class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -7337,7 +7350,7 @@ input[type="checkbox"]:disabled:checked:after,
                         <p><b>{{ question.get_question }}</b></p>
                         {% load poll_extras %}
                         {% if image_list|get_at_index:forloop.counter0 %}
-                        <div id="divImage" class="form-group" style="width: 70%">
+                        <div id="divImage{{ forloop.counter }}" class="form-group" style="width: 70%">
                             <img id="impPreview" class="img-thumbnail"
                                  src="data:image/gif;base64,{{ image_list|get_at_index:forloop.counter0 }}"
                                  alt="Изображение" width="auto" height="auto">
@@ -7370,10 +7383,35 @@ input[type="checkbox"]:disabled:checked:after,
     <p></p>
     <div class="row">
         <div class="col-lg-12 centered">
-            <button class="btn btn-primary">Проверить</button>
+            <button id="btnResult" class="btn btn-primary" onclick="checkTest()">Проверить</button>
         </div>
     </div>
     <p></p>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div id="divResult" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Результаты теста</h3>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Количество вопросов</th>
+                            <th>Количество правильных ответов</th>
+                            <th>Оценка</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ question_list|length }}</td>
+                            <td id="tdCorrectQuestion">-</td>
+                            <td id="tdResult">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endif %}
 </body>
 </html>
