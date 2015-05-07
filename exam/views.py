@@ -11,6 +11,7 @@ from exam.exam_test.exam_test import *
 from django.utils import timezone
 import pickle
 import math
+import base64
 
 
 TYPE_LIST = [
@@ -18,6 +19,7 @@ TYPE_LIST = [
             "Содержит только один правильный вариант ответа",
             "Вопрос со свободной формой ответа",
         ]
+
 
 def prepare_test_html(id):
     """
@@ -31,11 +33,22 @@ def prepare_test_html(id):
     else:
         exam_test = None
 
+    image_list = []
+    if exam_test:
+        for question in exam_test.get_questions():
+            if question.get_image():
+                image = TestImage.objects.get(id=question.get_image())
+                encoded_string = base64.b64encode(image.image.file.read())
+                image_list.append(encoded_string)
+            else:
+                image_list.append(None)
+
     template = get_template("exam/test_template.html")
     context = Context(
         {
             "test": test,
-            "question_list": exam_test.get_questions()
+            "question_list": exam_test.get_questions(),
+            "image_list": image_list
         }
     )
     html = template.render(context)
