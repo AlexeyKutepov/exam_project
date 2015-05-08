@@ -175,13 +175,14 @@ def report(request, id):
         raise SuspiciousOperation("Некорректный запрос")
     elif not request.user.is_authenticated() and journal.user:
         raise SuspiciousOperation("Некорректный запрос")
-    elif request.user != journal.user:
+    elif request.user != journal.test.author:
         raise SuspiciousOperation("Некорректный запрос")
     else:
         return render(
             request,
             "exam/report.html",
             {
+                "journal": journal
             }
         )
 
