@@ -97,13 +97,13 @@ def create_profile(request):
             position=position,
             picture=picture
         )
-        # send_mail(
-        #     'Регистрация на exam.ru',
-        #     'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
-        #     'test.kutepov@yandex.ru',
-        #     [email],
-        #     fail_silently=False
-        # )
+        send_mail(
+            'Регистрация на exam.ru',
+            'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
+            'test.kutepov@yandex.ru',
+            [email],
+            fail_silently=False
+        )
         return render(
             request,
             "exam/index.html",
@@ -167,7 +167,7 @@ def recall_password(request):
                 'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + user[0].password + ' \n \n С уважением, команда exam.ru',
                 'test.kutepov@yandex.ru',
                 [request.POST["email"]],
-                # fail_silently=False
+                fail_silently=False
             )
         else:
             pass
