@@ -16,3 +16,7 @@ window.onload=function() {
         $("#liTests").addClass("active");
     }
 };
+
+$(function () {
+  $('[data-toggle="popover"]').popover({html:true})
+})

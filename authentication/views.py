@@ -156,3 +156,19 @@ def settings(request):
                 "authentication/settings.html",
                 {}
             )
+
+
+def recall_password(request):
+    if "email" in request.POST:
+        user = UserProfile.objects.filter(email=request.POST["email"])
+        if user and len(user) == 1:
+            send_mail(
+                'Пароль к аккаунту на exam.ru',
+                'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + user[0].password + ' \n \n С уважением, команда exam.ru',
+                'test.kutepov@yandex.ru',
+                [request.POST["email"]],
+                # fail_silently=False
+            )
+        else:
+            pass
+    return HttpResponseRedirect(reverse("index"))

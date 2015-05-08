@@ -31,6 +31,28 @@
     <![endif]-->
 </head>
 <body>
+<form action="{% url "recall_password" %}" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="modalSendPassword" tabindex="-1" role="dialog" aria-labelledby="modalSendPasswordLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalSendPasswordLabel">Отправка пароля на электронную почту</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="control-label" for="inputEmailForPassword"><b>Введите e-mail:</b></label>
+                    <input id="inputEmailForPassword" name="email" type="email" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="submit" name="sendPassword" class="btn btn-primary">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="navbar-wrapper">
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -71,7 +93,9 @@
                                     <input id="email" name="email" type="email" placeholder="Email" class="form-control">
                                 </div>
                                 <div class="form-group {{ login_error|default:"" }}">
-                                    <input id="password" name="password" type="password" placeholder="Password" class="form-control">
+                                    <input id="password" name="password" type="password" placeholder="Password" class="form-control"
+                                           data-toggle="popover" data-placement="bottom" title="Забыли пароль?"
+                                           data-content="<a href='#' data-toggle='modal' data-target='#modalSendPassword'>Отправить пароль на электронную почту</a>">
                                 </div>
                                 <button type="submit" class="btn btn-success">Вход</button>
                             </form>
@@ -80,7 +104,6 @@
                 </div>
             </div>
         </nav>
-
     </div>
 </div>
 
@@ -92,7 +115,6 @@
         <p>This is a template for a simple marketing or informational website. It includes a large callout called a
             jumbotron and three supporting pieces of content. Use it as a starting point to create something more
             unique.</p>
-
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше &raquo;</a></p>
     </div>
 </div>
