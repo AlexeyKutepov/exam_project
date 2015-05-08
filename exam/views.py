@@ -142,11 +142,15 @@ def journal(request, id):
     :param id: id of test
     :return:
     """
-    if "delete" in request.POST:
+    test = Test.objects.get(id=id)
+    if request.user != test.author:
+        raise SuspiciousOperation("Некорректный id теста")
+    elif "delete" in request.POST:
         Journal.objects.get(id=int(request.POST["delete"])).delete()
         return HttpResponseRedirect(reverse('journal', args=[id]))
+    elif "report" in request.POST:
+        return HttpResponseRedirect(reverse('report', args=[request.POST["report"]]))
     else:
-        test = Test.objects.get(id=id)
         journal_list = Journal.objects.filter(test=test)
         return render(
             request,
@@ -156,6 +160,32 @@ def journal(request, id):
                 "journal_list": journal_list
             }
         )
+
+@login_required(login_url='/')
+def report(request, id):
+    """
+    Prepares the report of the test result
+    :param request:
+    :param id: id of Journal field
+    :return:
+    """
+    id = int(id)
+    journal = Journal.objects.get(id=id)
+    if not journal:
+        raise SuspiciousOperation("Некорректный запрос")
+    elif not request.user.is_authenticated() and journal.user:
+        raise SuspiciousOperation("Некорректный запрос")
+    elif request.user != journal.user:
+        raise SuspiciousOperation("Некорректный запрос")
+    else:
+        return render(
+            request,
+            "exam/report.html",
+            {
+            }
+        )
+
+
 
 
 def get_test_list_search(request, page, search):
