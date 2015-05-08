@@ -6,6 +6,7 @@ from authentication.forms import UserProfileForm
 from django.contrib import auth
 from exam.models import UserProfile
 from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 
 
 @csrf_protect
@@ -96,6 +97,13 @@ def create_profile(request):
             position=position,
             picture=picture
         )
+        # send_mail(
+        #     'Регистрация на exam.ru',
+        #     'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
+        #     'test.kutepov@yandex.ru',
+        #     [email],
+        #     fail_silently=False
+        # )
         return render(
             request,
             "exam/index.html",
