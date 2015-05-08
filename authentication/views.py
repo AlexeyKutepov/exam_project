@@ -158,13 +158,35 @@ def settings(request):
             )
 
 
-def recall_password(request):
+def generate_password(length=8):
+    """
+    Generates new password
+    :param length: length of password
+    :return:
+    """
+    if not isinstance(length, int) or length < 8:
+        raise ValueError("temp password must have positive length")
+
+    chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+    import random
+    return ''.join(map(lambda x: random.choice(chars), range(length)))
+
+
+def recovery_password(request):
+    """
+    Recoveries the password
+    :param request:
+    :return:
+    """
     if "email" in request.POST:
         user = UserProfile.objects.filter(email=request.POST["email"])
+        password = generate_password()
         if user and len(user) == 1:
+            user[0].set_password(password)
+            user[0].save()
             send_mail(
                 'Пароль к аккаунту на exam.ru',
-                'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + user[0].password + ' \n \n С уважением, команда exam.ru',
+                'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + password + ' \n \n С уважением, команда exam.ru',
                 'test.kutepov@yandex.ru',
                 [request.POST["email"]],
                 fail_silently=False
