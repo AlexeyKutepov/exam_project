@@ -48,14 +48,14 @@ def prepare_test_html(id):
     for question in exam_test.get_questions():
         if question.get_test_type().value == 1:
             correct_list = []
-            counter = 0
+            counter = 1
             for answer in question.get_answers():
                 if answer.is_correct():
                     correct_list.append(counter)
                 counter += 1
             question_list_json.append(correct_list)
         elif question.get_test_type().value == 2:
-            counter = 0
+            counter = 1
             for answer in question.get_answers():
                 if answer.is_correct():
                     question_list_json.append(counter)
