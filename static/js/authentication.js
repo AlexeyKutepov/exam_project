@@ -59,7 +59,7 @@ function checkEmail(input){
         $("#labelErrorEmail").hide();
         isEmail=true;
     } else {
-        $("#divEmail").addClass("has-error");
+        $("#divEmail").addClass("has-error").removeClass("has-success");
         $("#labelErrorEmail").show();
         isEmail=false;
     }

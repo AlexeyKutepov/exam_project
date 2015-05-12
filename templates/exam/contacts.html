@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
+    <script src="/static/js/contacts.js"></script>
 {% endblock %}
 {% block header_content %}
     <div class="k-panel-header vertical-align">
@@ -49,7 +50,7 @@
                         </div>
                         <div id="divEmail" class="form-group">
                             <label class="control-label" for="inputEmail">Адрес электронной почты (если Вы желаете получить ответ):</label>
-                            <input id="inputEmail" name="email" type="email" class="form-control" onchange="checkEmail(this)" onkeyup="checkEmail(this)">
+                            <input id="inputEmail" name="email" type="email" class="form-control" onchange="checkEmail(this)" onkeyup="checkEmail(this)" oninput="checkEmail(this)">
                             <label id="labelErrorEmail" class="control-label" for="inputEmail" hidden>Не корректный адрес электронной почты</label>
                         </div>
                     {% endif %}
