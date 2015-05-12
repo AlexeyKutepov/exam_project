@@ -944,6 +944,14 @@ def contacts(request):
                 email=request.POST["email"],
                 feedback=request.POST["message"]
             )
+        return render(
+            request,
+            "exam/alert.html",
+            {
+                "status": "success",
+                "message": "Ваше сообщение успешно отправлено команде exam.ru!"
+            }
+        )
 
 
     return render(
