@@ -19,6 +19,9 @@
         {% csrf_token %}
         <div class="row">
             <blockquote>
+                <b>Ссылка на тест:</b>
+                <p><a href="{{ path }}">{{ host }}{{ path }}</a></p>
+
                 {% if test.description %}
                     <b>Описание:</b>
                     <p>{{ test.description }}</p>

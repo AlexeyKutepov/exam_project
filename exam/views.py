@@ -283,49 +283,19 @@ def get_test_list(request, page):
     )
 
 
-def start_test(request):
+def start_test(request, id):
     """
     Starts selected test
-
-    :param request: request for starting test
-    :return: start_test.html
+    :param request:
+    :param id:
+    :return:
     """
-
-    if "run" in request.POST:
-        test = Test.objects.get(id=int(request.POST["run"]))
-        if test.test:
-            exam_test = pickle.loads(test.test)
-            number_of_questions = len(exam_test.get_questions())
-        else:
-            number_of_questions = 0
-        if request.user.is_authenticated():
-            progress = Progress.objects.filter(user=request.user, test=test)
-            if not progress:
-                Progress.objects.get_or_create(
-                    user=request.user,
-                    start_date=timezone.now(),
-                    end_date=None,
-                    test=test,
-                    result_list=None,
-                    current_result=0
-                )
-            else:
-                progress = progress[0]
-                progress.start_date = timezone.now()
-                progress.end_date = None
-                progress.result_list = None
-                progress.current_result = 0
-                progress.save()
-        return render(
-            request,
-            "exam/start_test.html",
-            {
-                "test": test,
-                "number_of_questions": number_of_questions
-            }
-        )
-    elif "start" and "email" and "firstName" and "lastName" in request.POST:
-        test = Test.objects.get(id=int(request.POST["start"]))
+    id = int(id)
+    try:
+        test = Test.objects.get(id=id)
+    except:
+        return HttpResponseRedirect(reverse("get_test_list", args=[1]))
+    if "start" and "email" and "firstName" and "lastName" in request.POST:
         middle_name = None
         if "middleName" in request.POST:
             middle_name = request.POST["middleName"]
@@ -353,7 +323,39 @@ def start_test(request):
             progress[0].save()
         return HttpResponseRedirect(reverse("next_question_unregistered_user", args=[test.id, progress[0].id, 1]))
     else:
-        return HttpResponseRedirect(reverse("get_test_list", args=[1]))
+        if test.test:
+            exam_test = pickle.loads(test.test)
+            number_of_questions = len(exam_test.get_questions())
+        else:
+            number_of_questions = 0
+        if request.user.is_authenticated():
+            progress = Progress.objects.filter(user=request.user, test=test)
+            if not progress:
+                Progress.objects.get_or_create(
+                    user=request.user,
+                    start_date=timezone.now(),
+                    end_date=None,
+                    test=test,
+                    result_list=None,
+                    current_result=0
+                )
+            else:
+                progress = progress[0]
+                progress.start_date = timezone.now()
+                progress.end_date = None
+                progress.result_list = None
+                progress.current_result = 0
+                progress.save()
+        return render(
+            request,
+            "exam/start_test.html",
+            {
+                "host": request.get_host(),
+                "path": request.get_full_path(),
+                "test": test,
+                "number_of_questions": number_of_questions
+            }
+        )
 
 
 def next_question_unregistered_user(request, id, progress_id, number):

@@ -60,7 +60,7 @@
                             <td>{{ test.author.get_short_name }}</td>
                             <td>{{ test.rating }}</td>
                             <td>
-                                <form action="{% url "start_test" %}" method="post">
+                                <form action="{% url "start_test" id=test.id %}" method="post">
                                     {% csrf_token %}
                                     <button id="btnRun{{ forloop.counter }}" type="submit" class="btn btn-success"
                                             name="run" value="{{ test.id }}">

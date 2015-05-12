@@ -68,7 +68,7 @@
                                 {% for test in test_list %}
                                     <tr>
                                         <th>{{ forloop.counter }}</th>
-                                        <td>{{ test.name }}</td>
+                                        <td><a href="{% url "start_test" id=test.id %}">{{ test.name }}</a></td>
                                         <td>{{ test.category }}</td>
                                         <td>{{ test.date_and_time|date:"d.m.Y" }}</td>
                                         <td>
