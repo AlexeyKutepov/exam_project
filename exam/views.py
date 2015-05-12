@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import Context
 from django.template.loader import get_template
-from exam.models import Category, Test, TestImage, Progress, Journal, UnregisteredUser
+from exam.models import Category, Test, TestImage, Progress, Journal, UnregisteredUser, Feedback
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
@@ -932,6 +932,20 @@ def edit_question(request, id, number):
 
 
 def contacts(request):
+    if "feedback" in request.POST:
+        if request.user.is_authenticated():
+            feedback = Feedback.objects.create(
+                user=request.user,
+                feedback=request.POST["message"]
+            )
+        else:
+            feedback = Feedback.objects.create(
+                name=request.POST["fio"],
+                email=request.POST["email"],
+                feedback=request.POST["message"]
+            )
+
+
     return render(
         request,
         "exam/contacts.html",

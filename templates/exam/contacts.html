@@ -37,6 +37,7 @@
             <div class="panel-body">
 
                 <form action="{% url "contacts" %}" method="post">
+                {% csrf_token %}
                     {% if user.is_authenticated %}
                         <p><b>Отправитель:</b></p>
                         <h5>{{ user.get_full_name }}</h5>
@@ -57,7 +58,7 @@
                        <textarea id="inputMessage" name="message" class="form-control" rows="5" required></textarea>
                     </div>
                     <div class="centered">
-                        <button id="btnSend" type="submit" class="btn btn-success">Отправить</button>
+                        <button id="btnSend" name="feedback" type="submit" class="btn btn-success">Отправить</button>
                     </div>
                 </form>
             </div>

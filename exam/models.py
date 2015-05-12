@@ -228,4 +228,20 @@ class TestImage(models.Model):
     image = models.ImageField(upload_to='test_images', blank=True)
 
 
+class Feedback(models.Model):
+    """
+    There are feedbacks from users
+    """
+    # User
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    # The user's name (if it is not registered)
+    name = models.CharField(max_length=500, blank=True, null=True)
+    # The user's e-mail (if it is not registered)
+    email = models.EmailField(blank=True, null=True)
+    # Feedback
+    feedback = models.TextField()
+    # Feedback date
+    date_and_time = models.DateTimeField(default=timezone.now())
+
+
 

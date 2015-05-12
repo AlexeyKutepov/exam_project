@@ -26,6 +26,13 @@ class JournalAdmin(admin.ModelAdmin):
     date_hierarchy = 'end_date'
 
 
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('user', 'name', 'email', 'date_and_time', 'feedback')
+    list_filter = ('user', 'name', 'email', 'date_and_time', 'feedback')
+    date_hierarchy = 'date_and_time'
+
+
 @admin.register(UserProfile)
 class UserProfileAdmin(UserAdmin):
     date_hierarchy = 'date_of_birth'
