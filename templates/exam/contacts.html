@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4">
+                    <h4>Контакты</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+<p></p>
+<h5>С помощью нашей формы обратной связи Вы можете:</h5>
+<ul>
+   <li><b>Получить помощь по работе c сервисом exam.ru</b></li>
+   <li><b>Сообщить об ошибках в работе сервиса и других возникших проблемах</b></li>
+   <li><b>Оставить предложение по улучшению сервиса exam.ru</b></li>
+   <li><b>Оставить отзыв о сервисе exam.ru</b></li>
+   <li><b>Задать любой вопрос или же просто пообщаться с нами :)</b> (Мы тоже живые люди)</li>
+</ul>
+{% if user.is_authenticated %}
+    <p>Мы <b>обязательно</b> Вам ответим :)</p>
+{% else %}
+    <p>Если Вы оставите свой e-mail, мы <b>обязательно</b> Вам ответим :)</p>
+{% endif %}
+<p></p>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <b>Обратная связь:</b>
+            </div>
+            <div class="panel-body">
+
+                <form action="{% url "contacts" %}" method="post">
+                    {% if user.is_authenticated %}
+                        <p><b>Отправитель:</b></p>
+                        <h5>{{ user.get_full_name }}</h5>
+                    {% else %}
+                        <div id="divFio" class="form-group">
+                            <label class="control-label" for="inputFio"><b>ФИО:</b></label>
+                            <input id="inputFio" name="fio" type="text" class="form-control" required>
+                            <label id="labelErrorFio" class="control-label" for="inputFio" hidden>Не корректно заполнено поле</label>
+                        </div>
+                        <div id="divEmail" class="form-group">
+                            <label class="control-label" for="inputEmail">Адрес электронной почты (если Вы желаете получить ответ):</label>
+                            <input id="inputEmail" name="email" type="email" class="form-control" onchange="checkEmail(this)" onkeyup="checkEmail(this)">
+                            <label id="labelErrorEmail" class="control-label" for="inputEmail" hidden>Не корректный адрес электронной почты</label>
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                       <label for="inputMessage"><b>Текст сообщения:</b></label>
+                       <textarea id="inputMessage" name="message" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="centered">
+                        <button id="btnSend" type="submit" class="btn btn-success">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

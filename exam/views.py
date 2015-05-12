@@ -929,3 +929,12 @@ def edit_question(request, id, number):
                     "image": image
                 }
             )
+
+
+def contacts(request):
+    return render(
+        request,
+        "exam/contacts.html",
+        {
+        }
+    )
