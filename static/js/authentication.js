@@ -41,7 +41,8 @@ function onPreview(input) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $('#impPreview').attr('src', e.target.result);
+            $('#impPreview')
+                .attr('src', e.target.result);
         };
 
         reader.readAsDataURL(input.files[0]);

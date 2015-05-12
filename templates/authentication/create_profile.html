@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block head %}
     <script src="/static/js/authentication.js"></script>
+    <script src="/static/js/crop.min.js"></script>
+    <link rel="stylesheet" href="/static/css/crop.css"/>
 {% endblock %}
 {% block auth_bar %}
     <ul class="nav navbar-nav navbar-right">
@@ -26,10 +28,30 @@
         <div class="col-lg-3 col-lg-offset-2">
             <div class="form-group">
                 <img id="impPreview" class="img-circle"
-                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                         alt="Generic placeholder image" width="140" height="140">
+                         data-src="holder.js/150x150/auto/white"
+                         alt="Photo" width="150" height="150">
                 <p></p>
-                  <input id="inputPicture" name="picture" type="file" onchange="onPreview(this)">
+                <input id="inputPicture" name="picture" type="file" onchange="onPreview(this)">
+{# TODO               #}
+{#                <input id="inputX" name="x" type="text" hidden>#}
+{#                <input id="inputY" name="y" type="text" hidden>#}
+{##}
+{#                <script type="text/javascript">#}
+{#                    var cropper;#}
+{#                    document.getElementById('impPreview').onload = function () {#}
+{#                        if (cropper) cropper.destroy();#}
+{#                        cropper = new Cropper(this, {#}
+{#                            min_width:  200,#}
+{#                            min_height: 200,#}
+{#                            max_width:  200,#}
+{#                            max_height:  200,#}
+{#                            update: function (coordinates) {#}
+{#                                $('#inputX').value = coordinates["x"];#}
+{#                                $('#inputY').value = coordinates["y"];#}
+{#                            }#}
+{#                        });#}
+{#                    }#}
+{#                </script>#}
             </div>
         </div>
         <div class="col-lg-5">
