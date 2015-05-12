@@ -21,6 +21,14 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
 
+
+
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "404ffcf5-0305-4be1-8e60-7aabb174eba6", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+
+
+
     {% block head %}
 
     {% endblock %}
@@ -110,12 +118,25 @@
 {% block header_content %}
 <div class="jumbotron">
     <div class="container">
-        <h1>Exam</h1>
+        <h3>Добро пожаловать на Exam.ru!</h3>
 
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a
-            jumbotron and three supporting pieces of content. Use it as a starting point to create something more
-            unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше &raquo;</a></p>
+        <p><b>Exam.ru</b> - универсальный сервис проверки знаний.</p>
+        <p>Мы сделали максимально простой и удобный в использовании сервис специально для Вас и уверены что Exam.ru станет Вашим надёжным помощником. <b>Вы останетесь довольны :-) </b></p>
+
+        {% if not user.is_authenticated %}
+        <p><a class="btn btn-primary btn-lg pull-right" href="{% url "create_profile" %}" role="button">Подружиться!</a></p>
+        <p></p>
+        {% endif %}
+
+        <span class='st_facebook_large' displayText='Facebook'></span>
+        <span class='st_twitter_large' displayText='Tweet'></span>
+        <span class='st_vkontakte_large' displayText='Vkontakte'></span>
+        <span class='st_linkedin_large' displayText='LinkedIn'></span>
+        <span class='st_googleplus_large' displayText='Google +'></span>
+        <span class='st_odnoklassniki_large' displayText='Odnoklassniki'></span>
+        <span class='st_pinterest_large' displayText='Pinterest'></span>
+        <span class='st_email_large' displayText='Email'></span>
+
     </div>
 </div>
 {% endblock %}
