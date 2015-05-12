@@ -8,15 +8,17 @@ window.onload=function() {
 
     if (pathname.indexOf('dashboard') + 1) {
         $("#liDashboard").addClass("active");
-    } else if (pathname.indexOf('create_new_test') + 1) {
+    } else if (pathname.indexOf('create/new/test') + 1) {
         $("#liTestConstructor").addClass("active");
-    } else if (pathname.indexOf('create_new_question') + 1) {
+    } else if (pathname.indexOf('create/new/question') + 1) {
         $("#liTestConstructor").addClass("active");
     } else if (pathname.indexOf('tests') + 1) {
         $("#liTests").addClass("active");
+    }else if (pathname.indexOf('contacts') + 1) {
+        $("#liContacts").addClass("active");
     }
 };
 
 $(function () {
   $('[data-toggle="popover"]').popover({html:true})
-})
+});

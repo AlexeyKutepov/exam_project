@@ -75,7 +75,7 @@
                             <li id="liTestConstructor"><a href="{% url "create_new_test" %}">Конструктор тестов</a></li>
                         {% endif %}
                         <li id="liTests"><a href="{% url "get_test_list" page=1 %}">Тесты</a></li>
-                        <li id="liAbout"><a href="{% url "contacts" %}">Контакты</a></li>
+                        <li id="liContacts"><a href="{% url "contacts" %}">Контакты</a></li>
                     </ul>
                     {% block auth_bar %}
                         {% if user.is_authenticated %}
