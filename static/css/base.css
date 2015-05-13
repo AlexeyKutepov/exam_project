@@ -10,8 +10,8 @@ body {
 }
 
 .k-panel-header {
-    height: 40px;
     background-color: #CDDC39;
+    display: inline-block
 }
 
 .vertical-align {
