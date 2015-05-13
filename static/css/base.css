@@ -39,3 +39,11 @@ body {
 .white_color {
    color: #ffffff;
 }
+
+.jumbotron {
+    background-color: #673AB7;
+    color: #ffffff;
+}
+.jumbotron h3 {
+    color: #ffffff;
+  }
