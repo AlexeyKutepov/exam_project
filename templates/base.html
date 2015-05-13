@@ -123,12 +123,27 @@
         <p></p>
         {% endif %}
 
-        <a class="btn btn-social-icon btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-facebook']);"><i class="fa fa-facebook"></i></a>
-        <a class="btn btn-social-icon btn-google" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-google']);"><i class="fa fa-google-plus"></i></a>
-        <a class="btn btn-social-icon btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-linkedin']);"><i class="fa fa-linkedin"></i></a>
-        <a class="btn btn-social-icon btn-twitter" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-twitter']);"><i class="fa fa-twitter"></i></a>
-        <a class="btn btn-social-icon btn-vk" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-vk']);"><i class="fa fa-vk"></i></a>
+        <a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://exam.ru&t=Exam.ru - лучший сервис on-line тестирования!"
+           onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+           target="_blank" title="Share on Facebook"><i class="fa fa-facebook"></i></a>
 
+        <a class="btn btn-social-icon btn-google" href="https://plus.google.com/share?url=http://exam.ru"
+           onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
+           target="_blank" title="Share on Google+"><i class="fa fa-google-plus"></i></a>
+
+        <a class="btn btn-social-icon btn-linkedin" href="https://www.linkedin.com/shareArticle?url=http://exam.ru&title=Exam.ru&summary=Лучший сервис on-line тестирования!"
+           onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
+           target="_blank" title="Share on LinkedIn">
+            <i class="fa fa-linkedin"></i></a>
+
+        <a class="btn btn-social-icon btn-twitter" href="https://twitter.com/share?url=http://exam.ru&via=Exam.ru&text=Лучший сервис on-line тестирования!"
+           onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+           target="_blank" title="Share on Twitter"><i class="fa fa-twitter"></i></a>
+
+        <a class="btn btn-social-icon btn-vk" href="http://vk.com/share.php?url=http://exam.ru&title=Exam.ru&description=Лучший сервис on-line тестирования!"
+           onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
+           target="_blank" title="Share on VK">
+           <i class="fa fa-vk"></i></a>
     </div>
 </div>
 {% endblock %}
