@@ -6,8 +6,11 @@
 
     {% load staticfiles %}
     <link rel="stylesheet" href="/static/css/material.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-social.css"/>
 
     <link rel="stylesheet" href="/static/css/base.css"/>
+
 
     <script src="/static/js/jquery-1.11.2.min.js"></script>
 
@@ -20,14 +23,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
-
-
-
-    <script type="text/javascript">var switchTo5x=true;</script>
-    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-    <script type="text/javascript">stLight.options({publisher: "404ffcf5-0305-4be1-8e60-7aabb174eba6", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-
-
 
     {% block head %}
 
@@ -128,14 +123,11 @@
         <p></p>
         {% endif %}
 
-        <span class='st_facebook_large' displayText='Facebook'></span>
-        <span class='st_twitter_large' displayText='Tweet'></span>
-        <span class='st_vkontakte_large' displayText='Vkontakte'></span>
-        <span class='st_linkedin_large' displayText='LinkedIn'></span>
-        <span class='st_googleplus_large' displayText='Google +'></span>
-        <span class='st_odnoklassniki_large' displayText='Odnoklassniki'></span>
-        <span class='st_pinterest_large' displayText='Pinterest'></span>
-        <span class='st_email_large' displayText='Email'></span>
+        <a class="btn btn-social-icon btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-facebook']);"><i class="fa fa-facebook"></i></a>
+        <a class="btn btn-social-icon btn-google" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-google']);"><i class="fa fa-google-plus"></i></a>
+        <a class="btn btn-social-icon btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-linkedin']);"><i class="fa fa-linkedin"></i></a>
+        <a class="btn btn-social-icon btn-twitter" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-twitter']);"><i class="fa fa-twitter"></i></a>
+        <a class="btn btn-social-icon btn-vk" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-vk']);"><i class="fa fa-vk"></i></a>
 
     </div>
 </div>
