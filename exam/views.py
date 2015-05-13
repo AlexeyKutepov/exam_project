@@ -178,11 +178,15 @@ def report(request, id):
     elif request.user != journal.test.author:
         raise SuspiciousOperation("Некорректный запрос")
     else:
+        report = pickle.loads(journal.report)
+        exam_test = pickle.loads(journal.test_object)
         return render(
             request,
             "exam/report.html",
             {
-                "journal": journal
+                "journal": journal,
+                "report": report,
+                "exam_test": exam_test
             }
         )
 
@@ -391,8 +395,10 @@ def next_question_unregistered_user(request, id, progress_id, number):
 
     if "answer" in request.POST:
         is_correct = True
+        request_answer = None
         if question.get_test_type() is TestType.OPEN_TYPE:
             if question.get_answers().get_answer() != request.POST["answer"]:
+                request_answer = request.POST["answer"]
                 is_correct = False
         elif question.get_test_type() is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
             correct_answer_list = []
@@ -400,6 +406,7 @@ def next_question_unregistered_user(request, id, progress_id, number):
                 if question.get_answers()[item].is_correct():
                     correct_answer_list.append(str(item + 1))
             is_correct = correct_answer_list == request.POST.getlist("answer")
+            request_answer = request.POST.getlist("answer")
         elif question.get_test_type() is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
             correct_answer = 1
             for item in range(len(question.get_answers())):
@@ -407,13 +414,14 @@ def next_question_unregistered_user(request, id, progress_id, number):
                     correct_answer = item + 1
                     break
             is_correct = str(correct_answer) == request.POST["answer"]
+            request_answer = request.POST["answer"]
 
         if is_correct:
             progress.current_result += 1
         result_list.append(
             ExamResult(
                 is_correct=is_correct,
-                answer=request.POST["answer"]
+                answer=request_answer
             )
         )
         progress.result_list = pickle.dumps(result_list)
@@ -505,15 +513,18 @@ def next_question(request, id, number):
 
     if "answer" in request.POST:
         is_correct = True
+        request_answer = None
         if question.get_test_type() is TestType.OPEN_TYPE:
             if question.get_answers().get_answer() != request.POST["answer"]:
                 is_correct = False
+                request_answer = request.POST["answer"]
         elif question.get_test_type() is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
             correct_answer_list = []
             for item in range(len(question.get_answers())):
                 if question.get_answers()[item].is_correct():
                     correct_answer_list.append(str(item + 1))
             is_correct = correct_answer_list == request.POST.getlist("answer")
+            request_answer = request.POST.getlist("answer")
         elif question.get_test_type() is TestType.CLOSE_TYPE_ONE_CORRECT_ANSWER:
             correct_answer = 1
             for item in range(len(question.get_answers())):
@@ -521,13 +532,14 @@ def next_question(request, id, number):
                     correct_answer = item + 1
                     break
             is_correct = str(correct_answer) == request.POST["answer"]
+            request_answer = request.POST["answer"]
 
         if is_correct:
             progress.current_result += 1
         result_list.append(
             ExamResult(
                 is_correct=is_correct,
-                answer=request.POST["answer"]
+                answer=request_answer
             )
         )
         progress.result_list = pickle.dumps(result_list)
@@ -546,7 +558,8 @@ def next_question(request, id, number):
                 number_of_questions=len(exam_test.get_questions()),
                 number_of_correct_answers=progress.current_result,
                 result=result_of_test,
-                report=progress.result_list
+                report=progress.result_list,
+                test_object=test.test
             )
 
             test.rating += 1

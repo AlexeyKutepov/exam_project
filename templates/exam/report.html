@@ -13,6 +13,7 @@
     </div>
 {% endblock %}
 {% block content %}
+{% load poll_extras %}
 <div class="row">
     <div class="col-lg-12">
         <p></p>
@@ -99,6 +100,82 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
+        {% if journal.result >= 70 %}
+            <div id="divResult" class="panel panel-success">
+        {% elif journal.result >= 40 %}
+            <div id="divResult" class="panel panel-warning">
+        {% else %}
+            <div id="divResult" class="panel panel-danger">
+        {% endif %}
+            <div class="panel-heading">
+                    <h3 class="panel-title">{{ journal.test.name }}</h3>
+                </div>
+                {% for question in exam_test.get_questions %}
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            {% if report|is_correct_by_index:forloop.counter0 %}
+                            <th class="success">Вопрос №{{ forloop.counter }}</th>
+                            {% else %}
+                            <th class="danger">Вопрос №{{ forloop.counter }}</th>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>{{ question.get_question }}</td>
+                        </tr>
+                     </tbody>
+                </table>
+                {% if question.get_test_type.value == 1 or question.get_test_type.value == 2 %}
+                <table class="table">
+                    <tbody>
+                            <tr>
+                                <th>Варианты ответа:</th>
+                                <th>Правильные:</th>
+                                <th>Выбранные:</th>
+                            </tr>
+                        {% for answer in  question.get_answers%}
+
+                            <tr>
+                                <td>{{ answer.get_answer }}</td>
+
+                                {% if answer.is_correct %}
+                                <td><i class="fa fa-check"></i></td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
+                                {% if forloop.counter in report|get_answers_by_index:forloop.parentloop.counter0 %}
+                                <td><i class="fa fa-check"></i></td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        <tr><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                {% else %}
+                <table class="table">
+                    <tbody>
+                            <tr>
+                                <th>Правильный ответ:</th>
+                                <th>Фактический ответ:</th>
+                            </tr>
+                            <tr>
+                                <td>{{ question.get_answers.get_answer }}</td>
+                                <td>{{ report|get_answer_by_index:forloop.counter0 }}</td>
+                            </tr>
+                        <tr><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
         <form action="{% url "journal" id=journal.test.id %}" method="post">
             {% csrf_token %}
             <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -128,4 +205,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}

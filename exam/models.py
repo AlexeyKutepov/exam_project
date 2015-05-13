@@ -195,6 +195,8 @@ class Journal(models.Model):
     result = models.IntegerField(default=0)
     # The report of the test (JSON - file)'
     report = models.BinaryField()
+    # The test
+    test_object= models.BinaryField()
 
     def __str__(self):
         return self.user.user.last_name + " " + self.user.user.first_name + " " + self.user.middle_name
