@@ -81,7 +81,7 @@
             <div id="divDateOfBirth" class="form-group">
                 <label class="control-label" for="inputDateOfBirth"><b>Дата рождения:</b></label>
                 <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control"
-                       onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" oninput="checkDateOfBirth(this)" value="{{ user.date_of_birth|date:"Y-m-d" }}" required>
+                       onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" value="{{ user.date_of_birth|date:"Y-m-d" }}" required>
             </div>
             <label class="control-label" for="divGender">Пол:</label>
             {% if user.gender == "MALE" %}
