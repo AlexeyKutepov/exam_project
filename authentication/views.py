@@ -38,9 +38,13 @@ def create_profile(request):
     """
     if "email" and "password1" and "password2" and "dateOfBirth" in request.POST:
         email = request.POST.get("email")
-        user_profile_in_db = UserProfile.objects.get(email=email)
-        if user_profile_in_db:
-            return HttpResponseRedirect(reverse("authentication_alert", args=["danger", "Пользователь с e-mail адресом "+email+" уже существует!"]))
+        try:
+            user_profile_in_db = UserProfile.objects.get(email=email)
+            if user_profile_in_db:
+                return HttpResponseRedirect(reverse("authentication_alert", args=["danger", "Пользователь с e-mail адресом "+email+" уже существует!"]))
+        except:
+            # Exception does not matter
+            pass
         password_1 = request.POST.get("password1")
         password_2 = request.POST.get("password2")
         date_of_birth = request.POST.get("dateOfBirth")
