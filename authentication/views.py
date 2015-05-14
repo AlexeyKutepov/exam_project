@@ -7,6 +7,7 @@ from django.contrib import auth
 from exam.models import UserProfile
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
+from django.conf import settings
 
 
 @csrf_protect
@@ -107,7 +108,7 @@ def create_profile(request):
         send_mail(
             'Регистрация на exam.ru',
             'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
-            'test.kutepov@yandex.ru',
+            settings.EMAIL_HOST_USER,
             [email],
             fail_silently=False
         )
@@ -194,7 +195,7 @@ def recovery_password(request):
             send_mail(
                 'Пароль к аккаунту на exam.ru',
                 'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + password + ' \n \n С уважением, команда exam.ru',
-                'test.kutepov@yandex.ru',
+                settings.EMAIL_HOST_USER,
                 [request.POST["email"]],
                 fail_silently=False
             )
