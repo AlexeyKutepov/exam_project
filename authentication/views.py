@@ -108,7 +108,7 @@ def create_profile(request):
         send_mail(
             'Регистрация на exam.ru',
             'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
-            settings.EMAIL_HOST_USER,
+            getattr(settings, "EMAIL_HOST_USER", None),
             [email],
             fail_silently=False
         )
@@ -195,7 +195,7 @@ def recovery_password(request):
             send_mail(
                 'Пароль к аккаунту на exam.ru',
                 'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + password + ' \n \n С уважением, команда exam.ru',
-                settings.EMAIL_HOST_USER,
+                getattr(settings, "EMAIL_HOST_USER", None),
                 [request.POST["email"]],
                 fail_silently=False
             )
