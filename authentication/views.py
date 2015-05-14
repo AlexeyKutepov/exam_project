@@ -40,15 +40,7 @@ def create_profile(request):
         email = request.POST.get("email")
         user_profile_in_db = UserProfile.objects.get(email=email)
         if user_profile_in_db:
-            return render(
-                request,
-                "exam/alert.html",
-                {
-                    "status": "danger",
-                    "message": "Пользователь с e-mail адресом "+email+" уже существует!"
-                }
-            )
-
+            return HttpResponseRedirect(reverse("authentication_alert", args=["danger", "Пользователь с e-mail адресом "+email+" уже существует!"]))
         password_1 = request.POST.get("password1")
         password_2 = request.POST.get("password2")
         date_of_birth = request.POST.get("dateOfBirth")
@@ -205,3 +197,21 @@ def recovery_password(request):
         else:
             pass
     return HttpResponseRedirect(reverse("index"))
+
+
+def alert(request, status, message):
+    """
+    Shows page with message
+    :param request:
+    :param status: status (success, danger ... for bootstrap)
+    :param message: message
+    :return:
+    """
+    return render(
+        request,
+        "exam/alert.html",
+        {
+            "status": status,
+            "message": message
+        }
+    )

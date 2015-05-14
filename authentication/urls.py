@@ -9,4 +9,5 @@ urlpatterns = patterns('',
         url(r'^create/profile/$', views.create_profile, name='create_profile'),
         url(r'^settings/$', views.settings, name='settings'),
         url(r'^recovery/password/$', views.recovery_password, name='recovery_password'),
+        url(r'^alert/(?P<status>.+)/(?P<message>.+)/$', views.alert, name='authentication_alert'),
 )
