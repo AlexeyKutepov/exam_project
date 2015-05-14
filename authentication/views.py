@@ -105,13 +105,16 @@ def create_profile(request):
             position=position,
             picture=picture
         )
-        send_mail(
-            'Регистрация на exam.ru',
-            'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
-            getattr(settings, "EMAIL_HOST_USER", None),
-            [email],
-            fail_silently=False
-        )
+        try:
+            send_mail(
+                'Регистрация на exam.ru',
+                'Здравствуйте ' + first_name + '! \n \n Поздравляем Вас с успешной регистрацией на exam.ru! \n \n Ваш логин: ' + email + ' \n Ваш пароль: ' + password_1 + ' \n \n С уважением, команда exam.ru',
+                getattr(settings, "EMAIL_HOST_USER", None),
+                [email],
+                fail_silently=False
+            )
+        except:
+            pass
         return render(
             request,
             "exam/index.html",
@@ -192,15 +195,25 @@ def recovery_password(request):
         if user and len(user) == 1:
             user[0].set_password(password)
             user[0].save()
-            send_mail(
-                'Пароль к аккаунту на exam.ru',
-                'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + password + ' \n \n С уважением, команда exam.ru',
-                getattr(settings, "EMAIL_HOST_USER", None),
-                [request.POST["email"]],
-                fail_silently=False
-            )
+            try:
+                send_mail(
+                    'Пароль к аккаунту на exam.ru',
+                    'Здравствуйте ' + user[0].first_name + '! \n \n Ваш логин: ' + user[0].email + ' \n Ваш пароль: ' + password + ' \n \n С уважением, команда exam.ru',
+                    getattr(settings, "EMAIL_HOST_USER", None),
+                    [request.POST["email"]],
+                    fail_silently=False
+                )
+                return HttpResponseRedirect(reverse("authentication_alert", args=[
+                    "success", "Новый пароль отправлен на электронную почту."
+                ]))
+            except:
+                return HttpResponseRedirect(reverse("authentication_alert", args=[
+                    "danger", "Не удалось отправить пароль на электронную почту. Повторите попытку или сообщите нам о проблеме."
+                ]))
         else:
-            pass
+            return HttpResponseRedirect(reverse("authentication_alert", args=[
+                    "danger", "Пользователь с e-mail адресом "+request.POST["email"]+" не зарегистрирован!"
+                ]))
     return HttpResponseRedirect(reverse("index"))
 
 
