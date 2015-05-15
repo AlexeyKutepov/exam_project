@@ -8,19 +8,19 @@
             <div class="row vertical-align">
 
                 {% if user.picture %}
-                <div class="col-lg-2 col-md-2 col-sm-2">
+                <div class="col-lg-2 col-md-3 col-sm-3">
                     <img class="img-circle"
                          src="{{ MEDIA_URL }}{{ user.picture }}"
                          alt="Photo" width="140" height="140">
                 </div>
                 {% else %}
-                <div class="col-lg-2 col-md-2 col-sm-2 placeholder">
+                <div class="col-lg-2 col-md-3 col-sm-3 placeholder">
                     <img data-src="holder.js/150x150/auto/white" class="img-circle"
                          alt="Photo" width="140" height="140">
                 </div>
                 {% endif %}
 
-                <div class="col-lg-8 col-md-8 col-sm-8">
+                <div class="col-lg-8 col-md-7 col-sm-7">
                     <h3>{{ user.get_short_name|default:"Имя не задано" }}</h3>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2">
