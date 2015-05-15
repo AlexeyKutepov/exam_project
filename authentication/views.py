@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -31,6 +32,18 @@ def sign_out(request):
     return HttpResponseRedirect(reverse("index"))
 
 
+def validate_date(date_text):
+    try:
+        date_text = datetime.datetime.strptime(date_text, '%Y-%m-%d')
+        return date_text
+    except ValueError:
+        try:
+            date_text = datetime.datetime.strptime(date_text, '%d.%m.%Y')
+            return date_text
+        except ValueError:
+            return datetime.datetime.now()
+
+
 def create_profile(request):
     """
     Creates new user profile
@@ -49,6 +62,8 @@ def create_profile(request):
         password_1 = request.POST.get("password1")
         password_2 = request.POST.get("password2")
         date_of_birth = request.POST.get("dateOfBirth")
+        date_of_birth = validate_date(date_of_birth)
+
 
         if "lastName" in request.POST:
             last_name = request.POST.get("lastName")

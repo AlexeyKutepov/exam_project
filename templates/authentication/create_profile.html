@@ -56,19 +56,19 @@
         </div>
         <div class="col-lg-5">
             <div id="divEmail" class="form-group">
-                <label class="control-label" for="inputEmail"><b>Адрес электронной почты:</b></label>
+                <label class="control-label" for="inputEmail"><b>* Адрес электронной почты:</b></label>
                 <input id="inputEmail" name="email" type="email" class="form-control"
                        onchange="checkEmail(this)" onkeyup="checkEmail(this)" oninput="checkEmail(this)" required>
                 <label id="labelErrorEmail" class="control-label" for="inputEmail" hidden>Не корректный адрес электронной почты</label>
             </div>
             <div id="divPassword1" class="form-group">
-                <label class="control-label" for="inputPassword1"><b>Пароль (не менее 6 символов):</b></label>
+                <label class="control-label" for="inputPassword1"><b>* Пароль (не менее 6 символов):</b></label>
                 <input id="inputPassword1" name="password1" type="password" class="form-control"
                        onchange="checkPassword1(this)" onkeyup="checkPassword1(this)" oninput="checkPassword1(this)" required>
                 <label id="labelErrorPassword1" class="control-label" for="inputPassword1" hidden>Пароль должен быть не меннее 6 символов</label>
             </div>
             <div id="divPassword2" class="form-group">
-                <label class="control-label" for="inputPassword2"><b>Подтверждение пароля:</b></label>
+                <label class="control-label" for="inputPassword2"><b>* Подтверждение пароля:</b></label>
                 <input id="inputPassword2" name="password2" type="password" class="form-control"
                        onchange="checkPassword2(this)" onkeyup="checkPassword2(this)" oninput="checkPassword2(this)" required>
                 <label id="labelErrorPassword2" class="control-label" for="inputPassword1" hidden>Пароли не совпадают</label>
@@ -78,12 +78,12 @@
     <div class="row">
         <div class="col-lg-4 col-lg-offset-2">
             <div id="divLastName" class="form-group">
-                <label class="control-label" for="inputLastName"><b>Фамилия:</b></label>
+                <label class="control-label" for="inputLastName"><b>* Фамилия:</b></label>
                 <input id="inputLastName" name="lastName" type="text" class="form-control"
                        onchange="checkLastName(this)" onkeyup="checkLastName(this)" oninput="checkLastName(this)" required>
             </div>
             <div id="divFirstName" class="form-group">
-                <label class="control-label" for="inputFirstName"><b>Имя:</b></label>
+                <label class="control-label" for="inputFirstName"><b>* Имя:</b></label>
                 <input id="inputFirstName" name="firstName" type="text" class="form-control"
                        onchange="checkFirstName(this)" onkeyup="checkFirstName(this)" oninput="checkFirstName(this)" required>
             </div>
@@ -92,7 +92,7 @@
                 <input id="inputMiddleName" name="middleName" type="text" class="form-control">
             </div>
             <div id="divDateOfBirth" class="form-group">
-                <label class="control-label" for="inputDateOfBirth"><b>Дата рождения:</b></label>
+                <label class="control-label" for="inputDateOfBirth"><b>* Дата рождения (дд.мм.гггг):</b></label>
                 <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control"
                        onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" required>
             </div>
