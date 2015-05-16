@@ -964,7 +964,7 @@ def contacts(request):
             "exam/alert.html",
             {
                 "status": "success",
-                "message": "Ваше сообщение успешно отправлено команде exam.ru!"
+                "message": "Ваше сообщение успешно отправлено команде www.exam.moscow!"
             }
         )
 
