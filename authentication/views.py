@@ -130,10 +130,9 @@ def create_profile(request):
             )
         except:
             pass
-        return render(
-            request,
-            "exam/index.html",
-        )
+        return HttpResponseRedirect(reverse("authentication_alert", args=[
+                    "success", "Поздравляем! Вы успешно зарегистрировались."
+                ]))
     else:
         return render(
             request,
