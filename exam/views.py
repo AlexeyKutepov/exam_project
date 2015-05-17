@@ -440,7 +440,8 @@ def next_question_unregistered_user(request, id, progress_id, number):
                 number_of_questions=len(exam_test.get_questions()),
                 number_of_correct_answers=progress.current_result,
                 result=result_of_test,
-                report=progress.result_list
+                report=progress.result_list,
+                test_object=test.test
             )
 
             test.rating += 1

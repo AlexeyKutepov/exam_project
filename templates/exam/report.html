@@ -39,7 +39,11 @@
                     </tr>
                     <tr>
                         <th>Дата рождения</th>
+                         {% if journal.user and journal.user.date_of_birth %}
                         <td>{{ journal.user.date_of_birth|date:"d.m.Y" }}</td>
+                        {% else %}
+                        <td>-</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <th>Страна</th>
