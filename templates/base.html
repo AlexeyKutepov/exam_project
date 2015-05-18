@@ -130,6 +130,7 @@
                         {% endif %}
                         <li id="liTests"><a href="{% url "get_test_list" page=1 %}">Тесты</a></li>
                         <li id="liContacts"><a href="{% url "contacts" %}">Контакты</a></li>
+                        <li id="liHelp"><a href="{% url "help" %}">Справка</a></li>
                     </ul>
                     {% block auth_bar %}
                         {% if user.is_authenticated %}

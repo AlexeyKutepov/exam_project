@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Exam - справка</title>
+{% endblock %}
+{% block seo %}
+    <meta name="description" content="Справка по сервису Exam. Как работать с сервисом.">
+    <meta name="keywords" content="Справка, обучение, помощь, с чего начать">
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4">
+                    <h4>Справка</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Как работать с сервисом Exam?</h4>
+            <hr>
+            <h6>Оглавление</h6>
+            <ol>
+                <li><a href="#registration">Регистрация</a></li>
+                <li><a href="#sign_in">Вход в систему</a></li>
+                <li><a href="#create_test">Создание теста</a></li>
+            </ol>
+            <a name="registration"></a>
+            <hr>
+            <h5>1. Регистрация</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Для того чтобы начать полноценную работу с сервисом Exam, Вам необходимо <b>зарегистрироваться</b>.</p>
+                    <p>Выберите в главном меню пункт <b>Регистрация</b> и перед Вами откроется окно с формой для создания нового пользователя:</p>
+                    <img class="img-thumbnail"
+                     src="/static/img/registration.png"
+                     alt="Окно регистрации" width="auto" height="auto">
+                    <p>Заполните обязательные поля, отмеченные звёздочкой (заполнение не обязательных полей остаётся на Ваше усмотрение), и нажмите кнопку <b>Зарегистрироваться</b>. </p>
+                    <p>Если всё было заполнено правильно, то Вы увидите окно с сообщением об успешной регистрации:</p>
+                    <img class="img-thumbnail"
+                     src="/static/img/registration_complete.png"
+                     alt="Сообщение об успешной регистрации" width="auto" height="auto">
+                </div>
+            </div>
+            <a name="sign_in"></a>
+            <hr>
+            <h5>2. Вход в систему</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>После как Вы <a href="#registration">зарегистрировались</a>, Вам необходимо войти в систему под своим логином (Ваш e-mail адрес) и паролем.</p>
+                    <p>Для этого введите свой адрес электронной почты и пароль в соответствующие поля в панели главного меню:</p>
+                    <img class="img-thumbnail"
+                     src="/static/img/sing_in.png"
+                     alt="Вход в систему" width="auto" height="auto">
+                    <p>После этого нажмите кнопку <b>Вход</b>. Если Вы ввели правильные данные, система Вас успешно авторизирует и перенаправит на страницу Вашего рабочего стола.</p>
+                </div>
+            </div>
+            <a name="create_test"></a>
+            <hr>
+            <h5>3. Создание теста</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>После как Вы <a href="#sign_in">вошли в систему</a>, Вы можете полноценно работать с сервисом Exam.</p>
+                    <p>Для того чтобы создать свой тест, выберите в главном меню пункт <b>Конструктор тестов</b> или перейдите на ребочий стол (пункт <b>Рабочий стол</b> в главном меню) и нажмите кнопку <b>Создать новый тест</b></p>
+                    <p>Перед Вами откроется окно создания нового теста:</p>
+                    <img class="img-thumbnail"
+                     src="/static/img/create_new_test.png"
+                     alt="Создание нового теста" width="auto" height="auto">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

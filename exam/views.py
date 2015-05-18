@@ -968,11 +968,23 @@ def contacts(request):
                 "message": "Ваше сообщение успешно отправлено команде www.exam.moscow!"
             }
         )
-
-
     return render(
         request,
         "exam/contacts.html",
+        {
+        }
+    )
+
+
+def exam_help(request):
+    """
+    Shows exam help
+    :param request:
+    :return:
+    """
+    return render(
+        request,
+        "exam/help.html",
         {
         }
     )

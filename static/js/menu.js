@@ -14,8 +14,10 @@ window.onload=function() {
         $("#liTestConstructor").addClass("active");
     } else if (pathname.indexOf('tests') + 1) {
         $("#liTests").addClass("active");
-    }else if (pathname.indexOf('contacts') + 1) {
+    } else if (pathname.indexOf('contacts') + 1) {
         $("#liContacts").addClass("active");
+    } else if (pathname.indexOf('help') + 1) {
+        $("#liHelp").addClass("active");
     }
 };
 

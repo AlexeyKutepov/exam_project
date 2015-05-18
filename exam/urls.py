@@ -21,4 +21,5 @@ urlpatterns = patterns('',
         url(r'^edit/test/edit/question/(?P<id>\d+)/(?P<number>\d+)/$', views.edit_question, name='edit_test_edit_question'),
         url(r'^report/(?P<id>\d+)/$', views.report, name='report'),
         url(r'^contacts/', views.contacts, name='contacts'),
+        url(r'^help/', views.exam_help, name='help'),
 )
