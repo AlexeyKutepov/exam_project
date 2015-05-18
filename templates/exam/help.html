@@ -29,6 +29,7 @@
                 <li><a href="#registration">Регистрация</a></li>
                 <li><a href="#sign_in">Вход в систему</a></li>
                 <li><a href="#create_test">Создание теста</a></li>
+                <li><a href="#offline_test">Интерактивная offline версия теста</a></li>
             </ol>
             <a name="registration"></a>
             <hr>
@@ -82,7 +83,7 @@
                     <p>Откроется окно создания вопроса:</p>
                      <img class="img-thumbnail"
                      src="/static/img/create_new_question.png"
-                     alt="Создание нового теста" width="auto" height="auto">
+                     alt="Создание нового вопроса" width="auto" height="auto">
                     <p>Окно создания вопроса содержит следующие поля:</p>
                     <ol>
                         <li><b>"Вопрос:"</b> - обязательное для заполнения поле. В него Вы должны ввести текст вопроса.</li>
@@ -101,7 +102,25 @@
                     <p>Созданный тест появится в списке тестов на Вашем рабочем столе:</p>
                     <img class="img-thumbnail"
                      src="/static/img/dashboard.png"
-                     alt="Создание нового теста" width="auto" height="auto">
+                     alt="Рабочий стол" width="auto" height="auto">
+                </div>
+            </div>
+            <a name="offline_test"></a>
+            <hr>
+            <h5>4. Интерактивная offline версия теста</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>В случае, когда необходимо провести тестирование в отсутствии интернета, можно воспользоваться <b>интерактивной offline версией теста</b>.</p>
+                    <p>Чтобы скачать файл с тестом, выберите в главном меню пункт <b>"Рабочий стол"</b>, а затем нажмите кнопку <b>"Скачать тест"</b> напротив нужного теста.</p>
+                    <p>Кнопка <b>"Скачать тест"</b> выглядит следующим образом:</p>
+                    <button type="button" class="btn btn-info" title="Скачать тест">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                    <p></p>
+                    <p>Кнопка <b>"Скачать тест"</b> доступна для каждого теста из списка на рабочем столе:</p>
+                    <img class="img-thumbnail"
+                     src="/static/img/test_from_dashboard_list.png"
+                     alt="Строка из списка тестов на рабочем столе" width="auto" height="auto">
                 </div>
             </div>
         </div>
