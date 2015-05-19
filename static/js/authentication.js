@@ -80,6 +80,10 @@ function checkPassword1(input) {
         $("#labelErrorPassword1").hide();
         isPass1=true;
     }
+    var inputPassword2 = $("#inputPassword2");
+    if (inputPassword2.val() != "") {
+        checkPassword2(inputPassword2[0])
+    }
     checkSubmit();
 }
 
