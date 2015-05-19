@@ -116,10 +116,12 @@ function checkPassword2(input) {
  * @param input
  */
 function checkLastName(input) {
-    if (input.value == "") {
+    if ($.trim(input.value) == "") {
+        input.value = $.trim(input.value);
         $("#divLastName").addClass("has-error").removeClass("has-success");
         isLastName=false;
     } else {
+        input.value = $.trim(input.value);
         $("#divLastName").removeClass("has-error").addClass("has-success");
         isLastName=true;
     }
@@ -131,10 +133,12 @@ function checkLastName(input) {
  * @param input
  */
 function checkFirstName(input) {
-    if (input.value == "") {
+    if ($.trim(input.value) == "") {
+        input.value = $.trim(input.value);
         $("#divFirstName").addClass("has-error").removeClass("has-success");
         isFirstName=false;
     } else {
+        input.value = $.trim(input.value);
         $("#divFirstName").removeClass("has-error").addClass("has-success");
         isFirstName=true;
     }
