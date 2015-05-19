@@ -9,6 +9,7 @@ from exam.models import UserProfile
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.conf import settings
+import imghdr
 
 
 @csrf_protect
@@ -103,6 +104,8 @@ def create_profile(request):
             position = None
         if "picture" in request.FILES:
             picture = request.FILES["picture"]
+            if not imghdr.what(picture):
+                picture = None
         else:
             picture = None
         user = auth.get_user_model().objects.create_user(
@@ -172,7 +175,7 @@ def settings(request):
         user.address = request.POST["address"]
         user.institution = request.POST["institution"]
         user.position = request.POST["position"]
-        if picture:
+        if picture and imghdr.what(picture):
             user.picture = picture
         user.save()
         if password:

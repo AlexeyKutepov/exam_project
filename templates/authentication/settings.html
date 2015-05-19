@@ -25,13 +25,13 @@
                                  src="{{ MEDIA_URL }}{{ user.picture }}"
                                  alt="Photo" width="140" height="140">
                         <p></p>
-                    <input id="inputPicture" name="picture" type="file" onchange="onPreview(this)">
+                    <input id="inputPicture" name="picture" type="file" accept="image/*" onchange="onPreview(this)">
                 {% else %}
                     <img id="impPreview" class="img-circle"
                              data-src="holder.js/150x150/auto/white"
                              alt="Photo" width="150" height="150">
                     <p></p>
-                    <input id="inputPicture" name="picture" type="file" onchange="onPreview(this)">
+                    <input id="inputPicture" name="picture" type="file" accept="image/*" onchange="onPreview(this)">
                 {% endif %}
             </div>
         </div>
