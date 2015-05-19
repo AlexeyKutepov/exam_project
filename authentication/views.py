@@ -130,9 +130,14 @@ def create_profile(request):
             )
         except:
             pass
-        return HttpResponseRedirect(reverse("authentication_alert", args=[
-                    "success", "Поздравляем! Вы успешно зарегистрировались."
-                ]))
+        user_auth = auth.authenticate(email=email, password=password_1)
+        if user_auth is not None and user_auth.is_active:
+            auth.login(request, user_auth)
+            return HttpResponseRedirect(reverse("dashboard"))
+        else:
+            return HttpResponseRedirect(reverse("authentication_alert", args=[
+                        "success", "Поздравляем! Вы успешно зарегистрировались. Для продолжения работы войдите в систему под своим логином и паролем."
+                    ]))
     else:
         return render(
             request,
