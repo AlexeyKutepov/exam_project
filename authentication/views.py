@@ -136,16 +136,25 @@ def create_profile(request):
         user_auth = auth.authenticate(email=email, password=password_1)
         if user_auth is not None and user_auth.is_active:
             auth.login(request, user_auth)
-            return HttpResponseRedirect(reverse("dashboard"))
+            if "next" in request.POST:
+                return HttpResponseRedirect(request.POST["next"])
+            else:
+                return HttpResponseRedirect(reverse("dashboard"))
         else:
             return HttpResponseRedirect(reverse("authentication_alert", args=[
                         "success", "Поздравляем! Вы успешно зарегистрировались. Для продолжения работы войдите в систему под своим логином и паролем."
                     ]))
     else:
+        next_page = None
+        if "next" in request.GET:
+            next_page = request.GET["next"]
         return render(
             request,
             "authentication/create_profile.html",
-            {"profile_form": UserProfileForm}
+            {
+                "profile_form": UserProfileForm,
+                "next": next_page
+            }
         )
 
 

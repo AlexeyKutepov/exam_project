@@ -139,7 +139,11 @@
 {#            </div>#}
 {#        </div>#}
         <div class="col-lg-offset-2 col-lg-6">
+            {% if next %}
+            <button id="btnSubmit" type="submit" name="next" value="{{ next }}" class="btn btn-success" disabled>Зарегистрироваться</button>
+            {% else %}
             <button id="btnSubmit" type="submit" class="btn btn-success" disabled>Зарегистрироваться</button>
+            {% endif %}
             <a href="/"><input type="button" class="btn btn-default" value="Отмена"/></a>
         </div>
     </div>

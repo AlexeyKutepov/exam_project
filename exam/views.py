@@ -625,7 +625,7 @@ def end_test(request, id):
 
 
 
-@login_required(login_url='/')
+@login_required(login_url='/accounts/create/profile/')
 def create_new_test(request):
     """
     Creates new test,
