@@ -87,6 +87,15 @@ def index(request):
     """
     return render(request, "exam/index.html")
 
+
+def index_beta(request):
+    """
+    Index page
+    :param request:
+    :return:
+    """
+    return render(request, "exam/beta/index_beta.html")
+
 @login_required(login_url='/')
 def dashboard(request):
     """

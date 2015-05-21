@@ -5,6 +5,7 @@ from exam import views
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
+        url(r'^index/beta/', views.index_beta, name='index_beta'),
         url(r'^dashboard/results/', views.dashboard_results, name='dashboard_results'),
         url(r'^dashboard/', views.dashboard, name='dashboard'),
         url(r'^journal/(?P<id>\d+)/$', views.journal, name='journal'),
