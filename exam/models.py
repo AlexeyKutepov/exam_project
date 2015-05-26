@@ -157,7 +157,7 @@ class UnregisteredUser(models.Model):
     """
 
     # e-mail
-    email = models.EmailField()
+    email = models.EmailField(blank=True, null=True)
     # user's first name
     first_name = models.TextField()
     # user's middle name

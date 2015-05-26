@@ -1,4 +1,5 @@
 from django.core.exceptions import SuspiciousOperation
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from exam.exam_test.exam_test import *
 from django.utils import timezone
+from django.conf import settings
 import pickle
 import math
 import base64
@@ -308,12 +310,15 @@ def start_test(request, id):
         test = Test.objects.get(id=id)
     except:
         return HttpResponseRedirect(reverse("get_test_list", args=[1]))
-    if "start" and "email" and "firstName" and "lastName" in request.POST:
+    if "start" and "firstName" and "lastName" in request.POST:
         middle_name = None
         if "middleName" in request.POST:
             middle_name = request.POST["middleName"]
+        email_address = None
+        if "email" in request.POST:
+            email_address = request.POST["email"]
         unregistered_user = UnregisteredUser.objects.get_or_create(
-            email=request.POST["email"],
+            email=email_address,
             first_name=request.POST["firstName"],
             middle_name=middle_name,
             last_name=request.POST["lastName"]
@@ -455,7 +460,21 @@ def next_question_unregistered_user(request, id, progress_id, number):
 
             test.rating += 1
             test.save()
-
+            if progress.unregistered_user.email:
+                try:
+                    send_mail(
+                        'Результаты прохождения теста "' + test.name + '"',
+                        'Здравствуйте ' + progress.unregistered_user.get_full_name() +
+                        '\n \nВы прошли тест "'+ test.name +'" на www.exam.moscow! \n \nВаши результаты: \nОценка: '+ str(result_of_test) + '\n' +
+                        'Количество вопросов в тесте: ' + str(len(exam_test.get_questions())) + '\n' +
+                        'Количество правильных ответов: ' + str(progress.current_result) +
+                        '\n \n С уважением, команда www.exam.moscow',
+                        getattr(settings, "EMAIL_HOST_USER", None),
+                        [progress.unregistered_user.email],
+                        fail_silently=False
+                    )
+                except:
+                    pass
             return HttpResponseRedirect(reverse("end_test", args=[journal.id]))
         else:
             number += 1
