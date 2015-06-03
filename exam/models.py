@@ -199,7 +199,12 @@ class Journal(models.Model):
     test_object= models.BinaryField()
 
     def __str__(self):
-        return self.user.get_full_name()
+        if self.user:
+            return self.user.get_full_name()
+        elif self.unregistered_user:
+            return self.unregistered_user.get_full_name()
+        else:
+            return "Unknown"
 
 
 class Progress(models.Model):
