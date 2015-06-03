@@ -199,7 +199,7 @@ class Journal(models.Model):
     test_object= models.BinaryField()
 
     def __str__(self):
-        return self.user.user.last_name + " " + self.user.user.first_name + " " + self.user.middle_name
+        return self.user.get_full_name()
 
 
 class Progress(models.Model):
