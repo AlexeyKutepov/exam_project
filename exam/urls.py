@@ -1,3 +1,5 @@
+from django.views.generic import TemplateView
+
 __author__ = 'Alexey Kutepov'
 
 from django.conf.urls import patterns, url
@@ -5,6 +7,7 @@ from exam import views
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
+        url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
         url(r'^index/beta/', views.index_beta, name='index_beta'),
         url(r'^dashboard/results/', views.dashboard_results, name='dashboard_results'),
         url(r'^dashboard/', views.dashboard, name='dashboard'),

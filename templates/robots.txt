@@ -1,0 +1,8 @@
+#for all
+User-agent: *
+Disallow: /admin/
+
+#for yandex
+User-agent: Yandex
+Disallow: /admin/
+Host: www.exam.moscow
