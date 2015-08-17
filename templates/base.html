@@ -4,6 +4,10 @@
     {% block title %}
         <title>Exam - универсальный сервис проверки знаний</title>
     {% endblock %}
+    {% block seo %}
+        <meta name="description" content="Универсальный сервис проверки знаний (онлайн конструктор тестов, система проверки знаний, журнал успеваемости). Позволяет создавать тесты на любую тему и проводить тестирование в режиме онлайн.">
+        <meta name="keywords" content="Конструктор тестов, проверка знаний, тестирование, журнал успеваемости, преподавателю, учёба">
+    {% endblock %}
     <meta charset="UTF-8">
     <meta http-equiv="content-language" content="ru" />
     <meta name="author" content="Алексей Кутепов" />
@@ -11,10 +15,7 @@
     <meta name='yandex-verification' content='62b41f391caca131' />
     <meta name='wmail-verification' content='eb696e869b4ff9e74f134f530e66987d' />
     <meta name="google-site-verification" content="oHSAQHTla8oVabep6b_U-XByVnW0kaweOABp-b6v-1E" />
-    {% block seo %}
-        <meta name="description" content="Универсальный сервис проверки знаний (On-line конструктор тестов, система проверки знаний, журнал успеваемости). Позволяет создавать тесты и проводить тестирование в режиме on-line.">
-        <meta name="keywords" content="Конструктор тестов, проверка знаний, тестирование, журнал успеваемости, преподавателю, учёба">
-    {% endblock %}
+
 
     {% load staticfiles %}
     <link rel="short icon" href="/static/img/favicon.png">
@@ -169,9 +170,7 @@
     <div class="container">
         <h3><b>Exam</b> - универсальный сервис проверки знаний</h3>
 
-        <p>Мы рады предложить вам удобный инструмент для реализации учебных задач.
-           С его помощью очень просто оценить уровень знаний обучаемых.</p>
-           <p>Воспользовавшись сервисом Exam, Вы получите: конструктор тестов, подключение любого количества участников для проведения тестирования, быстрый анализ результатов. </p>
+        <p>Удобный онлайн конструктор тестов, система проверки знаний и журнал успеваемости.</p>
 
 
         {% if not user.is_authenticated %}
