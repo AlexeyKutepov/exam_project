@@ -18,6 +18,8 @@ window.onload=function() {
         $("#liContacts").addClass("active");
     } else if (pathname.indexOf('help') + 1) {
         $("#liHelp").addClass("active");
+    } else if (pathname.indexOf('donate') + 1) {
+        $("#liDonate").addClass("active");
     }
 };
 

@@ -1016,3 +1016,12 @@ def exam_help(request):
         {
         }
     )
+
+
+def donate(request):
+    return render(
+        request,
+        "exam/donate.html",
+        {
+        }
+    )
