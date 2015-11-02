@@ -141,7 +141,7 @@
                         <li id="liTests"><a href="{% url "get_test_list" page=1 %}">Тесты</a></li>
                         <li id="liContacts"><a href="{% url "contacts" %}">Контакты</a></li>
                         <li id="liHelp"><a href="{% url "help" %}">Справка</a></li>
-                        <li id="liDonate"><a href="{% url "donate" %}">Помочь проекту!</a></li>
+{#                        <li id="liDonate"><a href="{% url "donate" %}">Помочь проекту!</a></li>#}
                     </ul>
                     {% block auth_bar %}
                         {% if user.is_authenticated %}
@@ -222,6 +222,21 @@
     <hr>
 
     <footer>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 centered">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- www.exam.moscow -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3381757163095866"
+                     data-ad-slot="9432921928"
+                     data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <hr class="featurette-divider">
         <p class="pull-right"><a href="#">Наверх</a></p>
 
         <p>&copy; Кутепов А.Л., 2015 &middot; <a href="{% url "index" %}">Главная</a> &middot; <a href="{% url "contacts" %}">Обратная связь</a> &middot;</p>
