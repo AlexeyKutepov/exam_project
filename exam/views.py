@@ -96,7 +96,7 @@ def index_beta(request):
     :param request:
     :return:
     """
-    return render(request, "exam/beta/index_beta.html")
+    return render(request, "exam/beta/base.html")
 
 @login_required(login_url='/')
 def dashboard(request):

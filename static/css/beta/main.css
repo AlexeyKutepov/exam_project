@@ -57,6 +57,17 @@ body {
 	font-size: 24px;
 }
 
+.menu {
+	display: inline-block;
+	height: 50px;
+	margin: 0 0 0 40px;
+	text-align: center;
+	line-height: 50px;
+	color: #fff;
+	font-size: 14px;
+    text-decoration: none;
+}
+
 .logo span {
 	background: #3167c4;
 	padding: 2px 4px;
