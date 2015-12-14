@@ -126,24 +126,27 @@
 
                 {% block auth_bar %}
                     {% if user.is_authenticated %}
-                        <button class="profile-btn ripple-slow" data-color="rgba(255,255,255,0.3)">
-                            <span class="glyphicon glyphicon-user"></span>
+                        <button class="profile-btn ripple-slow" data-color="rgba(255,255,255,0.3)" onclick="document.getElementById('formLogout').submit();">
+                            <span class="glyphicon glyphicon-log-out"></span>
                         </button>
+                        <form id="formLogout" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                        </form>
                     {% else %}
 
                         <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
                         {% csrf_token %}
-                            <div id="modalScheduleTest" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalScheduleTestLabel">
-                                <div class="modal-dialog modal-lg">
+                            <div id="modalLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel">
+                                <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                                     aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="modalScheduleTestLabel">Вход в систему</h4>
+                                            <h4 class="modal-title" id="modalLoginLabel">Вход в систему</h4>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="form-group {{ login_error|default:"" }}">
                                                         <input id="email" name="email" type="email" placeholder="Email" class="form-control">
                                                     </div>
@@ -164,55 +167,39 @@
                         </form>
                         <a class="menu pull-right" href="{% url 'create_profile' %}">Регистрация</a>
                         <a class="menu pull-right" href="" data-toggle="modal"
-                                data-target="#modalCancel{{ forloop.counter }}">Вход</a>
+                                data-target="#modalLogin">Вход</a>
                     {% endif %}
                 {% endblock %}
-
-
-
 			</div>
 		</section>
-		<div class="container">
-			<div class="header-text">
-				<p>Добро пожаловать на Exam!</p>
-				<small><b>Exam</b> - универсальный сервис проверки знаний и Ваш надёжный помощник!</small>
-			</div>
-		</div>
 	</header>
+    {% block header_content %}
 
-	<main id="main" role="main">
-		<figure class="art-block">
-			<div class="art-img art1">
-				<i class="fa fa-puzzle-piece"></i>
-			</div>
-			<h1>Конструктор тестов</h1>
-			<p>
-				Online конструктор позволяет легко и быстро создавать тесты любой тематики!
-				Созданные Вами тесты всегда доступны для прохождения online.
-				Так же Вы можете скачать интерактивную offline версию созданного теста.
-			</p>
-		</figure>
-		<figure class="art-block">
-			<div class="art-img art2">
-				<i class="fa fa-check"></i>
-			</div>
-			<h1>Система проверки знаний</h1>
-			<p>
-				Вам больше не нужно вручную проверять выполненные задания. Exam сделает это за Вас!
-				Система позволяет проводить online тестирования большого количества учащихся как в аудитории, так и удалённо.
-				Для прохождения теста регистрация не обязательна. Это позволяет значительно упростить работу с большим количеством людей.
-			</p>
-		</figure>
-		<figure class="art-block">
-			<div class="art-img art3">
-				<i class="fa fa-list"></i>
-			</div>
-			<h1>Журнал успеваемости</h1>
-			<p>
-				В вашем распоряжении будет журнал успеваемости с оценками и подробной информацией о выполненных тестах.
-				Полная детализация теста с правильными и фактическими ответами доступна только автору теста, что исключает возможность списывания.
-			</p>
-		</figure>
-	</main>
+    {% endblock %}
+    <div class="container">
+        {% block content %}
+
+        {% endblock %}
+	</div>
+    <footer class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 centered">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- www.exam.moscow -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3381757163095866"
+                     data-ad-slot="9432921928"
+                     data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <hr class="featurette-divider">
+        <p class="pull-right"><a href="#">Наверх</a></p>
+
+        <p>&copy; Кутепов А.Л., 2015 &middot; <a href="{% url "index" %}">Главная</a> &middot; <a href="{% url "contacts" %}">Обратная связь</a> &middot;</p>
+    </footer>
 </body>
 </html>
