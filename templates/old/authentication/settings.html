@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block head %}
+    <script src="/static/js/authentication.js"></script>
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <h4><a href="{%  url "dashboard" %}">Рабочий стол</a> > Настройки</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <p></p>
+    <form id="formSettings" action="{% url "settings" %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2">
+            <div class="form-group">
+                {% if user.picture %}
+                    <img id="impPreview" class="img-circle"
+                                 src="{{ MEDIA_URL }}{{ user.picture }}"
+                                 alt="Photo" width="140" height="140">
+                        <p></p>
+                    <input id="inputPicture" name="picture" type="file" accept="image/*" onchange="onPreview(this)">
+                {% else %}
+                    <img id="impPreview" class="img-circle"
+                             data-src="holder.js/150x150/auto/white"
+                             alt="Photo" width="150" height="150">
+                    <p></p>
+                    <input id="inputPicture" name="picture" type="file" accept="image/*" onchange="onPreview(this)">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div id="divEmail" class="form-group">
+                <label class="control-label" for="inputEmail"><b>* Адрес электронной почты:</b></label>
+                <input id="inputEmail" name="email" type="email" class="form-control"
+                       onchange="checkEmail(this)" onkeyup="checkEmail(this)" oninput="checkEmail(this)" value="{{ user.email }}" required>
+                <label id="labelErrorEmail" class="control-label" for="inputEmail" hidden>Не корректный адрес электронной почты</label>
+            </div>
+            <button id="btnChangePassword" name="changePassword" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" value="0" onclick="onChangePasswordClick(this)">
+                Изменить пароль
+            </button>
+            <p></p>
+            <div class="collapse" id="collapseExample">
+                <div class="well">
+                    <div id="divPassword1" class="form-group">
+                        <label class="control-label" for="inputPassword1"><b>* Пароль (не менее 6 символов):</b></label>
+                        <input id="inputPassword1" name="password1" type="password" class="form-control" onchange="checkPassword1(this)" onkeyup="checkPassword1(this)" oninput="checkPassword1(this)">
+                        <label id="labelErrorPassword1" class="control-label" for="inputPassword1" hidden>Пароль должен быть не меннее 6 символов</label>
+                    </div>
+                    <div id="divPassword2" class="form-group">
+                        <label class="control-label" for="inputPassword2"><b>* Подтверждение пароля:</b></label>
+                        <input id="inputPassword2" name="password2" type="password" class="form-control" onchange="checkPassword2(this)" onkeyup="checkPassword2(this)" oninput="checkPassword2(this)">
+                        <label id="labelErrorPassword2" class="control-label" for="inputPassword1" hidden>Пароли не совпадают</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-2">
+            <div id="divLastName" class="form-group">
+                <label class="control-label" for="inputLastName"><b>* Фамилия:</b></label>
+                <input id="inputLastName" name="lastName" type="text" class="form-control"
+                       onchange="checkLastName(this)" onkeyup="checkLastName(this)" oninput="checkLastName(this)" value="{{ user.last_name }}" required>
+            </div>
+            <div id="divFirstName" class="form-group">
+                <label class="control-label" for="inputFirstName"><b>* Имя:</b></label>
+                <input id="inputFirstName" name="firstName" type="text" class="form-control"
+                       onchange="checkFirstName(this)" onkeyup="checkFirstName(this)" oninput="checkFirstName(this)" value="{{ user.first_name }}" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputMiddleName">Отчество:</label>
+                <input id="inputMiddleName" name="middleName" type="text" class="form-control" value="{{ user.middle_name }}">
+            </div>
+            <div id="divDateOfBirth" class="form-group">
+                <label class="control-label" for="inputDateOfBirth"><b>* Дата рождения:</b></label>
+                <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control"
+                       onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" value="{{ user.date_of_birth|date:"Y-m-d" }}" required>
+            </div>
+            <label class="control-label" for="divGender">Пол:</label>
+            {% if user.gender == "MALE" %}
+            <div id="divGender" class="row">
+                <div class="col-lg-6">
+                    <label><input id="radioMale" type="radio" name="gender" value="MALE" checked>Мужской</label>
+                </div>
+                <div class="col-lg-6">
+                    <label><input id="radioFemale" type="radio" name="gender" value="FEMALE">Женский</label>
+                </div>
+            </div>
+            {% else %}
+                <div id="divGender" class="row">
+                    <div class="col-lg-6">
+                        <label><input id="radioMale" type="radio" name="gender" value="MALE">Мужской</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <label><input id="radioFemale" type="radio" name="gender" value="FEMALE" checked>Женский</label>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label class="control-label" for="inputCountry">Страна:</label>
+                <input id="inputCountry" name="country" type="text" class="form-control" value="{{ user.country }}">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputCity">Город:</label>
+                <input  id="inputCity" name="city" type="text" class="form-control" value="{{ user.city }}">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputAddress">Адрес:</label>
+                <input  id="inputAddress" name="address" type="text" class="form-control" value="{{ user.address }}">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputInstitution">Место работы/учёбы:</label>
+                <input id="inputInstitution" name="institution" type="text" class="form-control" value="{{ user.institution }}">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputPosition">Должность:</label>
+                <input id="inputPosition" name="position" type="text" class="form-control" value="{{ user.position }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-6">
+            <button id="btnSubmit" type="submit" class="btn btn-success" name="save" disabled>Сохранить изменения</button>
+            <a href="{% url "dashboard" %}"><input type="button" class="btn btn-default" value="Отмена"/></a>
+        </div>
+    </div>
+    </form>
+{% endblock %}

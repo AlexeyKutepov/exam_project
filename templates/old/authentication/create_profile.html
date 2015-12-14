@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block head %}
+    <script src="/static/js/authentication.js"></script>
+    <script src="/static/js/crop.min.js"></script>
+    <link rel="stylesheet" href="/static/css/crop.css"/>
+{% endblock %}
+{% block auth_bar %}
+    <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="{% url 'create_profile' %}">Регистрация</a></li>
+    </ul>
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <h4>Регистрация</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <p></p>
+    <form id="formCreateProfile" action="{% url "create_profile" %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2">
+            <div class="form-group">
+                <img id="impPreview" class="img-circle"
+                         data-src="holder.js/150x150/auto/white"
+                         alt="Photo" width="150" height="150">
+                <p></p>
+                <input id="inputPicture" name="picture" type="file" accept="image/*" onchange="onPreview(this)">
+{# TODO               #}
+{#                <input id="inputX" name="x" type="text" hidden>#}
+{#                <input id="inputY" name="y" type="text" hidden>#}
+{##}
+{#                <script type="text/javascript">#}
+{#                    var cropper;#}
+{#                    document.getElementById('impPreview').onload = function () {#}
+{#                        if (cropper) cropper.destroy();#}
+{#                        cropper = new Cropper(this, {#}
+{#                            min_width:  200,#}
+{#                            min_height: 200,#}
+{#                            max_width:  200,#}
+{#                            max_height:  200,#}
+{#                            update: function (coordinates) {#}
+{#                                $('#inputX').value = coordinates["x"];#}
+{#                                $('#inputY').value = coordinates["y"];#}
+{#                            }#}
+{#                        });#}
+{#                    }#}
+{#                </script>#}
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div id="divEmail" class="form-group">
+                <label class="control-label" for="inputEmail"><b>* Адрес электронной почты:</b></label>
+                <input id="inputEmail" name="email" type="email" class="form-control"
+                       onchange="checkEmail(this)" onkeyup="checkEmail(this)" oninput="checkEmail(this)" required>
+                <label id="labelErrorEmail" class="control-label" for="inputEmail" hidden>Не корректный адрес электронной почты</label>
+            </div>
+            <div id="divPassword1" class="form-group">
+                <label class="control-label" for="inputPassword1"><b>* Пароль (не менее 6 символов):</b></label>
+                <input id="inputPassword1" name="password1" type="password" class="form-control"
+                       onchange="checkPassword1(this)" onkeyup="checkPassword1(this)" oninput="checkPassword1(this)" required>
+                <label id="labelErrorPassword1" class="control-label" for="inputPassword1" hidden>Пароль должен быть не меннее 6 символов</label>
+            </div>
+            <div id="divPassword2" class="form-group">
+                <label class="control-label" for="inputPassword2"><b>* Подтверждение пароля:</b></label>
+                <input id="inputPassword2" name="password2" type="password" class="form-control"
+                       onchange="checkPassword2(this)" onkeyup="checkPassword2(this)" oninput="checkPassword2(this)" required>
+                <label id="labelErrorPassword2" class="control-label" for="inputPassword1" hidden>Пароли не совпадают</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-2">
+            <div id="divLastName" class="form-group">
+                <label class="control-label" for="inputLastName"><b>* Фамилия:</b></label>
+                <input id="inputLastName" name="lastName" type="text" class="form-control"
+                       onchange="checkLastName(this)" onkeyup="checkLastName(this)" oninput="checkLastName(this)" required>
+            </div>
+            <div id="divFirstName" class="form-group">
+                <label class="control-label" for="inputFirstName"><b>* Имя:</b></label>
+                <input id="inputFirstName" name="firstName" type="text" class="form-control"
+                       onchange="checkFirstName(this)" onkeyup="checkFirstName(this)" oninput="checkFirstName(this)" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputMiddleName">Отчество:</label>
+                <input id="inputMiddleName" name="middleName" type="text" class="form-control">
+            </div>
+            <div id="divDateOfBirth" class="form-group">
+                <label class="control-label" for="inputDateOfBirth"><b>* Дата рождения (дд.мм.гггг):</b></label>
+                <input id="inputDateOfBirth" name="dateOfBirth" type="date" class="form-control"
+                       onchange="checkDateOfBirth(this)" onkeyup="checkDateOfBirth(this)" required>
+            </div>
+            <label class="control-label" for="divGender">Пол:</label>
+            <div id="divGender" class="row">
+                <div class="col-lg-6">
+                    <label><input id="radioMale" type="radio" name="gender" value="MALE">Мужской</label>
+                </div>
+                <div class="col-lg-6">
+                    <label><input id="radioFemale" type="radio" name="gender" value="FEMALE">Женский</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label class="control-label" for="inputCountry">Страна:</label>
+                <input id="inputCountry" name="country" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputCity">Город:</label>
+                <input  id="inputCity" name="city" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputAddress">Адрес:</label>
+                <input  id="inputAddress" name="address" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputInstitution">Место работы/учёбы:</label>
+                <input id="inputInstitution" name="institution" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="inputPosition">Должность:</label>
+                <input id="inputPosition" name="position" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+{#        <div class="has-success col-lg-offset-2 col-lg-6">#}
+{#            <div class="checkbox">#}
+{#                <label>#}
+{#                    <input type="checkbox" value="option1" id="checkboxSuccess">#}
+{#                    Согласен с правилами пользования сервисом Exam#}
+{#                </label>#}
+{#            </div>#}
+{#        </div>#}
+        <div class="col-lg-offset-2 col-lg-6">
+            {% if next %}
+            <button id="btnSubmit" type="submit" name="next" value="{{ next }}" class="btn btn-success" disabled>Зарегистрироваться</button>
+            {% else %}
+            <button id="btnSubmit" type="submit" class="btn btn-success" disabled>Зарегистрироваться</button>
+            {% endif %}
+            <a href="/"><input type="button" class="btn btn-default" value="Отмена"/></a>
+        </div>
+    </div>
+    </form>
+{% endblock %}

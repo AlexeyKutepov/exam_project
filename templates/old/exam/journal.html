@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Exam - журнал</title>
+{% endblock %}
+{% block seo %}
+    <meta name="description" content="Журнал с результатами тестирования">
+    <meta name="keywords" content="журнал успеваемости, результаты тестирования, оценки, преподавателю, статистика">
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-12">
+                    <h4><a href="{%  url "dashboard" %}">Рабочий стол</a> > Журнал</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <b>{{ test.name }}</b>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Пользователь</th>
+                <th>Начало тестирования</th>
+                <th>Завершение тестирования</th>
+                <th>Количество вопросов</th>
+                <th>Количество правильных ответов</th>
+                <th>Оценка</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for journal in journal_list %}
+                {% if journal.result >= 70 %}
+                    <tr class="success">
+                        {% elif journal.result >= 40 %}
+                    <tr class="warning">
+                        {% else %}
+                    <tr class="danger">
+                {% endif %}
+            <th>{{ forloop.counter }}</th>
+            {% if journal.user %}
+            <td>{{ journal.user.get_full_name }}</td>
+            {% else %}
+            <td>{{ journal.unregistered_user.get_full_name }}</td>
+            {% endif %}
+            <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+            <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
+            <td>{{ journal.number_of_questions }}</td>
+            <td>{{ journal.number_of_correct_answers }}</td>
+            <td>{{ journal.result }}%</td>
+            <td>
+                <form action="{% url "journal" id=test.id %}" method="post">
+                    {% csrf_token %}
+                    <!-- Modal dialog delete -->
+                    <div class="modal fade" id="modalDelete{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Удаление записи в журнале</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Вы действительно хотите удалить запись №{{ forloop.counter }} в журнале оценок?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Нет</button>
+                                    <button type="submit" name="delete" value="{{ journal.id }}" class="btn btn-default">Да</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btnJournal{{ forloop.counter }}" type="submit"
+                            class="btn btn-success" name="report" value="{{ journal.id }}">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </button>
+                    <button id="btnDel{{ forloop.counter }}" type="button" data-toggle="modal"
+                            data-target="#modalDelete{{ forloop.counter }}" class="btn btn-danger"
+                            title="Удалить запись в журнале">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

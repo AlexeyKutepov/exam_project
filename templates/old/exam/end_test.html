@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Exam - результаты теста</title>
+{% endblock %}
+{% block seo %}
+    <meta name="description" content="Система проверки знаний сервиса Exam. Результаты теста.">
+    <meta name="keywords" content="Тестирование, результаты, прохождение теста, on-line, вопрос, ответ, учёба">
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4">
+                    <h4>Результаты теста</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <p></p>
+    {% if journal.result >= 70 %}
+    <div class="panel panel-success">
+    {% elif journal.result >= 40 %}
+    <div class="panel panel-warning">
+    {% else %}
+    <div class="panel panel-danger">
+    {% endif %}
+        <div class="panel-heading">
+            <b class="white_color">{{ journal.test.name }}</b>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Пользователь</th>
+                <th>Начало тестирования</th>
+                <th>Завершение тестирования</th>
+                <th>Количество вопросов</th>
+                <th>Количество правильных ответов</th>
+                <th>Оценка</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% if user.is_authenticated %}
+                    <td>{{ user.get_short_name }}</td>
+                    {% else %}
+                    <td>{{ journal.unregistered_user.get_full_name }}</td>
+                    {% endif %}
+                    <td>{{ journal.start_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.end_date|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ journal.number_of_questions }}</td>
+                    <td>{{ journal.number_of_correct_answers }}</td>
+                    <td>{{ journal.result }}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

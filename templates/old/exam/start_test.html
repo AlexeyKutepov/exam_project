@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Exam - тестирование</title>
+{% endblock %}
+{% block seo %}
+    <meta name="description" content="Система проверки знаний сервиса Exam. Тестирование.">
+    <meta name="keywords" content="Тестирование, прохождение теста, on-line, вопрос, ответ, учёба">
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block header_content %}
+    <div class="k-panel-header vertical-align">
+        <div class="container">
+            <div class="row vertical-align">
+                <div class="col-lg-4">
+                    <h4>{{ test.name|default:"Название теста не задано" }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <p></p>
+    {% if user.is_authenticated %}
+        <form action="{% url "next_question" id=test.id number=1 %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <blockquote>
+                <b>Ссылка на тест:</b>
+                <p><a href="{{ path }}">{{ host }}{{ path }}</a></p>
+
+                {% if test.description %}
+                    <b>Описание:</b>
+                    <p>{{ test.description }}</p>
+                {% endif %}
+                <b>Категория:</b>
+
+                <p>{{ test.category }}</p>
+                <b>Автор:</b>
+
+                <p>{{ test.author.get_full_name }}</p>
+                <b>Количество вопросов: </b>{{ number_of_questions }}
+            </blockquote>
+        </div>
+        {% if number_of_questions != 0 %}
+            <div class="row centered">
+                <button id="btnStart" type="submit" class="btn btn-primary"
+                        name="start" value="{{ test.id }}">
+                    Начать тестирование
+                </button>
+            </div>
+        {% endif %}
+        </form>
+    {% else %}
+        {% if test.is_public %}
+            <form action="{% url "start_test" id=test.id %}" method="post">
+            {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="divEmail" class="form-group">
+                            <label class="control-label" for="inputEmail">Адрес электронной почты (если желаете получить копию результатов тестирования на электронную почту):</label>
+                            <input id="inputEmail" name="email" type="email" class="form-control">
+                        </div>
+                        <div id="divLastName" class="form-group">
+                            <label class="control-label" for="inputLastName"><b>Фамилия:</b></label>
+                            <input id="inputLastName" name="lastName" type="text" class="form-control" required>
+                        </div>
+                        <div id="divFirstName" class="form-group">
+                            <label class="control-label" for="inputFirstName"><b>Имя:</b></label>
+                            <input id="inputFirstName" name="firstName" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="inputMiddleName">Отчество:</label>
+                            <input id="inputMiddleName" name="middleName" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <blockquote>
+                            {% if test.description %}
+                                <b>Описание:</b>
+                                <p>{{ test.description }}</p>
+                            {% endif %}
+                            <b>Категория:</b>
+
+                            <p>{{ test.category }}</p>
+                            <b>Автор:</b>
+
+                            <p>{{ test.author.get_full_name }}</p>
+                            <b>Количество вопросов: </b>{{ number_of_questions }}
+                        </blockquote>
+                    </div>
+                </div>
+            {% if number_of_questions != 0 %}
+                <div class="row centered">
+                    <button id="btnStart" type="submit" class="btn btn-primary"
+                            name="start" value="{{ test.id }}">
+                        Начать тестирование
+                    </button>
+                </div>
+            {% endif %}
+            </form>
+        {% else %}
+            <blockquote>
+                <b>Этот тест доступен только для зарегистрированных пользователей</b>
+            </blockquote>
+        {% endif %}
+    {% endif %}
+{% endblock %}

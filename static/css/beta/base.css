@@ -4,6 +4,18 @@ body {
 	background: #FAFAFA;
 }
 
+/*.k-panel {*/
+    /*width: 100%;*/
+    /*height: 170px;*/
+    /*background-color: #B2DFDB;*/
+/*}*/
+
+/*.k-panel-header {*/
+    /*width: 100%;*/
+    /*background-color: #CDDC39;*/
+    /*display: inline-block*/
+/*}*/
+
 #header {
 	background: #2196f3;
 	width: 100%;
