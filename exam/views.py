@@ -414,6 +414,8 @@ def next_question_unregistered_user(request, id, progress_id, number):
             if question.get_answers().get_answer() != request.POST["answer"]:
                 request_answer = request.POST["answer"]
                 is_correct = False
+            else:
+                request_answer = request.POST["answer"]
         elif question.get_test_type() is TestType.CLOSE_TYPE_SEVERAL_CORRECT_ANSWERS:
             correct_answer_list = []
             for item in range(len(question.get_answers())):
