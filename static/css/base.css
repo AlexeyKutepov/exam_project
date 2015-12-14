@@ -35,7 +35,7 @@ body {
 	float: left;
 	text-align: center;
 	color: #fff;
-	font-size: 18px;
+	font-size: 14px;
 
 	-webkit-border-radius: 40px;
 	-moz-border-radius: 40px;
@@ -43,6 +43,7 @@ body {
 }
 
 .search-btn,
+.loguot-btn,
 .profile-btn {
 	float: right;
 }

@@ -113,7 +113,7 @@
                     <span class="glyphicon glyphicon-ok"></span>
 				</button>
 
-				<a href="#" class="logo" title="Exam Привет!">Exam<span>Moscow</span></a>
+				<a href="/" class="logo" title="Exam Привет!">Exam<span>Moscow</span></a>
 
                 {% if user.is_authenticated %}
                     <a class="menu" href="{% url "dashboard" %}">Рабочий стол</a>
@@ -126,9 +126,8 @@
 
                 {% block auth_bar %}
                     {% if user.is_authenticated %}
-                        <button class="profile-btn ripple-slow" data-color="rgba(255,255,255,0.3)" onclick="document.getElementById('formLogout').submit();">
-                            <span class="glyphicon glyphicon-log-out"></span>
-                        </button>
+                        <button class="loguot-btn ripple-slow" data-color="rgba(255,255,255,0.3)" onclick="document.getElementById('formLogout').submit();">
+                            <span class="glyphicon glyphicon-log-out"> Выход</span></button>
                         <form id="formLogout" action="{% url 'logout' %}">
                             {% csrf_token %}
                         </form>
