@@ -22,9 +22,9 @@ def sign_in(request):
             auth.login(request, user)
             return HttpResponseRedirect(reverse("dashboard"))
         else:
-            return render(request, "exam/index.html", {"login_error": "has-error"})
+            return HttpResponseRedirect(reverse("authentication_alert", args=["danger", "Неправильный логин или пароль"]))
     else:
-        return render(request, "exam/index.html", {"login_error": "has-error"})
+        return HttpResponseRedirect(reverse("authentication_alert", args=["danger", "Неправильный логин или пароль"]))
 
 
 @login_required(login_url='/')
