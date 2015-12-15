@@ -33,8 +33,7 @@ small {font-size: 0.7em;}
 input,
 button,
 select,
-textarea,
-form {
+textarea{
 	background: none;
 	border: none;
 	outline: none;

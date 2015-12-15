@@ -85,23 +85,23 @@ def create_profile(request):
         if "country" in request.POST:
             country = request.POST.get("country")
         else:
-            country = None
+            country = ""
         if "city" in request.POST:
             city = request.POST.get("city")
         else:
-            city = None
+            city = ""
         if "address" in request.POST:
             address = request.POST.get("address")
         else:
-            address = None
+            address = ""
         if "institution" in request.POST:
             institution = request.POST.get("institution")
         else:
-            institution = None
+            institution = ""
         if "position" in request.POST:
             position = request.POST.get("position")
         else:
-            position = None
+            position = ""
         if "picture" in request.FILES:
             picture = request.FILES["picture"]
             if not imghdr.what(picture):

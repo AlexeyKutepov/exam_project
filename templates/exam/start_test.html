@@ -26,19 +26,13 @@
         {% csrf_token %}
         <div class="row">
             <blockquote>
-                <b>Ссылка на тест:</b>
-                <p><a href="{{ path }}">{{ host }}{{ path }}</a></p>
+                <p><b>Ссылка на тест: </b><a href="{{ path }}">{{ host }}{{ path }}</a></p>
 
                 {% if test.description %}
-                    <b>Описание:</b>
-                    <p>{{ test.description }}</p>
+                    <p><b>Описание: </b>{{ test.description }}</p>
                 {% endif %}
-                <b>Категория:</b>
-
-                <p>{{ test.category }}</p>
-                <b>Автор:</b>
-
-                <p>{{ test.author.get_full_name }}</p>
+                <p><b>Категория: </b>{{ test.category }}</p>
+                <p><b>Автор: </b>{{ test.author.get_full_name }}</p>
                 <b>Количество вопросов: </b>{{ number_of_questions }}
             </blockquote>
         </div>
