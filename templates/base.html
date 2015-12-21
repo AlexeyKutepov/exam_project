@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="ru">
+{% load staticfiles %}
     {% block title %}
         <title>Exam - универсальный сервис проверки знаний</title>
     {% endblock %}
@@ -13,12 +14,15 @@
     <meta name="telderi" content="2afd3e03b48548337b0679323101bfa1" />
     <meta name="google-site-verification" content="oHSAQHTla8oVabep6b_U-XByVnW0kaweOABp-b6v-1E" />
     {% block seo %}
+        <meta property="og:image" content="/static/img/index.png" />
+        <meta property="og:title" content="Онлайн конструктор тестов Exam!" />
+        <meta property="og:description" content="Удобный сервис для проверки знаний!" />
         <meta name="description" content="Универсальный сервис проверки знаний (On-line конструктор тестов, система проверки знаний, журнал успеваемости). Позволяет создавать тесты и проводить тестирование в режиме on-line.">
         <meta name="keywords" content="Конструктор тестов, проверка знаний, тестирование, журнал успеваемости, преподавателю, учёба">
     {% endblock %}
 
-    {% load staticfiles %}
     <link rel="short icon" href="/static/img/favicon.png">
+    <link rel="image_src" href="/static/img/index.png"/>
 
     <link rel="stylesheet" href="/static/css/material.bootstrap.min.css"/>
     <link rel="stylesheet" href="/static/css/font-awesome.css"/>
