@@ -1,0 +1,67 @@
+{% extends "planet/base.html" %}
+{% load i18n pagination_tags planet_tags %}
+{% load url from future %}
+
+{% block head_title %}{% trans "Блог" %}: {{ blog.title }}{% endblock %}
+
+{% block extra_head %}
+    <meta name="title" content="{% trans 'Блог' %}: {{ blog.title }}" />
+    <meta name="description" content="{% trans 'Блог' %} {{ blog.title }}" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="http://{{ site.domain }}{{ blog.get_absolute_url }}"/>
+{% endblock %}
+
+{% block breadcrumb_section %}<li><a href="{% url 'planet.views.blogs_list' %}">{% trans 'Blogs' %}</a> <span class="divider">/</span></li>{% endblock %}
+{% block breadcrumb_detail %}<li class="active">{{ blog.title }}</li>{% endblock %}
+
+{% block content %}
+    {% load poll_extras %}
+    <h4>{% trans "Блог" %}: {{ blog.title }}</h4>
+    <table class="blog details table table-hover table-bordered">
+        <tr>
+          <th>{% trans 'Сайт' %}</th>
+          <td><a href="{{ blog.url }}" title="{% trans 'Перейти к оригиналу' %}">{% trans 'перейти' %}</a></td>
+        </tr>
+    </table>
+    {% if tag %}
+        <h4>{% trans 'Posts under tag' %}: <strong>{{ tag|safe }}</strong></h4>
+    {% endif %}
+
+    {% autopaginate posts 20 %}
+    {% for post in posts %}
+        <div class="post short {% cycle 'even' 'odd' %} clearfix">
+            {% post_details post "planet/posts/short.html" %}
+        </div>
+        {% if forloop.counter|is_post_news5 %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 centered">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- www.exam.moscow -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3381757163095866"
+                     data-ad-slot="9432921928"
+                     data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if tag %}
+        <p>
+            <a href="{% url 'planet_tag_feed_list' tag.name %}" title="{% trans 'See the list of blogs talking about this tag' %}">
+                {% trans 'Other blogs talking about ' %} {{ tag|safe }}
+            </a>
+        </p>
+    {% endif %}
+
+    {% paginate %}
+{% endblock %}
+
+{% block right_column %}
+    {% include 'planet/feeds/blocks/syndication_block.html' %}
+    {% cloud_for_blog blog %}
+{% endblock %}

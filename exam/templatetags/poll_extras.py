@@ -37,3 +37,11 @@ def get_answer_by_index(List, i):
 @register.filter
 def is_correct_by_index(List, i):
     return List[int(i)].is_correct()
+
+@register.filter
+def is_post_news3(value):
+    return value % 3 == 0
+
+@register.filter
+def is_post_news5(value):
+    return value % 5 == 0

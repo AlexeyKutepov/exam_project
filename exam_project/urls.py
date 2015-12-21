@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
+admin.autodiscover()
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'exam_project.views.home', name='home'),
@@ -10,6 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('exam.urls')),
+    url(r'^', include('planet.urls')),
     url(r'^accounts/', include('authentication.urls'))
 )
 

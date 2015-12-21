@@ -1029,3 +1029,12 @@ def donate(request):
         {
         }
     )
+
+
+def news(request):
+    return render(
+        request,
+        "exam/news.html",
+        {
+        }
+    )

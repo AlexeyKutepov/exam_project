@@ -26,6 +26,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
 
 # Application definition
 
@@ -37,6 +39,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'exam',
+    # 3rd-party required apps:
+    'pagination',
+    'tagging',
+    'pinax_theme_bootstrap',
+    # and finally:
+    'planet',
+    'django.contrib.sites'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,7 +56,32 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'planet.context_processors.context',
+)
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
+PLANET = {
+    "USER_AGENT": "My Planet/1.0",
+}
+
+LANGUAGE_COOKIE_NAME = "myplanetlng"
+SESSION_COOKIE_NAME = "myplanetid"
 
 AUTH_USER_MODEL = 'exam.UserProfile'
 
