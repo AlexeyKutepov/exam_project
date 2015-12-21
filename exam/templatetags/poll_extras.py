@@ -43,5 +43,13 @@ def is_post_news3(value):
     return value % 3 == 0
 
 @register.filter
+def is_post_news4(value):
+    return value % 4 == 0
+
+@register.filter
 def is_post_news5(value):
     return value % 5 == 0
+
+@register.filter
+def is_post_news6(value):
+    return value % 6 == 0
