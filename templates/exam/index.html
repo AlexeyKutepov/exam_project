@@ -180,7 +180,11 @@
 		</section>
 		<div class="container">
 			<div class="header-text">
-				<p>Добро пожаловать на Exam!</p>
+            {% if not user.is_authenticated %}
+                <p>Добро пожаловать на Exam! <a href="{% url "create_profile" %}"><button type="button" class="btn btn-default pull-right"><b>Начать работу!</b></button></a></p>
+            {% else %}
+                <p>Добро пожаловать на Exam! <a href="{% url "dashboard" %}"><button type="button" class="btn btn-default pull-right"><b>Начать работу!</b></button></a></p>
+            {% endif %}
 				<small><b>Exam</b> - универсальный сервис проверки знаний и Ваш надёжный помощник!</small>
 			</div>
 		</div>
