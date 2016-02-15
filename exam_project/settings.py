@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '+00$^rz7sx&^i=0&#zinq@u^fcmfwt9+^0juw=^)2v*x%$zx&3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 
@@ -39,13 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'exam',
-    # 3rd-party required apps:
-    'pagination',
-    'tagging',
-    'pinax_theme_bootstrap',
-    # and finally:
-    'planet',
-    'django.contrib.sites'
 )
 
 MIDDLEWARE_CLASSES = (

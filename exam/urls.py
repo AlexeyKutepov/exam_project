@@ -28,5 +28,4 @@ urlpatterns = patterns('',
         url(r'^report/(?P<id>\d+)/$', views.report, name='report'),
         url(r'^contacts/', views.contacts, name='contacts'),
         url(r'^help/', views.exam_help, name='help'),
-        # url(r'^donate/', views.donate, name='donate'),
 )
