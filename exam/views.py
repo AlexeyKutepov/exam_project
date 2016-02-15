@@ -1021,20 +1021,3 @@ def exam_help(request):
         }
     )
 
-
-def donate(request):
-    return render(
-        request,
-        "exam/donate.html",
-        {
-        }
-    )
-
-
-def news(request):
-    return render(
-        request,
-        "exam/news.html",
-        {
-        }
-    )

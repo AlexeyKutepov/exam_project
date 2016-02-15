@@ -39,13 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'exam',
-    # 3rd-party required apps:
-    'pagination',
-    'tagging',
-    'pinax_theme_bootstrap',
-    # and finally:
-    'planet',
-    'django.contrib.sites'
 )
 
 MIDDLEWARE_CLASSES = (
