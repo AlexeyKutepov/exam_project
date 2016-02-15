@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '+00$^rz7sx&^i=0&#zinq@u^fcmfwt9+^0juw=^)2v*x%$zx&3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 
@@ -93,10 +93,21 @@ WSGI_APPLICATION = 'exam_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'exam',
+        'USER': 'exam',
+        'PASSWORD': 'A83x90o76N67E59c',
+        'HOST': 'localhost',
+        "OPTIONS": { "init_command": "SET names utf8; " },
     }
 }
 
@@ -114,11 +125,12 @@ USE_L10N = True
 USE_TZ = True
 
 # E-mail
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_HOST_USER = 'test.kutepov@yandex.ru'
-EMAIL_HOST_PASSWORD = 'kutepov'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'exam.moscow@gmail.com'
+EMAIL_HOST_PASSWORD = 'd03K3jU82jdu9'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
 
 
 
