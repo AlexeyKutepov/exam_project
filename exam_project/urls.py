@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('exam.urls')),
-    url(r'^', include('planet.urls')),
+    # url(r'^', include('planet.urls')),
     url(r'^accounts/', include('authentication.urls'))
 )
 
