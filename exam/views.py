@@ -154,9 +154,7 @@ def journal(request, id):
     :return:
     """
     test = Test.objects.get(id=id)
-    if request.user != test.author:
-        raise SuspiciousOperation("Некорректный id теста")
-    elif "delete" in request.POST:
+    if request.user == test.author and "delete" in request.POST:
         Journal.objects.get(id=int(request.POST["delete"])).delete()
         return HttpResponseRedirect(reverse('journal', args=[id]))
     elif "report" in request.POST:
@@ -185,8 +183,6 @@ def report(request, id):
     if not journal:
         raise SuspiciousOperation("Некорректный запрос")
     elif not request.user.is_authenticated() and journal.user:
-        raise SuspiciousOperation("Некорректный запрос")
-    elif request.user != journal.test.author:
         raise SuspiciousOperation("Некорректный запрос")
     else:
         report = pickle.loads(journal.report)
