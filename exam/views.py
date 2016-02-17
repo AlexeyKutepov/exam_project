@@ -145,7 +145,7 @@ def dashboard_results(request):
     )
 
 
-@login_required(login_url='/')
+# @login_required(login_url='/')
 def journal(request, id):
     """
     Shows the journal
@@ -170,7 +170,7 @@ def journal(request, id):
             }
         )
 
-@login_required(login_url='/')
+# @login_required(login_url='/')
 def report(request, id):
     """
     Prepares the report of the test result
