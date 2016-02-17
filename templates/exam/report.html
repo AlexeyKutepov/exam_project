@@ -9,15 +9,27 @@
 {% block head %}
 {% endblock %}
 {% block header_content %}
-    <div class="vertical-align">
-        <div class="container">
-            <div class="row vertical-align">
-                <div class="col-lg-12">
-                    <h4><a href="{%  url "dashboard" %}">Рабочий стол</a> > <a href="{%  url "journal" id=journal.test.id %}">Журнал</a> > Результаты</h4>
+    {% if request.user == journal.test.author %}
+        <div class="vertical-align">
+            <div class="container">
+                <div class="row vertical-align">
+                    <div class="col-lg-12">
+                        <h4><a href="{%  url "dashboard" %}">Рабочий стол</a> > <a href="{%  url "journal" id=journal.test.id %}">Журнал</a> > Результаты</h4>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="vertical-align">
+            <div class="container">
+                <div class="row vertical-align">
+                    <div class="col-lg-12">
+                        <h4><a href="{%  url "dashboard" %}">Рабочий стол</a> > Результаты</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 {% block content %}
 {% load poll_extras %}
@@ -185,6 +197,7 @@
         </div>
     </div>
 </div>
+{% if request.user == journal.test.author %}
 <div class="row">
     <div class="col-lg-12">
         <form action="{% url "journal" id=journal.test.id %}" method="post">
@@ -216,5 +229,6 @@
         </form>
     </div>
 </div>
+{% endif %}
 
 {% endblock %}

@@ -156,6 +156,7 @@
                         <th>Количество вопросов</th>
                         <th>Количество правильных ответов</th>
                         <th>Оценка</th>
+                        <th>Отчёт</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -173,6 +174,17 @@
                     <td>{{ journal.number_of_questions }}</td>
                     <td>{{ journal.number_of_correct_answers }}</td>
                     <td>{{ journal.result }}%</td>
+                    <td>
+                        <form action="{% url "journal" id=journal.test.id %}" method="post">
+                            {% csrf_token %}
+
+                            <button id="btnJournal{{ forloop.counter }}" type="submit"
+                                    class="btn btn-success" name="report" value="{{ journal.id }}">
+                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            </button>
+
+                        </form>
+                    </td>
                     </tr>
                     {% endfor %}
                     </tbody>
