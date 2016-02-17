@@ -3,20 +3,15 @@
 <head lang="ru">
 {% load staticfiles %}
     {% block title %}
-        <title>Exam - универсальный сервис проверки знаний</title>
+        <title>4Exam - универсальный сервис проверки знаний</title>
     {% endblock %}
     <meta charset="UTF-8">
     <meta http-equiv="content-language" content="ru" />
-    <meta name="author" content="Алексей Кутепов" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name='yandex-verification' content='62b41f391caca131' />
-    <meta name='wmail-verification' content='eb696e869b4ff9e74f134f530e66987d' />
-    <meta name="google-site-verification" content="oHSAQHTla8oVabep6b_U-XByVnW0kaweOABp-b6v-1E" />
-    <meta name="telderi" content="2afd3e03b48548337b0679323101bfa1" />
     {% block seo %}
-        <meta property="og:url" content="http://www.exam.moscow/">
+        <meta property="og:url" content="http://4exam.ru/">
         <meta property="og:image" content="/static/img/index.png" />
-        <meta property="og:title" content="Онлайн конструктор тестов Exam!" />
+        <meta property="og:title" content="Онлайн конструктор тестов 4exam!" />
         <meta property="og:description" content="Удобный сервис для проверки знаний!" />
         <meta name="description" content="Универсальный сервис проверки знаний (On-line конструктор тестов, система проверки знаний, журнал успеваемости). Позволяет создавать тесты и проводить тестирование в режиме on-line.">
         <meta name="keywords" content="Конструктор тестов, проверка знаний, тестирование, журнал успеваемости, преподавателю, учёба">
@@ -52,33 +47,7 @@
     <![endif]-->
 </head>
 <body>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
-            try {
-                w.yaCounter30266642 = new Ya.Metrika({id:30266642,
-                        webvisor:true,
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true});
-            } catch(e) { }
-        });
 
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
-    })(document, window, "yandex_metrika_callbacks");
-    </script>
-    <noscript><div><img src="//mc.yandex.ru/watch/30266642" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 
     <form action="{% url "recovery_password" %}" method="post">
         {% csrf_token %}
@@ -109,7 +78,7 @@
                     <span class="glyphicon glyphicon-ok"></span>
 				</button>
 
-				<a href="/" class="logo" title="Exam Привет!">Exam<span>Moscow</span></a>
+				<a href="/" class="logo" title="Exam Привет!">4Exam<span>ru</span></a>
 
                 {% if user.is_authenticated %}
                     <a class="menu" href="{% url "dashboard" %}">Рабочий стол</a>
@@ -307,6 +276,16 @@
                     Он не требует установки специальных программ и приложений, только доступ в интернет. Дистанционная проверка знаний — это современно и эффективно.
                 </p>
                  <p class="lead">Дистанционная проверка знаний — это современно и эффективно.</p>
+                 
+                 
+                 
+                 
+                 
+       
+                 
+                 
+                 
+                 
             </div>
             <div class="col-md-5 col-md-pull-7">
                 <img class="featurette-image img-responsive center-block" src="/static/img/work.jpg"
@@ -319,7 +298,7 @@
         <hr class="featurette-divider">
         <p class="pull-right"><a href="#">Наверх</a></p>
 
-        <p>&copy; Корнетов Дмитрий, 2015 &middot; <a href="{% url "index" %}">Главная</a> &middot; <a href="{% url "contacts" %}">Обратная связь</a> &middot;</p>
+        <p>&copy; 4exam.ru, 2015-2016 &middot; <a href="{% url "index" %}">Главная</a> &middot; <a href="{% url "contacts" %}">Обратная связь</a> &middot;</p>
     </footer>
 </body>
 </html>
