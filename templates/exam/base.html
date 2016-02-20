@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head lang="ru">
+{% load staticfiles %}
+    {% block title %}
+        <title>4Exam - универсальный сервис проверки знаний</title>
+    {% endblock %}
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="ru" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block seo %}
+        <meta property="og:url" content="http://4exam.ru/">
+        <meta property="og:image" content="/static/img/index.png" />
+        <meta property="og:title" content="Онлайн конструктор тестов 4exam!" />
+        <meta property="og:description" content="Удобный сервис для проверки знаний!" />
+        <meta name="description" content="Универсальный сервис проверки знаний (On-line конструктор тестов, система проверки знаний, журнал успеваемости). Позволяет создавать тесты и проводить тестирование в режиме on-line.">
+        <meta name="keywords" content="Конструктор тестов, проверка знаний, тестирование, журнал успеваемости, преподавателю, учёба">
+    {% endblock %}
+
+    <link rel="short icon" href="/static/img/favicon.png">
+    <link rel="image_src" href="/static/img/index.png"/>
+
+    <link rel="stylesheet" href="/static/css/material.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-social.css"/>
+	<link rel="stylesheet" href="/static/css/base.css">
+	<link rel="stylesheet" href="/static/css/normalize.css">
+
+    <script src="/static/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/menu.js"></script>
+	<script src="/static/js/beta/jquery.ripple.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    {% block head %}
+
+    {% endblock %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+  
+
+    <form action="{% url "recovery_password" %}" method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="modalSendPassword" tabindex="-1" role="dialog" aria-labelledby="modalSendPasswordLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalSendPasswordLabel">Отправка нового пароля на электронную почту</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="control-label" for="inputEmailForPassword"><b>Введите e-mail:</b></label>
+                        <input id="inputEmailForPassword" name="email" type="email" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        <button type="submit" name="sendPassword" class="btn btn-primary">Отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">4exam</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          
+                {% if user.is_authenticated %}
+                    <li><a href="{% url "dashboard" %}">Рабочий стол</a></li>
+                {% endif %}
+          
+       <a href="{% url "get_test_list" page=1 %}">Тесты</a>
+       
+       
+       
+       
+ 
+               <!--            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>  -->
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          
+          
+          
+          
+          
+                          {% block auth_bar %}
+                    {% if user.is_authenticated %}
+                        <button class="loguot-btn ripple-slow" data-color="rgba(255,255,255,0.3)" onclick="document.getElementById('formLogout').submit();">
+                            <span class="glyphicon glyphicon-log-out"> Выход</span></button>
+                        <form id="formLogout" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                        </form>
+                    {% else %}
+
+                        <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                            <div id="modalLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="modalLoginLabel">Вход в систему</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group {{ login_error|default:"" }}">
+                                                        <input id="email" name="email" type="email" placeholder="Email" class="form-control">
+                                                    </div>
+                                                    <div class="form-group {{ login_error|default:"" }}">
+                                                        <input id="password" name="password" type="password" placeholder="Password" class="form-control"
+                                                               data-toggle="popover" data-placement="bottom" title="Забыли пароль?"
+                                                               data-content="<a href='#' data-toggle='modal' data-target='#modalSendPassword'>Отправить новый пароль на электронную почту</a>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Вход</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <li><a class="menu pull-right" href="{% url 'create_profile' %}">Регистрация</a></li>
+                       <li> <a class="menu pull-right" href="" data-toggle="modal" data-target="#modalLogin">Вход</a></li>
+                    {% endif %}
+                {% endblock %}
+          
+          
+          
+
+          
+       
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<!--	<header id="header">
+		<section id="toolbar">
+			<div class="container">
+				<button class="sidebar-btn ripple-slow" data-color="rgba(255,255,255,0.3)">
+                    <span class="glyphicon glyphicon-ok"></span>
+				</button>
+
+				<a href="/" class="logo" title="Exam Привет!">4Exam<span>ru</span></a>
+
+                {% if user.is_authenticated %}
+                    <a class="menu" href="{% url "dashboard" %}">Рабочий стол</a>
+                {% endif %}
+{#                <a class="menu" href="{% url "planet_post_list" %}">Новости</a>#}
+                <a class="menu" href="{% url "get_test_list" page=1 %}">Тесты</a>
+                <a class="menu" href="{% url "contacts" %}">Контакты</a>
+                <a class="menu" href="{% url "help" %}">Справка</a>
+
+
+                {% block auth_bar %}
+                    {% if user.is_authenticated %}
+                        <button class="loguot-btn ripple-slow" data-color="rgba(255,255,255,0.3)" onclick="document.getElementById('formLogout').submit();">
+                            <span class="glyphicon glyphicon-log-out"> Выход</span></button>
+                        <form id="formLogout" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                        </form>
+                    {% else %}
+
+                        <form id="formLogin" class="navbar-form navbar-right" action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                            <div id="modalLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="modalLoginLabel">Вход в систему</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group {{ login_error|default:"" }}">
+                                                        <input id="email" name="email" type="email" placeholder="Email" class="form-control">
+                                                    </div>
+                                                    <div class="form-group {{ login_error|default:"" }}">
+                                                        <input id="password" name="password" type="password" placeholder="Password" class="form-control"
+                                                               data-toggle="popover" data-placement="bottom" title="Забыли пароль?"
+                                                               data-content="<a href='#' data-toggle='modal' data-target='#modalSendPassword'>Отправить новый пароль на электронную почту</a>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Вход</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="menu pull-right" href="{% url 'create_profile' %}">Регистрация</a>
+                        <a class="menu pull-right" href="" data-toggle="modal" data-target="#modalLogin">Вход</a>
+                    {% endif %}
+                {% endblock %}
+			</div>
+		</section>
+	</header>-->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    {% block header_content %}
+
+    {% endblock %}
+    <div class="container">
+        {% block content %}
+
+        {% endblock %}
+	</div>
+    <footer class="container">
+        <hr class="featurette-divider">
+        <p class="pull-right"><a href="#">Наверх</a></p>
+
+        <p>&copy; 4exam.ru, 2015-2016 &middot; <a href="{% url "index" %}">Главная</a> &middot; <a href="{% url "contacts" %}">Обратная связь</a> &middot; <a href="{% url "contacts" %}">Контакты</a> &middot; <a href="{% url "help" %}">Справка</a></p>
+    </footer>
+</body>
+</html>
