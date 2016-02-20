@@ -2,19 +2,16 @@
  * Created by alexey on 08.04.15.
  */
 
+
 $(document).ready(function () {
 
-    /**
-     * Create test page begin
-     */
-
-    var i = 3;
+    var i = parseInt($("#inputCount").val());
 
     $("#selectType").change(function () {
         switch ($(this).val()) {
             case "1":
                 $("[name='trueAnswer']").prop('type', "checkbox");
-                $("#isTrueAnswer1").prop( "required", false )
+                $("#isTrueAnswer1").prop( "required", false );
                 $('#divCloseAnswer').show();
                 $("#divOpenAnswer").hide();
                 $("#inputOpenAnswer").prop('required', false);
@@ -43,7 +40,7 @@ $(document).ready(function () {
                 }
                 break;
             case "3":
-                $("#isTrueAnswer1").prop( "required", false )
+                $("#isTrueAnswer1").prop( "required", false );
                 $('#divCloseAnswer').hide();
                 $("#divOpenAnswer").show();
                 $("#inputOpenAnswer").prop('required',true);
@@ -69,26 +66,24 @@ $(document).ready(function () {
                 "<div class='input-group'><span class='input-group-addon'><input id='isTrueAnswer" + (i + 1) + "' name='trueAnswer' value='" + (i + 1) + "' type='" + type + "'></span><input id='inputAnswer" + (i + 1) + "' name='answer" + (i + 1) + "' type='text' class='form-control'></div>"
         );
         i++;
-        $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
+        $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div><p id='pAnswer" + (i + 1) + "'></p>");
 
         $("#btnDeleteAnswer").toggleClass('disabled', false);
     });
 
     $("#btnDeleteAnswer").click(function () {
         if (i > 2) {
-            $('#divAnswer' + i).html('');
-            $('#divAnswer' + (i + 1)).html('');
+            $('#divAnswer' + i).remove();
+            $('#divAnswer' + (i + 1)).remove();
+            $('#pAnswer' + i).remove();
+            $('#pAnswer' + (i + 1)).remove();
             i--;
-            $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div>");
+            $('#divCloseAnswer').append("<div id='divAnswer" + (i + 1) + "' class='row'></div><p id='pAnswer" + (i + 1) + "'></p>");
         }
         if (i == 2) {
             $(this).toggleClass('disabled', true);
         }
     });
-
-    /**
-     * Create test page end
-     */
 });
 
 /**

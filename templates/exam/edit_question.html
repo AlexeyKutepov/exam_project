@@ -57,6 +57,7 @@
                             <input id="inputAnswer1" name="answer1" type="text" class="form-control" required>
                         </div>
                     </div>
+                    <p id="pAnswer1"></p>
                     <div id="divAnswer2" class="row">
                         <div class="input-group">
                         <span class="input-group-addon">
@@ -65,6 +66,7 @@
                             <input id="inputAnswer2" name="answer2" type="text" class="form-control" required>
                         </div>
                     </div>
+                    <p id="pAnswer2"></p>
                     <div id="divAnswer3" class="row">
                         <div class="input-group">
                         <span class="input-group-addon">
@@ -73,7 +75,9 @@
                             <input id="inputAnswer3" name="answer3" type="text" class="form-control">
                         </div>
                     </div>
+                    <p id="pAnswer3"></p>
                     <div id="divAnswer4" class="row"></div>
+                    <p id="pAnswer4"></p>
                 </div>
                 <div id="divOpenAnswer" class="row">
                     <div class="col-lg-12">
@@ -93,6 +97,7 @@
                         <button id="btnDeleteAnswer" type="button" class="btn btn-danger pull-right">Удалить</button>
                     </div>
                 </div>
+                    <input type="number" id="inputCount" hidden value="3"/>
                 {% else %}
                 <div id="divCloseAnswer">
                     <label>Варианты ответа:</label>
@@ -110,6 +115,7 @@
                                     <input id="inputAnswer{{ forloop.counter }}" name="answer{{ forloop.counter }}" type="text" class="form-control" value="{{ answer.get_answer }}" required>
                                 </div>
                             </div>
+                            <p id="pAnswer{{ forloop.counter }}"></p>
                         {% endfor %}
                     {% elif question.get_test_type.value == 2 %}
                         {% for answer in question.get_answers %}
@@ -125,9 +131,11 @@
                                     <input id="inputAnswer{{ forloop.counter }}" name="answer{{ forloop.counter }}" type="text" class="form-control" value="{{ answer.get_answer }}" required>
                                 </div>
                             </div>
+                            <p id="pAnswer{{ forloop.counter }}"></p>
                         {% endfor %}
                     {% endif %}
                     <div id="divAnswer{{ question.get_answers|length|add:"1" }}" class="row"></div>
+                    <p id="pAnswer{{ question.get_answers|length|add:"1" }}"></p>
                 </div>
                 <div id="divOpenAnswer" class="row" hidden>
                     <div class="col-lg-12">
@@ -147,6 +155,7 @@
                         <button id="btnDeleteAnswer" type="button" class="btn btn-danger pull-right">Удалить</button>
                     </div>
                 </div>
+                    <input type="number" id="inputCount" hidden value="{{ question.get_answers|length }}"/>
                 {% endif %}
 
             </div>
